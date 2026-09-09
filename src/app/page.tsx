@@ -131,7 +131,7 @@ export default function Home() {
               Senate Mashinani brings Kenya&apos;s upper house beyond Nairobi, turning devolution into a public, lived practice across the country&apos;s 47 counties.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
-              <Link href="/sessions" className="inline-flex items-center gap-2 bg-[#F3B664] px-5 py-3 text-sm font-bold text-[#081730] transition-transform hover:-translate-y-0.5 hover:bg-[#ffd08d]">
+              <Link href="/sessions/kilifi-programme" className="inline-flex items-center gap-2 bg-[#F3B664] px-5 py-3 text-sm font-bold text-[#081730] transition-transform hover:-translate-y-0.5 hover:bg-[#ffd08d]">
                 Explore the sessions <ArrowRight size={16} />
               </Link>
               <Link href="/faq" className="inline-flex items-center gap-2 border border-white/40 px-5 py-3 text-sm font-bold text-white transition-colors hover:border-white hover:bg-white/10">

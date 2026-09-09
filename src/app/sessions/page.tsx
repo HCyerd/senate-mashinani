@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { MapPin, Calendar, FileText, CheckCircle2, ExternalLink, TrendingUp, AlertTriangle, Lightbulb, Wallet, HelpCircle, Camera } from 'lucide-react';
 import Image from 'next/image';
 import { sessions } from './sessions';
@@ -122,6 +123,12 @@ export default function SessionsPage() {
                   ))}
                 </ul>
               </div>
+
+              {session.county === 'Kilifi County' && (
+                <Link href="/sessions/kilifi-programme" className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--primary)] transition-colors hover:text-[var(--accent)]">
+                  View detailed Kilifi programme <ExternalLink size={14} />
+                </Link>
+              )}
 
               <div className="border-t border-[var(--card-border)] pt-5">
                 <h3 className="text-sm font-semibold text-[var(--primary)] uppercase tracking-wide mb-2">Impact</h3>
