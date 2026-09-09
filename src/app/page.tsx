@@ -176,10 +176,10 @@ export default function Home() {
           </div>
           
           <div className="relative">
-            <div className="aspect-square md:aspect-[4/3] bg-slate-100 rounded-3xl overflow-hidden relative shadow-2xl border border-gray-100">
+            <div className="aspect-square  bg-slate-100 rounded-3xl overflow-hidden relative shadow-2xl border border-gray-100">
               {/* Placeholder for an image of the Senate in session */}
-              <div className="absolute inset-0 border-2 border-blue-900 shadow-lg shadow-blue-900 flex flex-col justify-center items-center text-white p-8 text-center">
-                <Image src="/senate_mashinani.png" alt="Senate Mashinani Session" layout="fill" objectFit="contain" className="bg-white p-8" />
+              <div className="  flex flex-col justify-center items-center text-white  text-center">
+                <Image src="/sessions_images/turkana_plenary_chamber.jpg" alt="Senate Mashinani Session" layout="fill" objectFit="cover" className="bg-white" />
                 {/* <h3 className="text-2xl font-bold mb-2">Connecting Lawmakers</h3>
                 <p className="text-emerald-100 bg-blue-900 p-2 rounded-lg border border-blue-800 z-10">Meeting the people where they are.</p> */}
               </div>
