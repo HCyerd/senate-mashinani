@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8f9fa;
+  --foreground: #0d1117;
+  --card: #ffffff;
+  --card-border: #e5e7eb;
+  --muted: #6b7280;
+  --primary: #0f2c59;
+  --primary-light: #1d4f91;
+  --accent: #CE1126;
+  --gold: #F4C300;
+  --nav-bg: rgba(255,255,255,0.95);
+}
+
+.dark {
+  --background: #0d1117;
+  --foreground: #e6edf3;
+  --card: #161b22;
+  --card-border: #30363d;
+  --muted: #8b949e;
+  --primary: #6ea8dc;
+  --primary-light: #9ac7ed;
+  --accent: #f87171;
+  --gold: #fbbf24;
+  --nav-bg: rgba(13,17,23,0.95);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #001768 0%, #3b93f1 40%, #1a1a1a 100%);
+}
+
+.dark .hero-gradient {
+  background: linear-gradient(135deg, #003300 0%, #0d1117 50%, #161b22 100%);
+}
+
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.nav-blur {
+  background-color: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.kenya-stripe {
+  background: linear-gradient(to right, #000000 33.33%, #CE1126 33.33%, #CE1126 66.66%, #006600 66.66%);
+  height: 4px;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s ease forwards;
+}
+
+.animate-delay-100 { animation-delay: 0.1s; }
+.animate-delay-200 { animation-delay: 0.2s; }
+.animate-delay-300 { animation-delay: 0.3s; }
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
