@@ -125,7 +125,7 @@ export default function Home() {
               <span className="h-px w-10 bg-[#F3B664]" /> Senate at the grassroots
             </p>
             <h1 className="max-w-xl font-serif text-5xl font-bold leading-[1.05] sm:text-6xl lg:text-7xl">
-              Parliament where people live.
+              Devolution in action. <br /> <p className="mt-4 text-lg font-semibold">Taking leadership to the grassroots.</p>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80 sm:text-xl">
               Senate Mashinani brings Kenya&apos;s upper house beyond Nairobi, turning devolution into a public, lived practice across the country&apos;s 47 counties.
