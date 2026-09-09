@@ -187,7 +187,7 @@ export default function SessionsPage() {
                 </div>
               )}
 
-              {session.expenditure && (
+              {/* {session.expenditure && (
                 <div className="border-t border-[var(--card-border)] pt-5">
                   <h3 className="text-sm font-semibold text-[var(--primary)] uppercase tracking-wide mb-3 flex items-center gap-1.5">
                     <Wallet size={14} /> Expenditure
@@ -198,7 +198,7 @@ export default function SessionsPage() {
                   </div>
                   <p className="text-xs text-[var(--muted)] leading-relaxed">{session.expenditure.note}</p>
                 </div>
-              )}
+              )} */}
 
               {session.youtubeLink && (
                 <a

@@ -85,10 +85,10 @@ export const sessions = [
       'Start planning for the next sitting early, with counties invited to express interest in hosting.',
       'Establish monitoring and evaluation mechanisms to capture feedback and track citizen engagement, county partnerships, and legislative effectiveness after each Mashinani.',
     ],
-    expenditure: {
-      total: 'KSh 81,164,833',
-      note: 'Covered air and ground transport, hotel accommodation, per-diems, ICT and connectivity equipment, branded items, chamber refurbishment, donated Speaker\'s seat and Laws of Kenya set, event management, outside catering, and live broadcast coverage by KBC.',
-    },
+    // expenditure: {
+    //   total: 'KSh 81,164,833',
+    //   note: 'Covered air and ground transport, hotel accommodation, per-diems, ICT and connectivity equipment, branded items, chamber refurbishment, donated Speaker\'s seat and Laws of Kenya set, event management, outside catering, and live broadcast coverage by KBC.',
+    // },
     images: [
       { src: '/sessions_images/busia_assembly_entrance.jpg', caption: 'Main entrance of the County Assembly of Busia' },
       { src: '/sessions_images/busia_plenary_chamber.jpg', caption: 'Senate plenary sitting inside the Busia County Assembly chamber' },
