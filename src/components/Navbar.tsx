@@ -10,28 +10,28 @@ import Image from 'next/image';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '/sessions', label: 'Sessions' },
   { href: '/senators', label: 'Leadership' },
+  { href: '/sittings', label: 'County Sittings' },  
   { href: '/news', label: 'News' },
   { href: '/faq', label: 'FAQ' },
 ];
 
 const programLinks = [
-  { href: '/programs', label: 'All Programmes' },
-  { href: '/programs/internships-attachments', label: 'Internships & Attachments' },
-  { href: '/programs/high-school-attachment', label: 'High School Attachment' },
-  { href: '/programs/county-legislation-tracker', label: 'County Legislation Tracker' },
+  { href: '/activities', label: 'Our Activities' },
+  { href: '/activities/internships-attachments', label: 'Internships & Attachments' },
+  { href: '/activities/high-school-attachment', label: 'High School Attachment' },
+  { href: '/activities/county-legislation-tracker', label: 'County Legislation Tracker' },
   { href: '/benchmarking', label: 'Benchmarking Visits' },
-  { href: '/programs/local-benchmarking', label: 'Local Benchmarking Visits' },
-  { href: '/programs/international-benchmarking', label: 'International Benchmarking Visits' },
-  { href: '/programs/public-participation', label: 'Public Participation' },
+  { href: '/activities/local-benchmarking', label: 'Local Benchmarking Visits' },
+  { href: '/activities/international-benchmarking', label: 'International Benchmarking Visits' },
+  { href: '/activities/public-participation', label: 'Public Participation' },
 ];
 
 export function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [programsOpen, setProgramsOpen] = useState(false);
-  const programsActive = pathname.startsWith('/programs') || pathname === '/benchmarking';
+  const programsActive = pathname.startsWith('/activities') || pathname === '/benchmarking';
 
   return (
     <nav className="nav-blur fixed top-0 left-0 right-0 z-50 border-b border-[var(--card-border)]">
@@ -60,7 +60,7 @@ export function Navbar() {
                   programsActive ? 'bg-[var(--primary)] text-white' : 'text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--card-border)]'
                 }`}
               >
-                Programs <ChevronDown size={15} className={`transition-transform ${programsOpen ? 'rotate-180' : ''}`} />
+                Activities <ChevronDown size={15} className={`transition-transform ${programsOpen ? 'rotate-180' : ''}`} />
               </button>
               {programsOpen && (
                 <div role="menu" className="absolute left-0 top-full z-50 mt-2 w-64 rounded-lg border border-[var(--card-border)] bg-[var(--card)] p-2 shadow-lg">

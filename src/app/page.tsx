@@ -39,7 +39,7 @@ const sessions = [
     highlight: 'Four plenary sittings and nine committees covered irrigation, energy, border security, community land, county accounts, and public awareness.',
     color: 'bg-amber-600',
     region: 'Northern Kenya',
-    img: '/sessions_images/turkana_session.jpg',
+    img: '/sessions_images/turkana.jpeg',
   },
   {
     number: '4th',
@@ -48,7 +48,7 @@ const sessions = [
     highlight: 'Four plenary sittings, a constitutional-amendment town hall, public submissions, fisheries and border inspections, and county oversight.',
     color: 'bg-blue-600',
     region: 'Western Kenya',
-    img: '/sessions_images/busia_session.jpg',
+    img: '/sessions_images/busia.jpeg',
   },
 ];
 

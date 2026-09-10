@@ -128,7 +128,7 @@ export const sessions = [
       'KEWOSA undertook activities to strengthen links between women Senators and county assemblies.',
       'Used public communications, Senate publications, and displayed historic parliamentary materials to support public awareness.',
     ],
-    impact: 'The report records stronger understanding between the Senate, Turkana County Government, and residents, as well as networking and capacity building with the County Assembly.',
+    impact: 'This initiative underscores a deepened understanding between the Senate, the Turkana County Government, and local residents, while establishing vital networking and capacity-building frameworks with the County Assembly. Ultimately, this engagement reinforces the fundamental principle that regardless of geographical remoteness, every region is an integral part of Kenya, and its citizens possess an inherent right to enjoy equitable development and modern, thriving livelihoods.',
     participants: 'Senators, Turkana County Assembly members, county and national officials, residents, students, civil society, and partner institutions.',
     successes: [
       'Direct interaction between the Senate and county leaders/residents enhanced the profile of the Senate in representing and protecting county interests.',
@@ -249,9 +249,4 @@ export const sessions = [
     participants: 'Senators, county leaders, residents, public institutions, and stakeholders who engaged with the plenary and committee programme.',
     youtubeLink: null,
   },
-  
- 
-  
- 
-  
 ];
