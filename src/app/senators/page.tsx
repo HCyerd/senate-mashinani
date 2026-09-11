@@ -35,7 +35,7 @@ const leadership = [
   },
   {
     role: 'Senate Minority Leader',
-    name: 'Sen. Justice (Rtd.) Stewart Madzayo, CBS, MP',
+    name: 'Sen. Justice (Rtd.) Stewart Madzayo, EGH, MP',
     description:
       'The Minority Leader leads the opposition in the Senate, coordinates the minority legislative position, and ensures robust accountability debate on government business.',
     link: 'https://parliament.go.ke/the-senate/senate-minority-leader',
@@ -45,7 +45,7 @@ const leadership = [
   },
   {
     role: 'Senate Majority Whip',
-    name: 'Sen. David Wakoli Wafula, MP',
+    name: 'Sen. David Wakoli Wafula, CBS, MP',
     description:
       'The Majority Whip ensures party discipline, attendance, and cohesion for majority coalition votes. Coordinates with the Majority Leader on chamber management.',
     link: 'https://parliament.go.ke/the-senate/senate-majority-whip',
@@ -55,7 +55,7 @@ const leadership = [
   },
   {
     role: 'Senate Minority Whip',
-    name: 'Sen. Olekina Ledama, MP',
+    name: 'Sen. Olekina Ledama, CBS, MP',
     description:
       'The Minority Whip manages attendance and voting discipline for the opposition, ensuring minority senators are present for critical votes.',
     link: 'https://parliament.go.ke/the-senate/senate-minority-whip',

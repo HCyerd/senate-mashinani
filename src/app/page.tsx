@@ -103,7 +103,7 @@ const HOST_EDITIONS: HostEdition[] = [
     date: 'September 21–25, 2026',
     region: 'Coast Region',
     assembly: 'Kilifi County Assembly Chambers, Malindi',
-    hostSenator: 'Sen. Stewart Madzayo, CBS (Senate Minority Leader)',
+    hostSenator: 'Sen. Stewart Madzayo, EGH, MP (Senate Minority Leader)',
     status: 'Upcoming',
     image: '/sessions_images/kilifi.jpeg',
     summary: 'Approved by Senate Motion on May 6, 2026. Convening to address Coast blue economy financing, salt mining royalties to indigenous host communities, and historical land injustice title adjudications.',
@@ -575,7 +575,7 @@ OFFICIAL ONLINE REPOSITORY: https://www.parliament.go.ke/
 Speaker of the Senate: Rt. Hon. Amason Jeffah Kingi, EGH
 Speaker of Kilifi County Assembly: Rt. Hon. Teddy Mwambire
 Governor of Kilifi County: H.E. Gideon Maitha Mung'aro, OGW
-Host Senator: Sen. Stewart Madzayo, CBS (Senate Minority Leader)
+Host Senator: Sen. Stewart Madzayo, EGH, MP (Senate Minority Leader)
 Senate Majority Leader: Sen. Aaron Cheruiyot, EGH
 Clerk of the Senate: Mr. Jeremiah Nyegenye, CBS
 
@@ -761,7 +761,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                       <span className="font-semibold flex items-center gap-1.5 text-slate-400">
                         <Users className="w-3.5 h-3.5 text-amber-400" /> Host Senator:
                       </span>
-                      <span className="text-white font-medium">Sen. Stewart Madzayo, CBS</span>
+                      <span className="text-white font-medium">Sen. Stewart Madzayo, EGH, MP</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="font-semibold flex items-center gap-1.5 text-slate-400">

@@ -39,7 +39,7 @@ export const kilifiProgramme: ProgrammeDay[] = [
       { number: 13, time: '1:00 p.m.', title: 'Mining, quarry and Mnarani Jetty inspections', description: 'Land Committee visits Krystalline Salt Limited and Mjana Heri sand quarries, and follows up on land ownership of Mnarani Jetty.', venue: 'Inspection visits' },
       { time: '1:00 p.m. - 2:00 p.m.', title: 'Lunch', venue: 'Catering Tents' },
       { number: 14, time: '2:00 p.m. - 3:00 p.m.', title: 'Senate and Kilifi County Assembly leadership meeting', venue: 'Kilifi County Assembly Chamber, Malindi Town' },
-      { number: 15, time: '7:30 p.m. - 9:30 p.m.', title: 'Welcome dinner', description: 'Hosted by Sen. (Rtd) Justice Stewart Madzayo, CBS, MP.', venue: 'Venue to be communicated' },
+      { number: 15, time: '7:30 p.m. - 9:30 p.m.', title: 'Welcome dinner', description: 'Hosted by Sen. (Rtd) Justice Stewart Madzayo, EGH, MP.', venue: 'Venue to be communicated' },
     ],
   },
   {
