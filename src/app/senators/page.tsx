@@ -1,5 +1,6 @@
 import { ExternalLink } from 'lucide-react';
 import Image from 'next/image';
+import { PageHero } from '@/components/PageHero';
 
 const leadership = [
   {
@@ -96,16 +97,12 @@ const committees = [
 export default function SenatorsPage() {
   return (
     <div>
-      {/* Header */}
-      <section className="hero-gradient py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm font-semibold text-[#F4C300] uppercase tracking-widest mb-3">People</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-5">Senate Leadership</h1>
-          <p className="text-lg text-white/75 max-w-2xl mx-auto leading-relaxed">
-            The Senate is led by experienced legislators who champion devolution, county rights, and the principles of the 2010 Constitution.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        badge="People"
+        title="Senate Leadership"
+        description="The Senate is led by experienced legislators who champion devolution, county rights, and the principles of the 2010 Constitution."
+        showImage={false}
+      />
 
       {/* House Leadership */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">

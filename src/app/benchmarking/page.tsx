@@ -1,4 +1,5 @@
 import { Globe, Users, Building2, ShieldCheck, MessageSquare, Handshake, ClipboardList, Mail } from 'lucide-react';
+import { PageHero } from '@/components/PageHero';
 
 const localSteps = [
   { step: '01', title: 'Submit a Request', desc: 'Send an introductory letter to the Clerk of the Senate requesting a benchmarking opportunity.' },
@@ -42,16 +43,12 @@ const internationalValue = [
 export default function BenchmarkingPage() {
   return (
     <div>
-      {/* Header */}
-      <section className="hero-gradient py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm font-semibold text-[#F4C300] uppercase tracking-widest mb-3">Knowledge Exchange</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-5">Benchmarking Visits</h1>
-          <p className="text-lg text-white/75 max-w-2xl mx-auto leading-relaxed">
-            Learning from Parliament. Sharing institutional practice. Strengthening service delivery. The Senate Liaison Office (SLO) coordinates local and international delegations seeking to learn from the Senate of Kenya.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        badge="Knowledge Exchange"
+        title="Benchmarking Visits"
+        description="Learning from Parliament. Sharing institutional practice. Strengthening service delivery. The Senate Liaison Office (SLO) coordinates local and international delegations seeking to learn from the Senate of Kenya."
+        imageLabel="Add delegation visit image"
+      />
 
       {/* Local Visits */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">

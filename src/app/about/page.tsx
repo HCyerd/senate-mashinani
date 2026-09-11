@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Scale, Users, BookOpen, Building2, ChevronRight } from 'lucide-react';
+import { PageHero } from '@/components/PageHero';
 
 const roles = [
   {
@@ -50,16 +51,12 @@ const timeline = [
 export default function AboutPage() {
   return (
     <div>
-      {/* Header */}
-      <section className="hero-gradient py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm font-semibold text-[#F4C300] uppercase tracking-widest mb-3">About</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-5">The Kenya Senate</h1>
-          <p className="text-lg text-white/75 max-w-2xl mx-auto leading-relaxed">
-            The Senate is the upper chamber of Kenya&apos;s bicameral Parliament, established under Article 93 of the 2010 Constitution to represent the counties and protect the interests of devolved governance.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        badge="Article 93 · The Parliament of Kenya"
+        title="The Kenya Senate"
+        description="The Senate is the upper chamber of Kenya's bicameral Parliament, established under Article 93 of the 2010 Constitution to represent the counties and protect the interests of devolved governance."
+        imageLabel="Add Senate Chamber image"
+      />
 
       {/* Historical Background */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -173,7 +170,7 @@ export default function AboutPage() {
           </div>
           <div className="mt-8">
             <Link
-              href="/sessions"
+              href="/sittings"
               className="inline-flex items-center gap-2 text-sm font-medium text-[var(--primary)] hover:gap-3 transition-all"
             >
               Explore Mashinani Plenaries <ChevronRight size={16} />

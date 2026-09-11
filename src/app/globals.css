@@ -1,29 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f9fa;
-  --foreground: #0d1117;
+  --background: #f8fafc;
+  --foreground: #0f172a;
   --card: #ffffff;
-  --card-border: #e5e7eb;
-  --muted: #6b7280;
-  --primary: #0f2c59;
-  --primary-light: #1d4f91;
-  --accent: #CE1126;
+  --card-border: #e2e8f0;
+  --muted: #64748b;
+  --primary: #0000a0;
+  --primary-light: #0000ff;
+  --accent: #A81C26;
   --gold: #F4C300;
   --nav-bg: rgba(255,255,255,0.95);
 }
 
 .dark {
-  --background: #0d1117;
+  --background: #0f172a;
   --foreground: #e6edf3;
-  --card: #161b22;
-  --card-border: #30363d;
-  --muted: #8b949e;
-  --primary: #6ea8dc;
-  --primary-light: #9ac7ed;
+  --card: #1e293b;
+  --card-border: #334155;
+  --muted: #94a3b8;
+  --primary: #0000a0;
+  --primary-light: #0000ff;
   --accent: #f87171;
   --gold: #fbbf24;
-  --nav-bg: rgba(13,17,23,0.95);
+  --nav-bg: rgba(15,23,42,0.95);
 }
 
 @theme inline {
@@ -41,11 +41,11 @@ body {
 }
 
 .hero-gradient {
-  background: linear-gradient(135deg, #001768 0%, #3b93f1 40%, #1a1a1a 100%);
+  background: linear-gradient(135deg, #020617 0%, #0f172a 45%, #022c22 100%);
 }
 
 .dark .hero-gradient {
-  background: linear-gradient(135deg, #003300 0%, #0d1117 50%, #161b22 100%);
+  background: linear-gradient(135deg, #020617 0%, #0f172a 45%, #022c22 100%);
 }
 
 .card {
@@ -62,8 +62,12 @@ body {
 }
 
 .kenya-stripe {
-  background: linear-gradient(to right, #000000 33.33%, #CE1126 33.33%, #CE1126 66.66%, #006600 66.66%);
+  background: linear-gradient(to right, #000000 25%, #A81C26 25%, #A81C26 50%, #ffffff 50%, #ffffff 75%, #006A44 75%);
   height: 4px;
+}
+
+.placeholder-box {
+  background-image: repeating-linear-gradient(45deg, rgba(148,163,184,0.15) 0, rgba(148,163,184,0.15) 1px, transparent 1px, transparent 10px);
 }
 
 @keyframes fadeInUp {

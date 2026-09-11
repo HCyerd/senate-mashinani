@@ -1,5 +1,7 @@
 
 import { ExternalLink, Tag, Calendar } from 'lucide-react';
+import { PageHero } from '@/components/PageHero';
+import { ImagePlaceholder } from '@/components/ImagePlaceholder';
 
 const newsItems = [
   {
@@ -153,16 +155,12 @@ const categories = ['All', 'Upcoming Event', 'Session Update', 'Legislation', 'P
 export default function NewsPage() {
   return (
     <div>
-      {/* Header */}
-      <section className="hero-gradient py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm font-semibold text-[#F4C300] uppercase tracking-widest mb-3">Updates</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-5">News &amp; Events</h1>
-          <p className="text-lg text-white/75 max-w-2xl mx-auto leading-relaxed">
-            The latest developments, legislation, and announcements from the Kenya Senate and the Mashinani initiative.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        badge="Updates"
+        title="News & Events"
+        description="The latest developments, legislation, and announcements from the Kenya Senate and the Mashinani initiative."
+        showImage={false}
+      />
 
       {/* Category Filters (static display) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
@@ -186,7 +184,8 @@ export default function NewsPage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {newsItems.map((item) => (
-            <div key={item.title} className="card flex flex-col hover:shadow-md transition-shadow group">
+            <div key={item.title} className="card overflow-hidden flex flex-col hover:shadow-md transition-shadow group">
+              <ImagePlaceholder variant="light" label={item.category} className="aspect-[16/9] w-full" />
               <div className="p-6 flex-1">
                 <div className="flex items-center justify-between gap-2 mb-4">
                   <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--primary)] bg-[var(--primary)]/10 px-2.5 py-0.5 rounded-full">

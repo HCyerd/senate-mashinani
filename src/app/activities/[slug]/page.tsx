@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowUpRight, CheckCircle2, Mail } from 'lucide-react';
 import { getProgramme, programmeEntries } from '../programme-data';
+import { PageHero } from '@/components/PageHero';
 
 type ProgrammePageProps = { params: Promise<{ slug: string }> };
 
@@ -22,13 +23,12 @@ export default async function ProgrammePage({ params }: ProgrammePageProps) {
 
   return (
     <div>
-      <section className="hero-gradient px-4 py-20">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#F4C300]">{programme.category}</p>
-          <h1 className="mb-5 text-4xl font-bold text-white sm:text-5xl">{programme.title}</h1>
-          <p className="mx-auto max-w-3xl text-lg leading-relaxed text-white/75">{programme.intro}</p>
-        </div>
-      </section>
+      <PageHero
+        badge={programme.category}
+        title={programme.title}
+        description={programme.intro}
+        showImage={false}
+      />
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <aside className="lg:sticky lg:top-24 lg:self-start">

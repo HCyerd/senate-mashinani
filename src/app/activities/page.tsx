@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { GraduationCap, BookOpen, School, CheckCircle2, Users, FileText, Building2, Globe2, ArrowRight } from 'lucide-react';
+import { PageHero } from '@/components/PageHero';
 
 const capacityPrograms = [
   {
@@ -124,16 +125,12 @@ const impact = [
 export default function ProgramsPage() {
   return (
     <div>
-      {/* Header */}
-      <section className="hero-gradient py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm font-semibold text-[#F4C300] uppercase tracking-widest mb-3">Capacity Development</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-5">Senate Liaison Office Programmes</h1>
-          <p className="text-lg text-white/75 max-w-2xl mx-auto leading-relaxed">
-            Explore learning, civic engagement, and institutional exchange programmes coordinated by the Senate Liaison Office under the Office of the Clerk of the Senate.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        badge="Capacity Development"
+        title="Senate Liaison Office Programmes"
+        description="Explore learning, civic engagement, and institutional exchange programmes coordinated by the Senate Liaison Office under the Office of the Clerk of the Senate."
+        imageLabel="Add programmes cohort image"
+      />
 
       {/* Programs */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">

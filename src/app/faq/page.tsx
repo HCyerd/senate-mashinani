@@ -2,20 +2,17 @@ import Link from 'next/link';
 import { ArrowRight, HelpCircle, Mail } from 'lucide-react';
 import { mashinaniFaqs } from '@/data/mashinaniFaqs';
 import { FaqAccordion } from '@/components/FaqAccordion';
+import { PageHero } from '@/components/PageHero';
 
 export default function FaqPage() {
   return (
     <div>
-      {/* Header */}
-      <section className="hero-gradient py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm font-semibold text-[#F4C300] uppercase tracking-widest mb-3">Senate Mashinani</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-5">Frequently Asked Questions</h1>
-          <p className="text-lg text-white/75 max-w-2xl mx-auto leading-relaxed">
-            Answers drawn directly from the Senate&apos;s official Senate Mashinani briefing document &mdash; covering the constitutional basis, county selection, and impact of sittings held outside Nairobi.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        badge="Senate Mashinani"
+        title="Frequently Asked Questions"
+        description="Answers drawn directly from the Senate's official Senate Mashinani briefing document, covering the constitutional basis, county selection, and impact of sittings held outside Nairobi."
+        showImage={false}
+      />
 
       {/* FAQ */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20">

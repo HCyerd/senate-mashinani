@@ -10,18 +10,21 @@ export const metadata = {
 export default function KilifiProgrammePage() {
   return (
     <div>
-      <section className="hero-gradient border-b border-white/10 px-4 py-16 text-white sm:py-20">
-        <div className="mx-auto max-w-5xl">
-          <Link href="/sessions" className="inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition-colors hover:text-white">
+      <section className="relative bg-slate-950 border-b border-white/10 px-4 py-16 text-white sm:py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950" />
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/40 via-transparent to-slate-950" />
+        <div className="relative z-10 mx-auto max-w-5xl">
+          <Link href="/sittings" className="inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition-colors hover:text-white">
             <ArrowLeft size={16} /> All Mashinani sittings
           </Link>
-          <p className="mt-8 text-sm font-semibold uppercase tracking-widest text-[#F4C300]">Fifth sitting outside Nairobi</p>
-          <h1 className="mt-3 max-w-3xl font-serif text-4xl font-bold leading-tight sm:text-5xl">Kilifi County Programme</h1>
-          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/80">
+          <p className="mt-8 text-sm font-semibold uppercase tracking-widest text-amber-300">Fifth sitting outside Nairobi</p>
+          <h1 className="mt-3 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">Kilifi County Programme</h1>
+          <div className="mt-5 w-16 h-1 bg-[#A81C26] rounded-full" />
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-300">
             <span className="inline-flex items-center gap-2"><CalendarDays size={16} /> 19th - 26th September 2026</span>
             <span className="inline-flex items-center gap-2"><MapPin size={16} /> Kilifi County</span>
           </div>
-          <p className="mt-6 max-w-3xl leading-relaxed text-white/75">Programme as at 28th August 2026. This schedule is planned and remains subject to official updates.</p>
+          <p className="mt-6 max-w-3xl leading-relaxed text-slate-300">Programme as at 28th August 2026. This schedule is planned and remains subject to official updates.</p>
         </div>
       </section>
 
