@@ -674,7 +674,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
               </p>
 
               <div className="flex flex-wrap items-center gap-4 pt-2">
-                <button
+                {/* <button
                   onClick={() => {
                     playCivicTone(587.33, 'sine', 0.2);
                     setLiveStreamModalOpen(true);
@@ -683,7 +683,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                 >
                   <Play className="w-4 h-4 fill-current" />
                   Watch Plenary Live
-                </button>
+                </button> */}
 
                 <a
                   href="#editions"
