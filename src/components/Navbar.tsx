@@ -105,14 +105,14 @@ export function Navbar() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="lg:hidden border-t border-[var(--card-border)] bg-[var(--card)] px-4 py-3 space-y-1">
-          <div>
+          {/* <div>
             <button type="button" onClick={() => setProgramsOpen(!programsOpen)} aria-expanded={programsOpen} className={`flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors ${programsActive ? 'bg-[var(--primary)] text-white' : 'text-[var(--muted)] hover:bg-[var(--card-border)] hover:text-[var(--foreground)]'}`}>
               Programs <ChevronDown size={16} className={`transition-transform ${programsOpen ? 'rotate-180' : ''}`} />
             </button>
             {programsOpen && <div className="ml-3 mt-1 space-y-1 border-l border-[var(--card-border)] pl-2">
               {programLinks.map((link) => <Link key={link.href} href={link.href} onClick={() => { setMenuOpen(false); setProgramsOpen(false); }} className={`block rounded-md px-3 py-2 text-sm transition-colors ${pathname === link.href ? 'bg-[var(--primary)] text-white' : 'text-[var(--muted)] hover:bg-[var(--card-border)] hover:text-[var(--foreground)]'}`}>{link.label}</Link>)}
             </div>}
-          </div>
+          </div> */}
           {navLinks.map((link) => (
             <Link
               key={link.href}
