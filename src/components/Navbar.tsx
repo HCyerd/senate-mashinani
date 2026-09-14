@@ -11,13 +11,15 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/senators', label: 'Leadership' },
-  { href: '/sittings', label: 'County Sittings' },  
-  { href: '/news', label: 'News' },
-  { href: '/faq', label: 'FAQ' },
+  { href: '/leadership', label: 'Directorate of Leadership' },
+  { href: '/sittings', label: 'County Sittings' }, 
+  { href: '/activities', label: 'Public Outreach' }, 
+  // { href: '/news', label: 'News' },
+  // { href: '/faq', label: 'FAQ' },
 ];
 
 const programLinks = [
-  { href: '/activities', label: 'Our Activities' },
+  { href: '/activities', label: 'Public Outreach' },
   { href: '/activities/internships-attachments', label: 'Internships & Attachments' },
   { href: '/activities/high-school-attachment', label: 'High School Attachment' },
   { href: '/activities/county-legislation-tracker', label: 'County Legislation Tracker' },
@@ -31,7 +33,7 @@ export function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [programsOpen, setProgramsOpen] = useState(false);
-  const programsActive = pathname.startsWith('/activities') || pathname === '/benchmarking';
+  const programsActive = pathname.startsWith('/Public Outreach') || pathname === '/benchmarking';
 
   return (
     <nav className="nav-blur fixed top-0 left-0 right-0 z-50 border-b border-[var(--card-border)]">
@@ -51,7 +53,7 @@ export function Navbar() {
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-0.5">
             <div className="relative">
-              <button
+              {/* <button
                 type="button"
                 onClick={() => setProgramsOpen(!programsOpen)}
                 aria-expanded={programsOpen}
@@ -60,9 +62,9 @@ export function Navbar() {
                   programsActive ? 'bg-[var(--primary)] text-white' : 'text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--card-border)]'
                 }`}
               >
-                Activities <ChevronDown size={15} className={`transition-transform ${programsOpen ? 'rotate-180' : ''}`} />
-              </button>
-              {programsOpen && (
+                Public Outreach <ChevronDown size={15} className={`transition-transform ${programsOpen ? 'rotate-180' : ''}`} />
+              </button> */}
+              {/* {programsOpen && (
                 <div role="menu" className="absolute left-0 top-full z-50 mt-2 w-64 rounded-lg border border-[var(--card-border)] bg-[var(--card)] p-2 shadow-lg">
                   {programLinks.map((link) => (
                     <Link key={link.href} href={link.href} role="menuitem" onClick={() => setProgramsOpen(false)} className={`block rounded-md px-3 py-2 text-sm transition-colors ${pathname === link.href ? 'bg-[var(--primary)] text-white' : 'text-[var(--muted)] hover:bg-[var(--card-border)] hover:text-[var(--foreground)]'}`}>
@@ -70,7 +72,7 @@ export function Navbar() {
                     </Link>
                   ))}
                 </div>
-              )}
+              )} */}
             </div>
             {navLinks.map((link) => (
               <Link

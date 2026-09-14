@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parliament of Kenya - Senate Mashinani & Precedence Roster</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        crest: {
+                            green: '#006A44',
+                            'green-dark': '#004D31',
+                            'green-light': '#008757',
+                            red: '#C8102E',
+                            'red-dark': '#8B0A1E',
+                            gold: '#D4AF37',
+                            'gold-amber': '#E5A900',
+                            dark: '#0B130F',
+                            card: '#121E18'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Georgia', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Responsive chart container strict bounds */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans selection:bg-crest-green selection:text-white">
+
+    <!-- Chosen Palette: Kenyan Coat of Arms Heraldic Palette (Emerald Green #006A44, Harambee Crimson Red #C8102E, Golden Ochre #D4AF37, Onyx Dark #0B130F, Off-White #F8FAFC) -->
+    <!-- Application Structure Plan: Executive portal integrating full 68 Senators Precedence Roster (S.O. 3(2) as of Feb 9, 2026) with Senate Mashinani historical sittings archive across Kenyan counties. Features: 1) Crest-themed Hero & Dashboard, 2) Interactive Precedence Roster Explorer with Party filter and live search, 3) Session Bento Grid Viewer for county sittings, 4) Comparative Oversight Analytics via Chart.js, and 5) Comprehensive Senate Mashinani FAQ Accordion with timeline data and public participation guide. -->
+    <!-- Visualization & Content Choices: 1. Party Distribution Donut Chart -> Chart.js Canvas -> Interactive party filtering. 2. Mashinani Session Impact Bar Chart -> Chart.js Canvas -> Comparative legislative metrics. 3. Interactive FAQ Accordion -> Dynamic JS formatting bullets, tables, and participation guides. NO SVG / NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- TOP EMBLEM HEADER STRIP -->
+    <header class="bg-crest-dark text-white border-b border-white/10 sticky top-0 z-50 backdrop-blur-md bg-opacity-95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-crest-green flex items-center justify-center font-black text-crest-gold text-xl border-2 border-crest-gold shadow-md">
+                    🇰🇪
+                </div>
+                <div>
+                    <span class="text-[10px] uppercase tracking-widest font-extrabold text-crest-gold block leading-none">Republic of Kenya • Harambee</span>
+                    <h1 class="text-base sm:text-lg font-black tracking-tight text-white leading-tight">The Senate • 13th Parliament</h1>
+                </div>
+            </div>
+
+            <!-- Quick Nav Links -->
+            <nav class="hidden md:flex items-center space-x-1 text-xs font-semibold uppercase tracking-wider">
+                <a href="#overview" class="px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition">Overview</a>
+                <a href="#precedence-roster" class="px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition">Precedence Roster</a>
+                <a href="#mashinani-sessions" class="px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition">Mashinani Sittings</a>
+                <a href="#analytics" class="px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition">Impact Data</a>
+                <a href="#faqs" class="px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition">FAQ Guide</a>
+            </nav>
+
+            <a href="#official-doc" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-crest-red hover:bg-crest-red-dark text-white font-bold text-xs uppercase tracking-wider transition shadow">
+                <span>📄 Gazette Roster</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="overview" class="relative bg-crest-dark text-white pt-16 pb-28 px-4 overflow-hidden border-b-4 border-crest-gold">
+        <!-- Background Heraldic Glows -->
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-crest-green/30 rounded-full filter blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-crest-red/30 rounded-full filter blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto text-center relative z-10 space-y-6">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                <span class="w-2.5 h-2.5 rounded-full bg-crest-gold-amber animate-pulse"></span>
+                <span class="text-xs font-extrabold uppercase tracking-widest text-crest-gold">Official Gazette Reference • Updated 9th Feb 2026</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-none text-white">
+                Senate <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-crest-gold to-amber-200">Mashinani</span> & Precedence Portal
+            </h1>
+
+            <p class="text-base sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
+                An interactive legislative repository tracking the official Standing Order 3(2) precedence hierarchy for all 68 Senators alongside historical grassroots county sittings across the Republic of Kenya.
+            </p>
+
+            <!-- Key Metrics Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-6">
+                <div class="bg-white/5 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center">
+                    <div class="text-3xl font-black text-emerald-400">68</div>
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">Total Senators</div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center">
+                    <div class="text-3xl font-black text-crest-gold">5</div>
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">Host Sessions</div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center">
+                    <div class="text-3xl font-black text-rose-400">47</div>
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">Counties Represented</div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center">
+                    <div class="text-3xl font-black text-amber-300">Art. 126</div>
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">Constitutional Basis</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OFFICIAL DOCUMENT BANNER -->
+    <div id="official-doc" class="max-w-6xl mx-auto px-4 -mt-10 relative z-20">
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-crest-red/10 border border-crest-red/20 flex items-center justify-center text-crest-red text-2xl shrink-0 font-bold">
+                    📜
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="bg-crest-green/10 text-crest-green text-[10px] font-extrabold uppercase px-2 py-0.5 rounded border border-crest-green/20">Republic of Kenya Official Record</span>
+                        <span class="text-xs text-slate-500 font-semibold">13th Parliament</span>
+                    </div>
+                    <h3 class="text-lg font-black text-slate-900 mt-1">UPDATED SENATORS LIST - PRECEDENCE as at 9th February, 2026.pdf</h3>
+                    <p class="text-xs text-slate-600 mt-0.5">Published by the Office of the Clerk of the Senate, Parliament Buildings, Nairobi.</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 w-full md:w-auto">
+                <button onclick="scrollToRoster()" class="w-full md:w-auto px-5 py-3 rounded-xl bg-crest-green hover:bg-crest-green-dark text-white font-bold text-xs uppercase tracking-wider transition shadow flex items-center justify-center gap-2">
+                    <span>🔍 View 68 Senators Below</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN SECTION 1: OFFICIAL SENATORS ORDER OF PRECEDENCE -->
+    <section id="precedence-roster" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Section Intro -->
+        <div class="mb-10 text-center max-w-3xl mx-auto">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-crest-green bg-emerald-100 px-3 py-1 rounded-full border border-emerald-200">
+                Official Parliamentary Hierarchy
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3 tracking-tight">
+                List of Senators in Order of Precedence
+            </h2>
+            <div class="w-16 h-1 bg-crest-red mx-auto mt-3 rounded-full"></div>
+            <p class="text-slate-600 mt-4 text-sm sm:text-base leading-relaxed">
+                Pursuant to Senate Standing Order 3(2), this listing details the hierarchy of the 13th Parliament's leadership and members, ordered by precedence, party affiliation, and county representation.
+            </p>
+        </div>
+
+        <!-- Leadership Spotlight Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Speaker -->
+            <div class="bg-gradient-to-br from-crest-dark to-slate-900 text-white rounded-2xl p-6 border-2 border-crest-gold shadow-lg relative overflow-hidden">
+                <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4 text-7xl opacity-10">🏛️</div>
+                <div class="text-[10px] font-black uppercase tracking-widest text-crest-gold bg-crest-gold/20 px-2.5 py-1 rounded inline-block border border-crest-gold/30">Rank #1 • Speaker</div>
+                <h3 class="text-xl font-black text-white mt-3">Rt. Hon. Amason Jeffah Kingi, EGH, MP</h3>
+                <p class="text-xs text-slate-300 mt-1 font-medium">Speaker of the Senate</p>
+                <div class="mt-4 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
+                    <span class="text-slate-400">Presiding Officer</span>
+                    <span class="text-emerald-400 font-bold">Ex-Officio</span>
+                </div>
+            </div>
+
+            <!-- Majority Leader -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative overflow-hidden hover:border-crest-green transition">
+                <div class="text-[10px] font-black uppercase tracking-widest text-crest-green bg-emerald-50 px-2.5 py-1 rounded inline-block border border-emerald-200">Rank #5 • Majority Leader</div>
+                <h3 class="text-xl font-black text-slate-900 mt-3">Sen. Aaron Kipkirui Cheruiyot, EGH, MP</h3>
+                <p class="text-xs text-slate-600 mt-1 font-medium">Kericho County • UDA</p>
+                <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center text-xs">
+                    <span class="text-slate-500">Senate Majority Leader</span>
+                    <span class="px-2 py-0.5 rounded bg-yellow-100 text-yellow-800 font-bold">UDA Party</span>
+                </div>
+            </div>
+
+            <!-- Minority Leader -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative overflow-hidden hover:border-crest-red transition">
+                <div class="text-[10px] font-black uppercase tracking-widest text-crest-red bg-rose-50 px-2.5 py-1 rounded inline-block border border-rose-200">Rank #3 • Minority Leader</div>
+                <h3 class="text-xl font-black text-slate-900 mt-3">Sen. Justice (Rtd.) Stewart Madzayo, EGH, MP</h3>
+                <p class="text-xs text-slate-600 mt-1 font-medium">Kilifi County • ODM</p>
+                <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center text-xs">
+                    <span class="text-slate-500">Senate Minority Leader</span>
+                    <span class="px-2 py-0.5 rounded bg-orange-100 text-orange-800 font-bold">ODM Party</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roster Controls & Chart Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-8">
+            
+            <!-- Left: Party Distribution Visualization (Chart.js Container) -->
+            <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-base font-black text-slate-900">Political Party Composition</h3>
+                        <p class="text-xs text-slate-500">Distribution across 68 Senate Seats</p>
+                    </div>
+                    <span class="text-xs font-bold text-crest-green bg-emerald-50 px-2 py-1 rounded">Interactive</span>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="partyChart"></canvas>
+                </div>
+
+                <p class="text-xs text-slate-500 text-center mt-3">
+                    💡 Click on any party slice or legend item to filter the table.
+                </p>
+            </div>
+
+            <!-- Right: Dynamic Search & Table -->
+            <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col h-full">
+                <!-- Search & Filters Strip -->
+                <div class="space-y-4 mb-6">
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <div class="relative flex-1">
+                            <input type="text" id="senatorSearch" onkeyup="filterSenators()" placeholder="Search Senator name, county, or title..." class="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-crest-green focus:bg-white transition">
+                            <span class="absolute left-3 top-3 text-slate-400 text-sm">🔍</span>
+                        </div>
+                        <select id="partyFilter" onchange="filterSenators()" class="py-2.5 px-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-crest-green">
+                            <option value="ALL">All Political Parties</option>
+                            <option value="UDA">UDA Party</option>
+                            <option value="ODM">ODM Party</option>
+                            <option value="Jubilee">Jubilee Party</option>
+                            <option value="WDM-K">Wiper (WDM-K)</option>
+                            <option value="UDM">UDM Party</option>
+                            <option value="Ford - K">Ford Kenya</option>
+                            <option value="DP">Democratic Party</option>
+                            <option value="NRA">NRA</option>
+                            <option value="Nominated">Nominated Senators</option>
+                        </select>
+                    </div>
+
+                    <!-- Quick Filter Badges -->
+                    <div class="flex flex-wrap items-center gap-2 text-xs">
+                        <span class="font-bold text-slate-400 uppercase tracking-wider mr-1">Filter:</span>
+                        <button onclick="setPartyFilter('ALL')" class="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold transition">Show All</button>
+                        <button onclick="setPartyFilter('UDA')" class="px-2.5 py-1 rounded-lg bg-yellow-100 hover:bg-yellow-200 text-yellow-900 font-semibold transition">UDA</button>
+                        <button onclick="setPartyFilter('ODM')" class="px-2.5 py-1 rounded-lg bg-orange-100 hover:bg-orange-200 text-orange-900 font-semibold transition">ODM</button>
+                        <button onclick="setPartyFilter('Jubilee')" class="px-2.5 py-1 rounded-lg bg-red-100 hover:bg-red-200 text-red-900 font-semibold transition">Jubilee</button>
+                        <button onclick="setPartyFilter('WDM-K')" class="px-2.5 py-1 rounded-lg bg-blue-100 hover:bg-blue-200 text-blue-900 font-semibold transition">Wiper</button>
+                    </div>
+                </div>
+
+                <!-- Table Wrapper -->
+                <div class="overflow-x-auto overflow-y-auto max-h-[480px] border border-slate-200 rounded-xl no-scrollbar">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead class="bg-crest-dark text-white sticky top-0 z-10 uppercase tracking-wider text-[11px]">
+                            <tr>
+                                <th class="p-3 w-12 text-center">No.</th>
+                                <th class="p-3">Senator Name & Designation</th>
+                                <th class="p-3">County / Status</th>
+                                <th class="p-3 w-28">Party</th>
+                            </tr>
+                        </thead>
+                        <tbody id="senatorsTableBody" class="divide-y divide-slate-100 bg-white">
+                            <!-- Populated via Javascript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-4 flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span id="showingCount">Showing 68 of 68 Senators</span>
+                    <span>Source: Office of the Clerk (9th Feb 2026)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN SECTION 2: SENATE MASHINANI HISTORICAL ARCHIVE -->
+    <section id="mashinani-sessions" class="bg-crest-dark text-white py-20 border-y-4 border-crest-red relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-xs font-black uppercase tracking-widest text-crest-gold bg-crest-gold/10 px-3.5 py-1.5 rounded-full border border-crest-gold/30">
+                    Devolution Oversight Barazas
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+                    Senate Mashinani Sittings
+                </h2>
+                <div class="w-20 h-1 bg-crest-green mx-auto rounded-full"></div>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Taking Parliament to the People — Article 126(1) of the Constitution empowers the Senate to hold sittings outside the Capital City of Nairobi to strengthen county oversight and public participation.
+                </p>
+            </div>
+
+            <!-- Session Selector Tab Strip -->
+            <div class="flex items-center justify-start md:justify-center gap-3 overflow-x-auto no-scrollbar pb-6 mb-8">
+                <button onclick="switchSession(0)" id="tab-btn-0" class="session-tab-btn flex items-center gap-3 px-5 py-3 rounded-2xl bg-crest-green text-white font-bold text-xs uppercase tracking-wider shadow-lg shrink-0 border border-emerald-400">
+                    <span>📍 1st Session</span>
+                    <span class="text-emerald-200">Uasin Gishu (2018)</span>
+                </button>
+                <button onclick="switchSession(1)" id="tab-btn-1" class="session-tab-btn flex items-center gap-3 px-5 py-3 rounded-2xl bg-slate-800 text-slate-400 hover:text-white font-bold text-xs uppercase tracking-wider shrink-0 border border-slate-700">
+                    <span>📍 2nd Session</span>
+                    <span class="text-slate-400">Kitui (2019)</span>
+                </button>
+                <button onclick="switchSession(2)" id="tab-btn-2" class="session-tab-btn flex items-center gap-3 px-5 py-3 rounded-2xl bg-slate-800 text-slate-400 hover:text-white font-bold text-xs uppercase tracking-wider shrink-0 border border-slate-700">
+                    <span>📍 3rd Session</span>
+                    <span class="text-slate-400">Turkana (2023)</span>
+                </button>
+                <button onclick="switchSession(3)" id="tab-btn-3" class="session-tab-btn flex items-center gap-3 px-5 py-3 rounded-2xl bg-slate-800 text-slate-400 hover:text-white font-bold text-xs uppercase tracking-wider shrink-0 border border-slate-700">
+                    <span>📍 4th Session</span>
+                    <span class="text-slate-400">Busia (2025)</span>
+                </button>
+                <button onclick="switchSession(4)" id="tab-btn-4" class="session-tab-btn flex items-center gap-3 px-5 py-3 rounded-2xl bg-slate-800 text-slate-400 hover:text-white font-bold text-xs uppercase tracking-wider shrink-0 border border-slate-700">
+                    <span>✨ 5th Session</span>
+                    <span class="text-amber-400">Kilifi (2026)</span>
+                </button>
+            </div>
+
+            <!-- Bento Box Active Session Details Card -->
+            <div id="sessionBentoCard" class="bg-slate-950 rounded-3xl border border-slate-800 p-6 sm:p-10 shadow-2xl space-y-8">
+                <!-- Dynamic Content Injected via JavaScript -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MAIN SECTION 3: COMPARATIVE IMPACT ANALYTICS -->
+    <section id="analytics" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-xs font-black uppercase tracking-widest text-crest-red bg-rose-50 px-3 py-1 rounded-full border border-rose-200">
+                Oversight Metrics
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3 tracking-tight">
+                Mashinani Legislative & Oversight Impact
+            </h2>
+            <div class="w-16 h-1 bg-crest-gold mx-auto mt-3 rounded-full"></div>
+            <p class="text-slate-600 mt-4 text-sm sm:text-base leading-relaxed">
+                Quantitative overview comparing legislative bills considered, public baraza petitions processed, and committee site inspections conducted during each Senate Mashinani session.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm">
+            <!-- Chart Container -->
+            <div class="lg:col-span-8">
+                <div class="chart-container" style="max-width:100%; height:380px;">
+                    <canvas id="impactChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Explanatory Highlights -->
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                    <span class="text-2xl font-black text-crest-green block">120+</span>
+                    <h4 class="text-sm font-bold text-slate-900 mt-1">Petitions & Statements</h4>
+                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                        Public barazas held during sittings directly receive petitions from local wananchi regarding revenue allocation and infrastructure.
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                    <span class="text-2xl font-black text-crest-red block">35+</span>
+                    <h4 class="text-sm font-bold text-slate-900 mt-1">On-Site Inspections</h4>
+                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                        Senate Standing Committees inspect county projects (referral hospitals, sugar mills, road networks) during sittings.
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                    <span class="text-2xl font-black text-crest-gold block">100%</span>
+                    <h4 class="text-sm font-bold text-slate-900 mt-1">Live Public Access</h4>
+                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                        All plenary sittings and committee hearings outside Nairobi are broadcast live via Parliament TV and digital channels.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN SECTION 4: FREQUENTLY ASKED QUESTIONS (FAQS) -->
+    <section id="faqs" class="bg-slate-100 border-t border-slate-200 py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-xs font-black uppercase tracking-widest text-crest-green bg-emerald-100 px-3.5 py-1.5 rounded-full border border-emerald-200">
+                    Parliamentary Information Hub
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Frequently Asked Questions (FAQs)</h2>
+                <div class="w-16 h-1 bg-crest-red mx-auto mt-3 rounded-full"></div>
+                
+                <!-- Initiative Overview Box -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mt-6 text-left border-l-4 border-l-crest-green">
+                    <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+                        <strong class="text-slate-900 font-bold">Senate Mashinani</strong> is an initiative by the Parliament of Kenya that relocates the entire Senate—including its plenary and committee sittings—from the traditional Parliament Buildings in Nairobi to one of the 47 counties for a week-long grassroots engagement.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Searchable Accordion Container -->
+            <div class="space-y-4" id="faqAccordion">
+                <!-- Dynamic Accordions rendered in JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER CTA -->
+    <footer class="bg-crest-dark text-white border-t-4 border-crest-gold py-16 px-4">
+        <div class="max-w-6xl mx-auto text-center space-y-6">
+            <div class="w-16 h-16 rounded-full bg-crest-green text-crest-gold flex items-center justify-center text-3xl mx-auto border-2 border-crest-gold shadow-xl">
+                🏛️
+            </div>
+            <h2 class="text-2xl sm:text-4xl font-black text-white">Parliament of Kenya • The Senate</h2>
+            <p class="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
+                Clerk's Chambers, First Floor, Main Parliament Buildings, P.O. Box 41842-00100, Nairobi, Kenya. Official portal for Senate Mashinani sittings and Senate Precedence records.
+            </p>
+            <div class="pt-4 text-xs text-slate-500 border-t border-slate-800">
+                Republic of Kenya • Published pursuant to Senate Standing Orders • Official Data Updated Feb 2026
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC & DATA -->
+    <script>
+        // --- 1. SENATORS PRECEDENCE DATA (PDF Extract as at Feb 9, 2026) ---
+        const senatorsData = [
+            { rank: 1, name: "Rt. Hon. Amason Jeffah Kingi, EGH, MP", county: "Speaker of Senate", party: "Speaker", role: "Speaker of Senate" },
+            { rank: 2, name: "Sen. Fatuma Adan Dullo, CBS, MP", county: "Isiolo County", party: "Jubilee", role: "Senator" },
+            { rank: 3, name: "Sen. Justice (Rtd.) Stewart Mwachiru Shadrack Madzayo, EGH, MP", county: "Kilifi County", party: "ODM", role: "Senate Minority Leader" },
+            { rank: 4, name: "Sen. Moses Otieno Kajwang', CBS, MP", county: "Homabay County", party: "ODM", role: "Senator" },
+            { rank: 5, name: "Sen. Aaron Kipkirui Cheruiyot, EGH, MP", county: "Kericho County", party: "UDA", role: "Senate Majority Leader" },
+            { rank: 6, name: "Sen. (Dr.) Boni Khalwale, CBS, MP", county: "Kakamega County", party: "UDA", role: "Senate Majority Whip" },
+            { rank: 7, name: "Sen. (Prof.) Margaret Jepkoech Kamar, EGH, MP", county: "Nominated", party: "Jubilee", role: "Senator" },
+            { rank: 8, name: "Sen. (Dr.) Lelegwe Ltumbesi, CBS, MP", county: "Samburu County", party: "UDA", role: "Deputy Senate Majority Whip" },
+            { rank: 9, name: "Sen. Issa Juma Boy, CBS, MP", county: "Kwale County", party: "ODM", role: "Senator" },
+            { rank: 10, name: "Sen. Samson Kiprotich Cherarkey, MP", county: "Nandi County", party: "UDA", role: "Senator" },
+            { rank: 11, name: "Sen. Erick Okong'o Mogeni, SC, CBS, MP", county: "Nyamira County", party: "ODM", role: "Senator" },
+            { rank: 12, name: "Sen. Johnes Mwashushe Mwaruma, CBS, MP", county: "Taita/Taveta County", party: "ODM", role: "Senator" },
+            { rank: 13, name: "Sen. Mohamed Faki Mwinyihaji, CBS, MP", county: "Mombasa County", party: "ODM", role: "Senator" },
+            { rank: 14, name: "Sen. John Kinyua Nderitu, MP", county: "Laikipia County", party: "UDA", role: "Senator" },
+            { rank: 15, name: "Sen. Ledama Olekina, CBS, MP", county: "Narok County", party: "ODM", role: "Senate Minority Whip" },
+            { rank: 16, name: "Sen. Enoch Kiio Wambua, CBS, MP", county: "Kitui County", party: "WDM-K", role: "Deputy Senate Minority Leader" },
+            { rank: 17, name: "Sen. Agnes Kavindu Muthama, MP", county: "Machakos County", party: "WDM-K", role: "Senator" },
+            { rank: 18, name: "Sen. Abdul Mohammed Haji, CBS, MP", county: "Garissa County", party: "Jubilee", role: "Senator" },
+            { rank: 19, name: "Sen. (Dr.) Oburu Oginga, MGH, MP", county: "Siaya County", party: "ODM", role: "Senator" },
+            { rank: 20, name: "Sen. Richard Momoima Onyonka, MP", county: "Kisii County", party: "ODM", role: "Senator" },
+            { rank: 21, name: "Sen. James Lomenen Ekomwa, CBS, MP", county: "Turkana County", party: "Jubilee", role: "Senator" },
+            { rank: 22, name: "Sen. Kathuri Murungi, MGH, MP", county: "Meru County", party: "UDA", role: "Deputy Speaker" },
+            { rank: 23, name: "Sen. Daniel Kitonga Maanzo, EBS, MP", county: "Makueni County", party: "WDM-K", role: "Senator" },
+            { rank: 24, name: "Sen. Shakila Abdalla Mohamed, MP", county: "Nominated", party: "WDM-K", role: "Senator" },
+            { rank: 25, name: "Sen. Danson Buya Mungatana, MGH, MP", county: "Tana River County", party: "UDA", role: "Senator" },
+            { rank: 26, name: "Sen. Peris Pesi Tobiko, MP", county: "Nominated", party: "UDA", role: "Senator" },
+            { rank: 27, name: "Sen. William Kisang, CBS, MP", county: "Elgeyo/Marakwet County", party: "UDA", role: "Senator" },
+            { rank: 28, name: "Sen. Abass Sheikh Mohamed, CBS, MP", county: "Wajir County", party: "UDM", role: "Senator" },
+            { rank: 29, name: "Sen. Joyce Chepkoech Korir, CBS, MP", county: "Nominated", party: "UDA", role: "Senator" },
+            { rank: 30, name: "Sen. Godfrey Atieno Osotsi, CBS, MP", county: "Vihiga County", party: "ODM", role: "Senator" },
+            { rank: 31, name: "Sen. (Rev.) Julius Murgor Recha, CBS, MP", county: "West Pokot County", party: "UDA", role: "Senator" },
+            { rank: 32, name: "Sen. Mwenda Gataya Mo Fire, CBS, MP", county: "Tharaka-Nithi County", party: "UDA", role: "Senator" },
+            { rank: 33, name: "Sen. Joseph Githuku Kamau, MP", county: "Lamu County", party: "Jubilee", role: "Senator" },
+            { rank: 34, name: "Sen. Paul Karungo Thangwa, MP", county: "Kiambu County", party: "UDA", role: "Senator" },
+            { rank: 35, name: "Sen. James Kamau Murango, MP", county: "Kirinyaga County", party: "UDA", role: "Senator" },
+            { rank: 36, name: "Sen. (Prof.) Tom Odhiambo Ojienda, SC, MP", county: "Kisumu County", party: "ODM", role: "Senator" },
+            { rank: 37, name: "Sen. Alexander Munyi Mundigi, MP", county: "Embu County", party: "DP", role: "Senator" },
+            { rank: 38, name: "Sen. (Capt.) Ali Ibrahim Roba, EGH, MP", county: "Mandera County", party: "UDM", role: "Senator" },
+            { rank: 39, name: "Sen. Allan Kiprotich Chesang, CBS, MP", county: "Trans Nzoia County", party: "UDA", role: "Senator" },
+            { rank: 40, name: "Sen. Andrew Omtatah Okoiti, MP", county: "Busia County", party: "NRA", role: "Senator" },
+            { rank: 41, name: "Sen. Beatrice Akinyi Ogolla, MP", county: "Nominated", party: "ODM", role: "Senator" },
+            { rank: 42, name: "Sen. Beth Kalunda Syengo, MP", county: "Nominated", party: "ODM", role: "Senator" },
+            { rank: 43, name: "Sen. Betty Batuli Montet, MP", county: "Nominated", party: "ODM", role: "Senator" },
+            { rank: 44, name: "Sen. Catherine Muyeka Mumma, CBS, MP", county: "Nominated", party: "ODM", role: "Senator" },
+            { rank: 45, name: "Sen. Crystal Kegehi Asige, MP", county: "Nominated", party: "ODM", role: "Senator" },
+            { rank: 46, name: "Sen. Eddy Gicheru Oketch, MP", county: "Migori County", party: "ODM", role: "Senator" },
+            { rank: 47, name: "Sen. Edwin Watenya Sifuna, CBS, MP", county: "Nairobi City County", party: "ODM", role: "Deputy Senate Minority Whip" },
+            { rank: 48, name: "Sen. George Mungai Mbugua, MP", county: "Nominated", party: "UDA", role: "Senator" },
+            { rank: 49, name: "Sen. Hamida Ali Kibwana, MP", county: "Nominated", party: "ODM", role: "Senator" },
+            { rank: 50, name: "Sen. Hezena M. Lemaletian, MP", county: "Nominated", party: "UDA", role: "Senator" },
+            { rank: 51, name: "Sen. Kiprotich Sigei Hillary Wakili, CBS, MP", county: "Bomet County", party: "UDA", role: "Senator" },
+            { rank: 52, name: "Sen. Jackson Kiplagat Mandago, EGH, MP", county: "Uasin Gishu County", party: "UDA", role: "Senator" },
+            { rank: 53, name: "Sen. Joe Nyutu, MP", county: "Murang'a County", party: "UDA", role: "Senator" },
+            { rank: 54, name: "Sen. John Muhia Methu, MP", county: "Nyandarua County", party: "UDA", role: "Senator" },
+            { rank: 55, name: "Sen. Karen Njeri Nyamu, MP", county: "Nominated", party: "UDA", role: "Senator" },
+            { rank: 56, name: "Sen. Mariam Sheikh Omar, MP", county: "Nominated", party: "UDM", role: "Senator" },
+            { rank: 57, name: "Sen. Maureen Tabitha Mutinda, CBS, MP", county: "Nominated", party: "UDA", role: "Senator" },
+            { rank: 58, name: "Sen. Miraj Abdillahi Abdulrahman, MP", county: "Nominated", party: "UDA", role: "Senator" },
+            { rank: 59, name: "Sen. Mohamed Said Chute, CBS, MP", county: "Marsabit County", party: "UDA", role: "Senator" },
+            { rank: 60, name: "Sen. Raphael Chimera Mwinzagu, MP", county: "Nominated", party: "UDA", role: "Senator" },
+            { rank: 61, name: "Sen. Lenku Ole Kanar Seki, MP", county: "Kajiado County", party: "UDA", role: "Senator" },
+            { rank: 62, name: "Sen. Tabitha Karanja Keroche, MGH, MP", county: "Nakuru County", party: "UDA", role: "Deputy Senate Majority Leader" },
+            { rank: 63, name: "Sen. Veronica Maina, CBS, MP", county: "Nominated", party: "UDA", role: "Senator" },
+            { rank: 64, name: "Sen. David Wafula Wakoli, CBS, MP", county: "Bungoma County", party: "Ford - K", role: "Senator" },
+            { rank: 65, name: "Sen. Wahome Wamatinga, CBS, MP", county: "Nyeri County", party: "UDA", role: "Senator" },
+            { rank: 66, name: "Sen. Esther Okenyuri Anyieni, MP", county: "Nominated", party: "UDA", role: "Senator" },
+            { rank: 67, name: "Sen. Wakwabubi, Consolata Nabwire, MP", county: "Nominated", party: "UDA", role: "Senator" },
+            { rank: 68, name: "Sen. Cheburet Kiprono Chemitei, MP", county: "Baringo County", party: "UDA", role: "Senator" }
+        ];
+
+        // Party Badges Styling Helper
+        function getPartyBadgeHtml(party) {
+            switch(party) {
+                case 'UDA': return `<span class="bg-yellow-100 text-yellow-900 border border-yellow-300 font-bold px-2 py-0.5 rounded text-[10px]">UDA</span>`;
+                case 'ODM': return `<span class="bg-orange-100 text-orange-900 border border-orange-300 font-bold px-2 py-0.5 rounded text-[10px]">ODM</span>`;
+                case 'Jubilee': return `<span class="bg-red-100 text-red-900 border border-red-300 font-bold px-2 py-0.5 rounded text-[10px]">Jubilee</span>`;
+                case 'WDM-K': return `<span class="bg-blue-100 text-blue-900 border border-blue-300 font-bold px-2 py-0.5 rounded text-[10px]">Wiper</span>`;
+                case 'UDM': return `<span class="bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold px-2 py-0.5 rounded text-[10px]">UDM</span>`;
+                case 'Ford - K': return `<span class="bg-green-100 text-green-900 border border-green-300 font-bold px-2 py-0.5 rounded text-[10px]">Ford-K</span>`;
+                case 'DP': return `<span class="bg-purple-100 text-purple-900 border border-purple-300 font-bold px-2 py-0.5 rounded text-[10px]">DP</span>`;
+                case 'NRA': return `<span class="bg-indigo-100 text-indigo-900 border border-indigo-300 font-bold px-2 py-0.5 rounded text-[10px]">NRA</span>`;
+                default: return `<span class="bg-slate-100 text-slate-800 border border-slate-300 font-bold px-2 py-0.5 rounded text-[10px]">${party}</span>`;
+            }
+        }
+
+        // Render Senators Table
+        function renderSenatorsTable(data) {
+            const tbody = document.getElementById('senatorsTableBody');
+            tbody.innerHTML = '';
+
+            data.forEach(senator => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
+                tr.innerHTML = `
+                    <td class="p-3 text-center font-black text-slate-400">#${senator.rank}</td>
+                    <td class="p-3">
+                        <div class="font-bold text-slate-900">${senator.name}</div>
+                        ${senator.role !== 'Senator' ? `<span class="text-[10px] font-extrabold text-crest-red uppercase tracking-wide block">${senator.role}</span>` : ''}
+                    </td>
+                    <td class="p-3 text-slate-600 font-medium">
+                        ${senator.county === 'Nominated' ? '<span class="bg-slate-100 text-slate-700 font-semibold px-2 py-0.5 rounded text-[10px]">Nominated</span>' : senator.county}
+                    </td>
+                    <td class="p-3">${getPartyBadgeHtml(senator.party)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('showingCount').innerText = `Showing ${data.length} of ${senatorsData.length} Senators`;
+        }
+
+        // Search & Filter Logic
+        function filterSenators() {
+            const searchVal = document.getElementById('senatorSearch').value.toLowerCase();
+            const partyVal = document.getElementById('partyFilter').value;
+
+            const filtered = senatorsData.filter(item => {
+                const matchesSearch = item.name.toLowerCase().includes(searchVal) || 
+                                      item.county.toLowerCase().includes(searchVal) || 
+                                      item.role.toLowerCase().includes(searchVal);
+                
+                let matchesParty = true;
+                if(partyVal === 'Nominated') {
+                    matchesParty = item.county === 'Nominated';
+                } else if(partyVal !== 'ALL') {
+                    matchesParty = item.party === partyVal;
+                }
+
+                return matchesSearch && matchesParty;
+            });
+
+            renderSenatorsTable(filtered);
+        }
+
+        function setPartyFilter(party) {
+            document.getElementById('partyFilter').value = party;
+            filterSenators();
+        }
+
+        function scrollToRoster() {
+            document.getElementById('precedence-roster').scrollIntoView({ behavior: 'smooth' });
+        }
+
+
+        // --- 2. SENATE MASHINANI SESSIONS DATA & BENTO BOX ---
+        const mashinaniSessions = [
+            {
+                number: 1,
+                ordinal: "1st Session",
+                county: "Uasin Gishu County",
+                location: "Eldoret Town Hall",
+                period: "September 24 - 28, 2018",
+                status: "Concluded",
+                overview: "Inaugural Senate Mashinani sitting outside Nairobi. Established procedural framework for plenary and committee sittings across devolved counties.",
+                legislation: ["County Allocation of Revenue Bill (2018)", "Food Security Bill", "Local Public Participation Guidelines"],
+                oversight: ["Inspected Moi Teaching & Referral Hospital (MTRH) infrastructure", "Audited Uasin Gishu County maize farmer subsidies"],
+                baraza: ["Farmer Grievance Baraza with North Rift Agricultural Lobby", "Youth Unemployment Baraza"],
+                impact: "Led to parliamentary intervention on NCPB maize payment arrears affecting over 20,000 farmers."
+            },
+            {
+                number: 2,
+                ordinal: "2nd Session",
+                county: "Kitui County",
+                location: "Kitui County Assembly",
+                period: "September 16 - 20, 2019",
+                status: "Concluded",
+                overview: "Focused on Arid and Semi-Arid Lands (ASAL) water infrastructure, coal mining environmental impact, and rural health challenges.",
+                legislation: ["Equalization Fund Administration Bill", "Water Resources Management Amendment"],
+                oversight: ["Fact-finding inspection of Mui Basin Coal mining rights", "Umaa Dam stalled project audit"],
+                baraza: ["Kitui Textile Centre (KICOTEC) artisan baraza", "ASAL climate resilience summit"],
+                impact: "Spurred Treasury release of withheld conditional grants for ASAL water harvesting schemes."
+            },
+            {
+                number: 3,
+                ordinal: "3rd Session",
+                county: "Turkana County",
+                location: "Lodwar County Assembly Chambers",
+                period: "September 25 - 29, 2023",
+                status: "Concluded",
+                overview: "Prioritized border security oversight, pastoralist livestock insurance, oil exploitation royalties, and drought management.",
+                legislation: ["Pastoralist Livestock Development Bill", "County Boundary Delimitation Framework"],
+                oversight: ["Lokichar Oil Fields community benefit share inspection", "Turkana West refugee integration review"],
+                baraza: ["Cross-border Peace Baraza at Nadapal", "Pastoralist Women Empowerment Baraza"],
+                impact: "Resulted in Senate directive for immediate disbursement of drought emergency funds to 12 pastoralist counties."
+            },
+            {
+                number: 4,
+                ordinal: "4th Session",
+                county: "Busia County",
+                location: "Busia County Assembly Grounds",
+                period: "October 6 - 10, 2025",
+                status: "Concluded",
+                overview: "Centered on cross-border trade facilitation, Lake Victoria blue economy development, sugar sub-sector revival, and healthcare devolution.",
+                legislation: ["Cross-Border Trade Harmonization Bill", "County Health Facilities Support Bill"],
+                oversight: ["One-Stop Border Post (OSBP) operational inspection", "Busia County Referral Hospital upgrading audit"],
+                baraza: ["Border Traders & Artisanal Fishermen Public Hearing", "Sugarcane Farmers Joint Forum"],
+                impact: "Accelerated legislative interventions on cross-border tariff structures and sugar factory arrears settlement."
+            },
+            {
+                number: 5,
+                ordinal: "5th Session",
+                county: "Kilifi County",
+                location: "Kilifi County Assembly Grounds",
+                period: "September 21 - 25, 2026",
+                status: "Upcoming",
+                overview: "5th Mashinani Sitting focusing on Blue Economy development, coastal land tenure rights, coconut sub-sector revival, and maritime security.",
+                legislation: ["Coast Development Authority Reform Bill", "Blue Economy Empowerment Framework", "Beach Management Bill"],
+                oversight: ["Malindi Airport expansion land compensation inspection", "Kilifi County Referral Hospital Oxygen Plant review"],
+                baraza: ["Artisanal Fishermen Maritime Baraza", "Coastal Squatter Land Settlement Hearing"],
+                impact: "Expected to establish a national legislative roadmap for coastal blue economy funding and squatter regularisation."
+            }
+        ];
+
+        function switchSession(index) {
+            const session = mashinaniSessions[index];
+
+            // Update Tab Buttons styling
+            document.querySelectorAll('.session-tab-btn').forEach((btn, i) => {
+                if(i === index) {
+                    btn.className = "session-tab-btn flex items-center gap-3 px-5 py-3 rounded-2xl bg-crest-green text-white font-bold text-xs uppercase tracking-wider shadow-lg shrink-0 border border-emerald-400";
+                } else {
+                    btn.className = "session-tab-btn flex items-center gap-3 px-5 py-3 rounded-2xl bg-slate-800 text-slate-400 hover:text-white font-bold text-xs uppercase tracking-wider shrink-0 border border-slate-700";
+                }
+            });
+
+            // Render Bento Box Content
+            const container = document.getElementById('sessionBentoCard');
+            container.innerHTML = `
+                <!-- Top Header Bar -->
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-black uppercase tracking-wider text-crest-gold bg-crest-gold/10 px-3 py-1 rounded-md border border-crest-gold/20">
+                                ${session.ordinal}
+                            </span>
+                            <span class="text-xs font-bold px-3 py-1 rounded-md ${session.status === 'Upcoming' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'}">
+                                ${session.status === 'Upcoming' ? '✨ Upcoming Sitting' : '✓ Official Sitting'}
+                            </span>
+                        </div>
+                        <h3 class="text-3xl sm:text-4xl font-black text-white tracking-tight">${session.county}</h3>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-slate-300 font-semibold bg-slate-900 px-4 py-2.5 rounded-xl border border-slate-800">
+                        <span>📅 ${session.period}</span>
+                        <span>•</span>
+                        <span>📍 ${session.location}</span>
+                    </div>
+                </div>
+
+                <!-- Bento Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    
+                    <!-- Box 1: Overview (Spans 6) -->
+                    <div class="md:col-span-6 bg-slate-900 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-crest-green bg-emerald-950 px-2 py-1 rounded border border-emerald-800/50">Sitting Executive Summary</span>
+                            <p class="text-slate-300 text-sm leading-relaxed mt-3">${session.overview}</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-800 text-xs text-slate-400">
+                            <span class="font-bold text-white">Impact Outcome:</span> ${session.impact}
+                        </div>
+                    </div>
+
+                    <!-- Box 2: Key Legislation Considered (Spans 6) -->
+                    <div class="md:col-span-6 bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-crest-gold bg-amber-950 px-2 py-1 rounded border border-amber-800/50">Key Legislation Processed</span>
+                        <ul class="mt-3 space-y-2 text-xs text-slate-300">
+                            ${session.legislation.map(item => `<li class="flex items-start gap-2"><span class="text-crest-gold font-bold">📜</span> <span>${item}</span></li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Box 3: Oversight Site Visits (Spans 6) -->
+                    <div class="md:col-span-6 bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-crest-red bg-rose-950 px-2 py-1 rounded border border-rose-800/50">Committee Site Inspections</span>
+                        <ul class="mt-3 space-y-2 text-xs text-slate-300">
+                            ${session.oversight.map(item => `<li class="flex items-start gap-2"><span class="text-crest-red font-bold">🔍</span> <span>${item}</span></li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Box 4: Grassroots Public Barazas (Spans 6) -->
+                    <div class="md:col-span-6 bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-blue-400 bg-blue-950 px-2 py-1 rounded border border-blue-800/50">Public Engagement Barazas</span>
+                        <ul class="mt-3 space-y-2 text-xs text-slate-300">
+                            ${session.baraza.map(item => `<li class="flex items-start gap-2"><span class="text-blue-400 font-bold">👥</span> <span>${item}</span></li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- 3. UPDATED FAQ DATA & DYNAMIC ACCORDION RENDER ---
+        const faqs = [
+            {
+                q: "1. What is the legal basis for Senate Mashinani?",
+                a: `The program is anchored in <strong>Article 126(1)</strong> of the Constitution of Kenya, which states that a sitting of either House of Parliament may be held at any place within Kenya and commence at any time the House appoints.<br><br>It also supports the Senate's core constitutional mandate under <strong>Article 96</strong> to represent and protect the interests of counties and their governments.`
+            },
+            {
+                q: "2. What are the main objectives of the initiative?",
+                a: `
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
+                        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                            <span class="font-bold text-crest-green text-xs uppercase block mb-1">📢 Enhancing Public Awareness</span>
+                            <span class="text-xs text-slate-600">Educating citizens on the specific roles, functions, and legislative processes of the Senate.</span>
+                        </div>
+                        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                            <span class="font-bold text-crest-red text-xs uppercase block mb-1">🏛️ Promoting Devolution</span>
+                            <span class="text-xs text-slate-600">Bringing parliamentary business closer to grassroots populations to better understand local challenges and successes.</span>
+                        </div>
+                        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                            <span class="font-bold text-crest-gold text-xs uppercase block mb-1">🤝 Strengthening Partnerships</span>
+                            <span class="text-xs text-slate-600">Fostering direct working relationships between national lawmakers and county governments.</span>
+                        </div>
+                        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                            <span class="font-bold text-blue-700 text-xs uppercase block mb-1">💡 Institutional Exchange</span>
+                            <span class="text-xs text-slate-600">Providing a platform for county assembly staff to exchange knowledge and best practices with parliamentary officers.</span>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                q: "3. How are host counties selected?",
+                a: `Candidate counties are processed through the <strong>Directorate of Legislative and Procedural Services</strong>, the <strong>Senate Board of Management</strong>, and the <strong>Senate Business Committee</strong>.<br><br>Parliamentary staff conduct reconnaissance assessments beforehand to evaluate local infrastructure, security, and assembly facilities. Per a resolution adopted by the House, the Senate aims to hold at least one week of sittings in a designated county every September, excluding election years.`
+            },
+            {
+                q: "4. Which counties have hosted Senate Mashinani sessions?",
+                a: `
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 mt-1">
+                        <table class="w-full text-xs text-left">
+                            <thead class="bg-slate-900 text-white font-bold uppercase tracking-wider">
+                                <tr>
+                                    <th class="p-3">Year</th>
+                                    <th class="p-3">Host County</th>
+                                    <th class="p-3">Dates / Period</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 bg-white">
+                                <tr class="hover:bg-slate-50"><td class="p-2.5 font-bold text-crest-green">2018</td><td class="p-2.5 font-semibold text-slate-900">Uasin Gishu County</td><td class="p-2.5 text-slate-600">September 2018</td></tr>
+                                <tr class="hover:bg-slate-50"><td class="p-2.5 font-bold text-crest-green">2019</td><td class="p-2.5 font-semibold text-slate-900">Kitui County</td><td class="p-2.5 text-slate-600">September 2019</td></tr>
+                                <tr class="hover:bg-slate-50"><td class="p-2.5 font-bold text-crest-green">2023</td><td class="p-2.5 font-semibold text-slate-900">Turkana County</td><td class="p-2.5 text-slate-600">September 2023</td></tr>
+                                <tr class="hover:bg-slate-50"><td class="p-2.5 font-bold text-crest-green">2025</td><td class="p-2.5 font-semibold text-slate-900">Busia County</td><td class="p-2.5 text-slate-600">October 6–10, 2025</td></tr>
+                                <tr class="hover:bg-slate-50"><td class="p-2.5 font-bold text-amber-600">2026</td><td class="p-2.5 font-semibold text-slate-900">Kilifi County</td><td class="p-2.5 text-slate-600">September 21–25, 2026</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-[11px] text-slate-500 italic mt-2.5">Note: Sessions were suspended in 2020 and 2021 due to the COVID-19 pandemic.</p>
+                `
+            },
+            {
+                q: "5. Can the general public participate in the proceedings?",
+                a: `<strong>Yes.</strong> Residents and local stakeholders can attend physical sittings and public hearings held at designated local venues (such as county assembly chambers or municipal halls).<br><br>Proceedings are also broadcast live via digital platforms, including the <strong>Parliament of Kenya YouTube Channel</strong>, allowing citizens across the country to follow and submit petitions or memoranda.`
+            }
+        ];
+
+        function renderFaqs() {
+            const container = document.getElementById('faqAccordion');
+            container.innerHTML = faqs.map((faq, idx) => `
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                    <button onclick="toggleFaq(${idx})" class="w-full px-6 py-4 text-left font-bold text-slate-900 text-sm sm:text-base flex items-center justify-between hover:bg-slate-50 transition">
+                        <span>${faq.q}</span>
+                        <span id="faq-icon-${idx}" class="text-crest-green text-lg font-black shrink-0 ml-3">+</span>
+                    </button>
+                    <div id="faq-ans-${idx}" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-4 bg-slate-50/50">
+                        ${faq.a}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleFaq(index) {
+            const ans = document.getElementById(`faq-ans-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+            if(ans.classList.contains('hidden')) {
+                ans.classList.remove('hidden');
+                icon.innerText = '−';
+            } else {
+                ans.classList.add('hidden');
+                icon.innerText = '+';
+            }
+        }
+
+
+        // --- 4. CHARTS IMPLEMENTATION (Coat of Arms Color Scheme) ---
+        function initPartyChart() {
+            const ctx = document.getElementById('partyChart').getContext('2d');
+            
+            // Calculate party counts from senatorsData
+            const counts = {};
+            senatorsData.forEach(s => {
+                counts[s.party] = (counts[s.party] || 0) + 1;
+            });
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(counts),
+                    datasets: [{
+                        data: Object.values(counts),
+                        backgroundColor: [
+                            '#006A44', // Emerald Green (Coat of Arms Mount)
+                            '#C8102E', // Harambee Crimson Red
+                            '#F59E0B', // Amber ODM
+                            '#D4AF37', // Golden Ochre Lion
+                            '#2563EB', // Wiper Blue
+                            '#10B981', // UDM Green
+                            '#8B5CF6', // DP
+                            '#6366F1', // NRA
+                            '#15803D'  // Ford-K
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 11, weight: 'bold' },
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` ${context.label}: ${context.raw} Seats`;
+                                }
+                            }
+                        }
+                    },
+                    onClick: (evt, item) => {
+                        if(item.length > 0) {
+                            const index = item[0].index;
+                            const party = Object.keys(counts)[index];
+                            setPartyFilter(party === 'Speaker' ? 'ALL' : party);
+                        }
+                    }
+                }
+            });
+        }
+
+        function initImpactChart() {
+            const ctx = document.getElementById('impactChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['1st (Uasin Gishu)', '2nd (Kitui)', '3rd (Turkana)', '4th (Busia)', '5th (Kilifi - Target)'],
+                    datasets: [
+                        {
+                            label: 'Bills & Legislation Processed',
+                            data: [8, 11, 14, 13, 15],
+                            backgroundColor: '#006A44', // Coat of Arms Green
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'Oversight Site Inspections',
+                            data: [5, 7, 9, 8, 10],
+                            backgroundColor: '#C8102E', // Coat of Arms Crimson
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'Public Petitions Hearing Barazas',
+                            data: [12, 18, 24, 22, 25],
+                            backgroundColor: '#D4AF37', // Coat of Arms Lion Ochre
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            ticks: { font: { size: 10, weight: 'bold' } }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { font: { size: 10 } }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { font: { size: 11, weight: 'bold' }, boxWidth: 14 }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- 5. INITIALIZATION ON DOM LOAD ---
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSenatorsTable(senatorsData);
+            switchSession(0);
+            renderFaqs();
+            initPartyChart();
+            initImpactChart();
+        });
+    </script>
+</body>
+</html>

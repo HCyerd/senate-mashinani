@@ -28,7 +28,7 @@ export function PageHero({ badge, title, description, showImage = true, imageLab
 
       {showImage && (
         <div className="relative z-10 ">
-          <Image src="/sessions_images/vss.jpeg" alt={imageLabel ?? 'Add hero image'} className=" rounded-2xl w-full" width={1920} height={220} />
+          <Image src="/sessions_images/senate.jpg" alt={imageLabel ?? 'Add hero image'} className=" rounded-2xl w-full" width={1920} height={220} />
         </div>
       )}
     </section>

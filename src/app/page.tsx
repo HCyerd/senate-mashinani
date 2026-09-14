@@ -33,6 +33,7 @@ import {
   Info,
   CalendarCheck
 } from 'lucide-react';
+import Image from 'next/image';
 
 interface HostEdition {
   id: string;
@@ -80,10 +81,12 @@ interface OrderPaperSession {
   status: 'Concluded' | 'In Progress' | 'Upcoming';
 }
 
-interface FaqItem {
-  question: string;
-  answer: string;
+export interface FAQItem {
+  id: number;
+  q: string;
+  a: React.ReactNode;
 }
+
 
 interface Testimonial {
   id: string;
@@ -127,7 +130,7 @@ const HOST_EDITIONS: HostEdition[] = [
     hostSenator: 'Sen. Okiya Omtatah Okoiti',
     status: 'Concluded',
     image: '/sessions_images/busia.jpeg',
-    summary: 'Convened pursuant to a motion moved by Majority Leader Sen. Aaron Cheruiyot. Addressed border congestion at Malaba/Busia OSBPs, Lake Victoria blue economy protection, and on-site CPAC audit hearings.',
+    summary: 'Convened pursuant to a motion moved by Majority Leader Sen. Aaron Cheruiyot, E.G.H., member for Kericho County. Addressed border congestion at Malaba/Busia OSBPs, Lake Victoria blue economy protection, and on-site CPAC audit hearings.',
     highlights: [
       'Decongestion of the Malaba and Busia One-Stop Border Posts (OSBP) and reduction of non-tariff barriers with Uganda.',
       'Bilateral security protocols protecting artisanal Lake Victoria fisherfolk from cross-border territorial harassment.',
@@ -389,28 +392,90 @@ const ORDER_PAPER_ITEMS: OrderPaperSession[] = [
     categoryColor: 'text-blue-800 bg-blue-100 border-blue-200',
     title: 'Adoption of Kilifi Resolutions & Adjournment',
     description: 'Tabling of committee reports from the week’s inquiries, adoption of the final Kilifi Communiqué, and formal motion of adjournment sine die for the Senate Mashinani sitting.',
-    mover: 'Senate Majority Leader, Sen. Aaron Cheruiyot',
+    mover: 'Senate Majority Leader, Sen. Aaron Cheruiyot, E.G.H., member for Kericho County',
     type: 'Plenary',
     status: 'Upcoming'
   }
 ];
 
-const FAQ_ITEMS: FaqItem[] = [
+const faqs: FAQItem[] = [
   {
-    question: 'What constitutional provision empowers the Senate to sit outside Nairobi?',
-    answer: 'Article 126(1) of the Constitution of Kenya explicitly states: "A sitting of either House may be held at any place within Kenya and may commence at any time as the House may determine." Furthermore, a Senate resolution adopted on March 8, 2023, establishes that Senators shall hold plenary and committee sittings in the counties for one week in September each year.'
+    id: 1,
+    q: "1. What is the legal basis for Senate Mashinani?",
+    a: (
+      <>
+        The program is anchored in <strong>Article 126(1)</strong> of the Constitution of Kenya, which states that a sitting of either House of Parliament may be held at any place within Kenya and commence at any time the House appoints.<br /><br />It also supports the Senate's core constitutional mandate under <strong>Article 96</strong> to represent and protect the interests of counties and their governments.
+      </>
+    )
   },
   {
-    question: 'Are laws and motions passed during Senate Mashinani legally binding?',
-    answer: 'Yes, 100%. Senate Mashinani is an official, sovereign sitting of the Senate of Kenya. The official ceremonial Mace is transported under security to the host assembly chamber, and all proceedings are published in the official parliamentary Hansard. All votes, summons, and legislative readings carry full legal force.'
+    id: 2,
+    q: "2. What are the main objectives of the initiative?",
+    a: (
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
+        <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+          <span className="font-bold text-[#006A44] text-xs uppercase block mb-1">📢 Enhancing Public Awareness</span>
+          <span className="text-xs text-slate-600">Educating citizens on the specific roles, functions, and legislative processes of the Senate.</span>
+        </div>
+        <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+          <span className="font-bold text-[#C8102E] text-xs uppercase block mb-1">🏛️ Promoting Devolution</span>
+          <span className="text-xs text-slate-600">Bringing parliamentary business closer to grassroots populations to better understand local challenges and successes.</span>
+        </div>
+        <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+          <span className="font-bold text-[#D4AF37] text-xs uppercase block mb-1">🤝 Strengthening Partnerships</span>
+          <span className="text-xs text-slate-600">Fostering direct working relationships between national lawmakers and county governments.</span>
+        </div>
+        <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+          <span className="font-bold text-blue-700 text-xs uppercase block mb-1">💡 Institutional Exchange</span>
+          <span className="text-xs text-slate-600">Providing a platform for county assembly staff to exchange knowledge and best practices with parliamentary officers.</span>
+        </div>
+      </div>
+    )
   },
   {
-    question: 'How are host County Assemblies assessed and selected?',
-    answer: 'The process begins with the Senate Directorate of Legislative and Procedural Services preparing a list that balances regional equity. The Senate Business Committee (SBC) recommends candidate counties, after which the Clerk of the Senate deploys a technical assessment team to evaluate chamber seating, acoustics, Hansard digital recording systems, security, and public baraza venues.'
+    id: 3,
+    q: "3. How are host counties selected?",
+    a: (
+      <>
+        Candidate counties are processed through the <strong>Directorate of Legislative and Procedural Services</strong>, the <strong>Senate Board of Management</strong>, and the <strong>Senate Business Committee</strong>.<br /><br />Parliamentary staff conduct reconnaissance assessments beforehand to evaluate local infrastructure, security, and assembly facilities. Per a resolution adopted by the House, the Senate aims to hold at least one week of sittings in a designated county every September, excluding election years.
+      </>
+    )
   },
   {
-    question: 'Can ordinary citizens attend the sessions and table petitions?',
-    answer: 'Yes. The public galleries in the host assembly are opened to the public, committee public hearings allow direct testimony, and open-air Citizen Barazas (Town Halls) in public grounds give ordinary citizens direct access to Senators and Governors. Petitions can also be submitted electronically.'
+    id: 4,
+    q: "4. Which counties have hosted Senate Mashinani sessions?",
+    a: (
+      <>
+        <div className="overflow-x-auto rounded-xl border border-slate-200 mt-1">
+          <table className="w-full text-xs text-left">
+            <thead className="bg-slate-900 text-white font-bold uppercase tracking-wider">
+              <tr>
+                <th className="p-3">Year</th>
+                <th className="p-3">Host County</th>
+                <th className="p-3">Dates / Period</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200 bg-white">
+              <tr className="hover:bg-slate-50"><td className="p-2.5 font-bold text-[#006A44]">2018</td><td className="p-2.5 font-semibold text-slate-900">Uasin Gishu County</td><td className="p-2.5 text-slate-600">September 2018</td></tr>
+              <tr className="hover:bg-slate-50"><td className="p-2.5 font-bold text-[#006A44]">2019</td><td className="p-2.5 font-semibold text-slate-900">Kitui County</td><td className="p-2.5 text-slate-600">September 2019</td></tr>
+              <tr className="hover:bg-slate-50"><td className="p-2.5 font-bold text-[#006A44]">2023</td><td className="p-2.5 font-semibold text-slate-900">Turkana County</td><td className="p-2.5 text-slate-600">September 2023</td></tr>
+              <tr className="hover:bg-slate-50"><td className="p-2.5 font-bold text-[#006A44]">2025</td><td className="p-2.5 font-semibold text-slate-900">Busia County</td><td className="p-2.5 text-slate-600">October 6–10, 2025</td></tr>
+              <tr className="hover:bg-slate-50"><td className="p-2.5 font-bold text-amber-600">2026</td><td className="p-2.5 font-semibold text-slate-900">Kilifi County</td><td className="p-2.5 text-slate-600">September 21–25, 2026</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-[11px] text-slate-500 italic mt-2.5">Note: Sessions were suspended in 2020 and 2021 due to the COVID-19 pandemic.</p>
+      </>
+    )
+  },
+  {
+    id: 5,
+    q: "5. Can the general public participate in the proceedings?",
+    a: (
+      <>
+        <strong>Yes.</strong> Residents and local stakeholders can attend physical sittings and public hearings held at designated local venues (such as county assembly chambers or municipal halls).<br /><br />Proceedings are also broadcast live via digital platforms, including the <strong>Parliament of Kenya YouTube Channel</strong>, allowing citizens across the country to follow and submit petitions or memoranda.
+      </>
+    )
   }
 ];
 
@@ -418,6 +483,7 @@ export default function App() {
   // Navigation & audio states
   const [audioEnabled, setAudioEnabled] = useState<boolean>(false);
   const audioCtxRef = useRef<AudioContext | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   // Filter & Search states
   const [selectedEditionTab, setSelectedEditionTab] = useState<string>('all');
@@ -644,9 +710,9 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
       <section className="relative bg-slate-950 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/sessions_images/kilifi.jpeg"
+            src="/sessions_images/senate.jpg"
             alt="Senate Chamber in session"
-            className="w-full h-full object-cover object-center opacity-25 filter saturate-150 scale-105"
+            className="w-full h-full object-cover object-center opacity-95 filter saturate-150 scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/85 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-blue-950/40" />
@@ -665,12 +731,15 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
                 Taking Parliament <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-amber-200 to-blue-200">
-                  To The Grassroots
+                  To The Grassroots 
                 </span>
               </h1>
+              <h5 className="text-lg italic sm:text-xl lg:text-2xl font-extrabold tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-amber-200 to-blue-400 font-serif">
+                Devolution In Action 
+              </h5>
 
-              <p className="text-base sm:text-lg text-slate-300 max-w-2xl font-normal leading-relaxed">
-                Senate Mashinani relocates the sovereign plenary and standing committees of the Senate of Kenya directly into host County Assemblies. Interrogating devolution expenditure, receiving citizen petitions, and conducting live oversight where Kenyans live and work.
+              <p className="text-base sm:text-lg text-slate-300 max-w-2xl font-normal leading-relaxed font-semibold">
+                Senate Mashinani relocates the sovereign plenary and committees sittings to host County Assemblies. Interrogating devolution expenditure, receiving citizen petitions, and conducting live oversight where Kenyans live and work.
               </p>
 
               <div className="flex flex-wrap items-center gap-4 pt-2">
@@ -739,9 +808,9 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                 <div className="mt-4 space-y-4">
                   <div className="relative h-44 rounded-2xl overflow-hidden group">
                     <img
-                      src="/sessions_images/kilifi.jpeg"
+                      src="/sessions_images/kilifi.png"
                       alt="Kilifi Coastal County"
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                      className="w-full h-full object-fit group-hover:scale-105 transition duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
                     <div className="absolute bottom-3 left-4 right-4 flex justify-between items-end">
@@ -864,7 +933,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
       </div>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-white">
+      <section id="about" className="py-20 bg-white w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-800 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200">
@@ -892,41 +961,20 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
               </p>
               <div className="p-4 bg-slate-50 rounded-xl border-l-4 border-blue-600 text-xs sm:text-sm text-slate-700 italic">
                 &ldquo;The Senate plays the critical interlinkage role between the National and County levels of government. There is need to enhance interaction between the Senate and County Governments, bringing the Senate closer to the Counties and the general public.&rdquo;
-                <div className="font-bold text-slate-900 mt-2 not-italic">— Sen. Aaron Cheruiyot, Majority Leader of the Senate</div>
+                <div className="font-bold text-slate-900 mt-2 not-italic">— Sen. Aaron Cheruiyot, E.G.H., member for Kericho County, Majority Leader of the Senate</div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-8 border border-slate-700 shadow-xl space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-amber-400/20 text-amber-400 flex items-center justify-center">
-                  <Award className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg text-white">How Host Counties Are Selected</h4>
-                  <p className="text-xs text-slate-400">Strict technical readiness & regional rotation</p>
-                </div>
+            <div >
+              <div className="flex items-center w-full h-full">           
+                <Image
+                  src="/sessions_images/chambers.jpg"
+                  alt="Host Counties Selection"
+                  width={800}
+                  height={400}
+                  className="rounded-xl"
+                />
               </div>
-
-              <ol className="space-y-4 text-xs sm:text-sm text-slate-300">
-                <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
-                  <div>
-                    <strong className="text-white">Directorate Recommendation:</strong> The Senate Directorate of Legislative & Procedural Services identifies prospective counties ensuring equitable rotation across former provinces.
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
-                  <div>
-                    <strong className="text-white">Senate Business Committee (SBC) Approval:</strong> Chaired by the Speaker, the SBC selects candidate assemblies and formal House motions are tabled.
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
-                  <div>
-                    <strong className="text-white">Clerk&apos;s Technical Audit:</strong> A multi-disciplinary team led by the Clerk of the Senate audits chamber capacity, digital Hansard recording, acoustics, security, and open-air baraza venues.
-                  </div>
-                </li>
-              </ol>
             </div>
           </div>
         </div>
@@ -1248,7 +1296,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                   <span className="w-2 h-2 rounded-full bg-red-600 animate-ping" />
                   Official Kilifi Sitting Schedule
                 </span>
-                <a
+                {/* <a
                   href="https://www.parliament.go.ke/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -1256,7 +1304,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                 >
                   <ExternalLink className="w-3.5 h-3.5 text-blue-700" />
                   <span>Verified Source:  https://www.parliament.go.ke/</span>
-                </a>
+                </a> */}
               </div>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">
                 Kilifi County Assembly Plenary & Committee Timetable
@@ -1267,13 +1315,13 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
-              <button
+              {/* <button
                 onClick={downloadHansardFile}
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-700 text-xs font-bold hover:bg-slate-50 transition shadow-sm"
               >
                 <Download className="w-4 h-4 text-blue-700" />
                 Download Full 5-Day PDF/Text
-              </button>
+              </button> */}
               {/* <button
                 onClick={() => {
                   playCivicTone(587.33, 'triangle', 0.2);
@@ -1527,9 +1575,9 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
       </section>
 
       {}
-      <section id="petition" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+      {/* <section id="petition" className="py-20 bg-white"> */}
+        {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> */}
+          {/* <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-800 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200">
               Sauti ya Mashinani · Citizen Action
             </span>
@@ -1540,12 +1588,12 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
             <p className="text-base sm:text-lg text-slate-600 mt-4 leading-relaxed">
               Article 118 of the Constitution mandates public involvement in all legislative business. Submit your memorandum directly to the relevant Senate Standing Committee.
             </p>
-          </div>
+          </div> */}
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start"> */}
             
             {/* Left: Memorandum Submission Form */}
-            <div className="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
+            {/* <div className="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
               <div className="flex items-center justify-between pb-6 border-b border-slate-200">
                 <div>
                   <h3 className="font-bold text-xl text-slate-900">File a Citizen Memorandum</h3>
@@ -1674,7 +1722,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
               </form>
 
               {/* Submission Confirmation Box */}
-              {submissionSuccessRef && (
+              {/* {submissionSuccessRef && (
                 <div className="mt-6 p-4 rounded-xl bg-blue-50 border border-blue-300 text-blue-900 flex items-start gap-3 animate-in fade-in duration-300">
                   <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                   <div>
@@ -1685,13 +1733,14 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                   </div>
                 </div>
               )}
-            </div>
+            </div> */} 
+
 
             {/* Right: Live Civic Sentiment Poll & Testimonial Feed */}
-            <div className="lg:col-span-5 space-y-8">
+            {/* <div className="lg:col-span-5 space-y-8"> */}
               
               {/* Poll Card */}
-              <div className="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl">
+              {/* <div className="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
                   <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
@@ -1748,10 +1797,10 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                   <span>Total Verified Votes: {totalVotes.toLocaleString()}</span>
                   <span className="text-blue-400 font-semibold">Updated Real-Time</span>
                 </div>
-              </div>
+              </div> */}
 
               {/* Real Citizen Feed */}
-              <div className="bg-slate-50 border border-slate-200 rounded-3xl p-6">
+              {/* <div className="bg-slate-50 border border-slate-200 rounded-3xl p-6">
                 <h4 className="font-bold text-slate-900 text-sm mb-4 flex items-center gap-2">
                   <MessageCircle className="w-4 h-4 text-[#A81C26]" />
                   Voices from Grassroots Sittings
@@ -1772,63 +1821,57 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
-            </div>
+            {/* </div> */}
 
-          </div>
-        </div>
-      </section>
+          {/* </div> */}
+        {/* </div> */}
+      {/* </section> */}
 
       {}
-      <section id="faq" className="py-20 bg-slate-50 border-t border-slate-200">
+     {/* FAQ SECTION */}
+      <section id="faqs" className="bg-slate-100 border-t border-slate-200 py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-800 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200">
-              Civic Education
+          <div className="text-center mb-12">
+            <span className="text-xs font-black uppercase tracking-widest text-[#006A44] bg-emerald-100 px-3.5 py-1.5 rounded-full border border-emerald-200">
+              Parliamentary Information Hub
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-4">
-              Frequently Asked Questions
-            </h2>
-            <div className="w-16 h-1 bg-[#A81C26] mx-auto mt-3 rounded-full" />
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Frequently Asked Questions (FAQs)</h2>
+            <div className="w-16 h-1 bg-[#C8102E] mx-auto mt-3 rounded-full"></div>
+
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mt-6 text-left border-l-4 border-l-[#006A44]">
+              <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
+                <strong className="text-slate-900 font-bold">Senate Mashinani</strong> is an initiative by the Parliament of Kenya that relocates the entire Senate—including its plenary and committee sittings—from the traditional Parliament Buildings in Nairobi to one of the 47 counties for a week-long grassroots engagement.
+              </p>
+            </div>
           </div>
 
           <div className="space-y-4">
-            {FAQ_ITEMS.map((faq, index) => {
-              const isOpen = activeFaqIndex === index;
-              return (
-                <div
-                  key={index}
-                  className="border border-slate-200 rounded-2xl overflow-hidden transition-all duration-200 bg-white"
+            {faqs.map((faq, index) => (
+              <div key={faq.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full px-6 py-4 text-left font-bold text-slate-900 text-sm sm:text-base flex items-center justify-between hover:bg-slate-50 transition"
                 >
-                  <button
-                    onClick={() => {
-                      playCivicTone(440, 'sine', 0.1);
-                      setActiveFaqIndex(isOpen ? null : index);
-                    }}
-                    className="w-full px-6 py-5 text-left font-bold text-base sm:text-lg text-slate-900 flex justify-between items-center bg-slate-50/50 hover:bg-slate-50"
-                  >
-                    <span>{faq.question}</span>
-                    <ChevronDown
-                      className={`w-5 h-5 text-slate-500 transition-transform duration-200 ${
-                        isOpen ? 'rotate-180 text-blue-600' : ''
-                      }`}
-                    />
-                  </button>
-                  {isOpen && (
-                    <div className="px-6 py-4 text-sm text-slate-600 leading-relaxed border-t border-slate-100 bg-white animate-in fade-in duration-200">
-                      {faq.answer}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                  <span>{faq.q}</span>
+                  <span className="text-[#006A44] text-lg font-black shrink-0 ml-3">
+                    {openFaq === index ? '−' : '+'}
+                  </span>
+                </button>
+                {openFaq === index && (
+                  <div className="px-6 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-4 bg-slate-50/50">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {}
-      <section className="py-16 bg-gradient-to-r from-blue-950 via-[#0656ea] to-slate-950 text-white text-center">
+      {/* <section className="py-16 bg-gradient-to-r from-blue-950 via-[#0656ea] to-slate-950 text-white text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl font-extrabold">
             Stay Connected to the Grassroots Senate
@@ -1871,7 +1914,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
             Parliament of Kenya · Directorate of Media & Public Relations.
           </p>
         </div>
-      </section>
+      </section> */}
 
       {}
 
