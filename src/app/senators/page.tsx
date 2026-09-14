@@ -311,14 +311,14 @@ export default function SenatorsPage(): React.ReactElement | null {
       ${darkMode ? 'bg-[#0f172a] text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
       
       {/* Floating Theme Switcher */}
-      <button
+      {/* <button
         onClick={() => setDarkMode(!darkMode)}
         className={`fixed top-6 right-6 z-50 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95
           ${darkMode ? 'bg-[#2E3A8C] text-[#C7A537] shadow-[#2E3A8C]/20' : 'bg-white text-[#2E3A8C] shadow-slate-200'}`}
         aria-label="Toggle Dark Mode"
       >
         {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-      </button>
+      </button> */}
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
