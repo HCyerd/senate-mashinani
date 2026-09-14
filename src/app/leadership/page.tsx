@@ -327,14 +327,14 @@ export default function SenateOfficersPage(): React.ReactElement | null {
     <div className={`min-h-screen transition-colors duration-300 font-sans ${darkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
       
       {/* Floating Theme Switcher Button */}
-      <button 
+      {/* <button 
         onClick={() => setDarkMode(!darkMode)}
         aria-label="Toggle Theme" 
         className={`fixed top-6 right-6 z-50 p-3.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 border-2 
           ${darkMode ? 'bg-slate-900 text-[#C7A537] border-slate-800' : 'bg-white text-[#2E3A8C] border-slate-200'}`}
       >
         {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-      </button>
+      </button> */}
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
