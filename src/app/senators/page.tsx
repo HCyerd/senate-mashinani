@@ -41,7 +41,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
     party: 'PAA / Independent Speaker',
     partyColor: 'bg-amber-500',
     category: 'Presiding',
-    image: '/senators_images/Amason_Jeffah_Kingi_Senator.jpg',
+    image: '/senators_images/Amason_Jeffah_Kingi_Senator.png',
     description: 'Presides over Senate proceedings, maintains order, and protects the rights and privileges of Senators.'
   },
   {
