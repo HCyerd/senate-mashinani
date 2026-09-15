@@ -432,15 +432,15 @@ const faqs: FAQItem[] = [
       </div>
     )
   },
-  {
-    id: 3,
-    q: "3. How are host counties selected?",
-    a: (
-      <>
-        Candidate counties are processed through the <strong>Directorate of Legislative and Procedural Services</strong>, the <strong>Senate Board of Management</strong>, and the <strong>Senate Business Committee</strong>.<br /><br />Parliamentary staff conduct reconnaissance assessments beforehand to evaluate local infrastructure, security, and assembly facilities. Per a resolution adopted by the House, the Senate aims to hold at least one week of sittings in a designated county every September, excluding election years.
-      </>
-    )
-  },
+  // {
+  //   id: 3,
+  //   q: "3. How are host counties selected?",
+  //   a: (
+  //     <>
+  //       Candidate counties are processed through the <strong>Directorate of Legislative and Procedural Services</strong>, the <strong>Senate Board of Management</strong>, and the <strong>Senate Business Committee</strong>.<br /><br />Parliamentary staff conduct reconnaissance assessments beforehand to evaluate local infrastructure, security, and assembly facilities. Per a resolution adopted by the House, the Senate aims to hold at least one week of sittings in a designated county every September, excluding election years.
+  //     </>
+  //   )
+  // },
   {
     id: 4,
     q: "4. Which counties have hosted Senate Mashinani sessions?",
