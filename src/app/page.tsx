@@ -435,7 +435,7 @@ const faqs: FAQItem[] = [
   },
   {
     id: 3,
-    q: "3. How can I get Contact Information?",
+    q: "3. How can I contact the Senate?",
     a: (
       <>
         For official inquiries regarding upcoming schedules or public participation opportunities, you can contact the Clerk of the Senate at <strong>Email:</strong> <i> <a href="mailto:clerk@senate.go.ke">clerk@senate.go.ke</a></i> or <strong>Telephone:</strong> <i><a href="tel:+25422221291">+254 (2) 2221291</a> or <a href="tel:+25422848000">+254 (2) 2848000</a></i>
