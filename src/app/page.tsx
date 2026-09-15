@@ -31,7 +31,8 @@ import {
   Sparkles,
   ArrowRight,
   Info,
-  CalendarCheck
+  CalendarCheck,
+  Italic
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -432,15 +433,15 @@ const faqs: FAQItem[] = [
       </div>
     )
   },
-  // {
-  //   id: 3,
-  //   q: "3. How are host counties selected?",
-  //   a: (
-  //     <>
-  //       Candidate counties are processed through the <strong>Directorate of Legislative and Procedural Services</strong>, the <strong>Senate Board of Management</strong>, and the <strong>Senate Business Committee</strong>.<br /><br />Parliamentary staff conduct reconnaissance assessments beforehand to evaluate local infrastructure, security, and assembly facilities. Per a resolution adopted by the House, the Senate aims to hold at least one week of sittings in a designated county every September, excluding election years.
-  //     </>
-  //   )
-  // },
+  {
+    id: 3,
+    q: "3. How can I get Contact Information?",
+    a: (
+      <>
+        For official inquiries regarding upcoming schedules or public participation opportunities, you can contact the Clerk of the Senate at <strong>Email:</strong> <i> <a href="mailto:clerk@senate.go.ke">clerk@senate.go.ke</a></i> or <strong>Telephone:</strong> <i><a href="tel:+25422221291">+254 (2) 2221291</a> or <a href="tel:+25422848000">+254 (2) 2848000</a></i>
+      </>
+    )
+  },
   {
     id: 4,
     q: "4. Which counties have hosted Senate Mashinani sessions?",
