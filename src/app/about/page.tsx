@@ -1,386 +1,623 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-// Using lucide-react for icons as an alternative to phosphor for standard React projects
+import React, { useState, useEffect } from 'react';
 import { 
+    Landmark, 
+    History, 
     Users, 
-    ArrowDown, 
-    MapPin, 
-    CalendarCheck, 
-    Handshake, 
-    Target, 
-    Eye, 
     Scale, 
-    Search, 
-    MessageSquare, 
-    CalendarPlus,
+    ChevronDown, 
+    Gavel,
+    ShieldCheck,
+    Globe,
+    ExternalLink,
+    Target,
+    Eye,
+    Network,
+    Award,
+    BookOpen,
+    Briefcase,
     Sun,
     Moon
 } from 'lucide-react';
+import Image from 'next/image';
 
-export default function AboutPage() {
-    // --- State & Refs ---
-    const [isDarkMode, setIsDarkMode] = useState(false);
-    const [mounted, setMounted] = useState(false);
-    const observerRef = useRef<IntersectionObserver | null>(null);
+type TabProps = {
+    id: string;
+    label: string;
+    icon: React.ReactNode;
+    isActive: boolean;
+    onClick: (id: string) => void;
+};
 
-    useEffect(() => {
-        setMounted(true);
-        
-        // Initial check
-        const isDark = document.documentElement.classList.contains('dark');
-        setIsDarkMode(isDark);
+type LeaderProps = {
+    name: string;
+    role: string;
+    description: string;
+    image: string;
+    themeColor: string;
+};
 
-        // Set up a MutationObserver to watch for class changes on the html element
-        // This allows external navbars to toggle the theme and have this component react
-        const htmlObserver = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'class') {
-                    const isNowDark = document.documentElement.classList.contains('dark');
-                    setIsDarkMode(isNowDark);
-                }
-            });
-        });
+// Colors are mapped dynamically to CSS variables for smooth theme toggling
+const THEME = {
+    primary: 'bg-[var(--primary)]',
+    primaryText: 'text-[var(--primary-text)]', 
+    secondary: 'bg-[var(--secondary)]',
+    secondaryText: 'text-[var(--secondary)]',
+    accentGreen: 'text-[var(--accent-green)]',
+    accentRed: 'text-[var(--accent-red)]',
+    bgCard: 'bg-[var(--card)]',
+    borderLight: 'border-[var(--card-border)]',
+    textBody: 'text-[var(--muted-foreground)]'
+};
 
-        htmlObserver.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ['class']
-        });
+const SENATE_LEADERS: LeaderProps[] = [
+    {
+        name: "Rt. Hon. Amason Kingi",
+        role: "Speaker of the Senate",
+        description: "Serving as the Speaker since September 2022. Ex-officio member elected by the Senators. Presides over the sittings of the Senate.",
+        image: "/senators_images/Amason_Jeffah_Kingi_Senator.png",
+        themeColor: "bg-[#252864]"
+    },
+    {
+        name: "Hon. Kathuri Murungi",
+        role: "Deputy Speaker",
+        description: "Assists the Speaker in presiding over the sittings of the Senate and ensuring orderly conduct of House business.",
+        image: "/senators_images/Murungi_Kathuri_Senator.jpg",
+        themeColor: "bg-[#15008b]"
+    },
+    {
+        name: "Mr. Jeremiah M. Nyegenye",
+        role: "Clerk of the Senate",
+        description: "The chief administrative officer of the Senate and Secretary of the Parliamentary Service Commission, serving since 2013.",
+        image: "/CoS.jpg",
+        themeColor: "bg-[#C4122C]"
+    },
+    {
+        name: "Sen. Aaron Cheruiyot",
+        role: "Senate Majority Leader",
+        description: "Lead speaker for the majority party in the Senate. Directs the legislative agenda of the majority coalition on the floor.",
+        image: "/senators_images/Aaron_Kipkirui_Cheruiyot_Senator.jpg",
+        themeColor: "bg-[#C9B25A]"
+    },
+    {
+        name: "Sen. Stewart Madzayo",
+        role: "Senate Minority Leader",
+        description: "Leader of the minority coalition in the Senate. Crucial in providing checks, balances, and alternative legislative policies.",
+        image: "/senators_images/Justice_Stewart_Madzayo_Senator.jpg",
+        themeColor: "bg-[#252864]"
+    }
+];
 
-        return () => {
-            htmlObserver.disconnect();
-        };
-    }, []);
+const TabButton: React.FC<TabProps> = ({ id, label, icon, isActive, onClick }) => (
+    <button
+        onClick={() => onClick(id)}
+        className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all duration-300 border-b-2 outline-none whitespace-nowrap rounded-t-xl
+            ${isActive 
+                ? 'border-[var(--secondary)] text-[var(--primary-text)] bg-[var(--card)] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]' 
+                : 'border-transparent text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--card-border)]'
+            }`}
+    >
+        <span className={`${isActive ? 'text-[var(--secondary)]' : 'text-[var(--muted)]'}`}>{icon}</span>
+        {label}
+    </button>
+);
 
-    useEffect(() => {
-        if (!mounted) return;
+const SectionHeading: React.FC<{ title: string, subtitle?: string }> = ({ title, subtitle }) => (
+    <div className="mb-10 text-center md:text-left">
+        <h2 className={`text-3xl md:text-4xl font-extrabold ${THEME.primaryText} mb-3 relative inline-block transition-colors duration-300`}>
+            {title}
+            <div className={`absolute -bottom-2 left-0 w-1/3 h-1.5 ${THEME.secondary} rounded-full`}></div>
+        </h2>
+        {subtitle && <p className={`${THEME.textBody} mt-5 text-lg max-w-3xl leading-relaxed transition-colors duration-300`}>{subtitle}</p>}
+    </div>
+);
 
-        const revealElements = document.querySelectorAll('.reveal');
+export default function AboutSenate() {
+    const [activeTab, setActiveTab] = useState<string>('overview');
+    const [expandedRole, setExpandedRole] = useState<number | null>(0);
+    const [isDark, setIsDark] = useState<boolean>(false);
 
-        const revealOptions = {
-            threshold: 0.15,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        observerRef.current = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observerRef.current?.unobserve(entry.target);
-                }
-            });
-        }, revealOptions);
-
-        revealElements.forEach(el => {
-            observerRef.current?.observe(el);
-        });
-
-        return () => {
-            if (observerRef.current) {
-                observerRef.current.disconnect();
-            }
-        };
-    }, [mounted]);
-
-    // In a real Next.js app, this would be in tailwind.config.ts and globals.css
-    // We include it here to ensure the single-file works perfectly.
-    const customStyles = `
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    // CSS Variables for dynamic styling
+    const themeStyles = `
+        .senate-app {
+            --background: #F9FAFB;
+            --foreground: #0f172a;
+            --card: #ffffff;
+            --card-border: #e2e8f0;
+            --muted: #64748b;
+            --muted-foreground: #475569;
+            --primary: #252864;
+            --primary-foreground: #ffffff;
+            --primary-text: #252864;
+            --secondary: #C9B25A;
+            --secondary-text: #C9B25A;
+            --accent-green: #15008b;
+            --accent-red: #C4122C;
+            --hover-overlay: rgba(0,0,0,0.05);
         }
-        
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-300 { transition-delay: 300ms; }
-
-        .dark .glow-effect {
-            box-shadow: 0 0 40px -10px rgba(199, 172, 70, 0.15); /* Gold glow */
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes blob {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-            100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animate-blob {
-            animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-            animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-            animation-delay: 4s;
-        }
-
-        /* Using inline styles for colors to simulate the custom Tailwind config from previous step */
-        :root {
-            --brand-50: #f0f4f8;
-            --brand-100: #d9e2ec;
-            --brand-400: #486581;
-            --brand-500: #2A3C7D;
-            --brand-600: #1e2b5e;
-            --brand-900: #0f1630;
-            --brand-950: #070b18;
-            
-            --accent-100: #fcf3c7;
-            --accent-400: #ead252;
-            --accent-500: #C7AC46;
-            --accent-600: #a38b34;
+        .senate-app.dark-theme {
+            --background: #020617;
+            --foreground: #f8fafc;
+            --card: #0f172a;
+            --card-border: #1e293b;
+            --muted: #94a3b8;
+            --muted-foreground: #cbd5e1;
+            --primary: #15173e; 
+            --primary-foreground: #ffffff;
+            --primary-text: #ffffff;
+            --secondary: #C9B25A;
+            --secondary-text: #d4c178;
+            --accent-green: #00b359;
+            --accent-red: #e62240;
+            --hover-overlay: rgba(255,255,255,0.05);
         }
     `;
 
+    const roles = [
+        {
+            title: "Representing Counties",
+            icon: <Globe className={THEME.primaryText} />,
+            desc: "The primary mandate of the Senate is to represent the counties and serve to protect the interests of the counties and their governments. It is a vital organ for devolution."
+        },
+        {
+            title: "Law-making",
+            icon: <Gavel className={THEME.primaryText} />,
+            desc: "Participates in the law-making function of Parliament by considering, debating, and approving Bills concerning counties."
+        },
+        {
+            title: "Revenue Allocation",
+            icon: <Scale className={THEME.primaryText} />,
+            desc: "Determines the allocation of national revenue among counties, as provided in Article 217, and exercises oversight over national revenue allocated to the county governments."
+        },
+        {
+            title: "Oversight & Impeachment",
+            icon: <ShieldCheck className={THEME.primaryText} />,
+            desc: "Participates in the oversight of State officers. Has powers to determine any resolution to remove the President, Deputy President, County Governors, and Deputy Governors from office."
+        }
+    ];
+
     return (
-        <div className={`min-h-screen transition-colors duration-500 overflow-x-hidden selection:bg-[#2A3C7D] selection:text-white ${isDarkMode ? 'dark bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
-            <title>About - Parliamentary Service Commission</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <div className={`senate-app min-h-screen bg-[var(--background)] text-[var(--foreground)] font-sans selection:bg-[var(--secondary)] selection:text-[var(--primary-foreground)] transition-colors duration-300 ${isDark ? 'dark-theme' : ''}`}>
+            <style dangerouslySetInnerHTML={{ __html: themeStyles }} />
             
-            <style dangerouslySetInnerHTML={{ __html: customStyles }} />
-
             {}
-            <section className="relative pt-20 pb-20 lg:pt-32 lg:pb-32 overflow-hidden min-h-screen flex flex-col justify-center">
-                {/* Background Image with Low Opacity */}
-                {/* Note: You can replace the URL below with a local image path like '/parliament_building.jpg' */}
-                <div 
-                    className="absolute inset-0 -z-20 bg-cover bg-center bg-no-repeat opacity-15 dark:opacity-[0.05] mix-blend-luminosity transition-opacity duration-500"
-                    style={{ backgroundImage: "url('https://images.unsplash.com/photo-1523292562811-8fa7962a78c8?q=80&w=2070&auto=format&fit=crop')" }}
-                ></div>
-
-                {/* Background decorative elements */}
-                <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-                    <div className="absolute top-[10%] left-[10%] w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob bg-[#2A3C7D]/10 dark:bg-[#2A3C7D]/20"></div>
-                    <div className="absolute top-[20%] right-[10%] w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000 bg-[#C7AC46]/10 dark:bg-[#C7AC46]/20"></div>
-                    <div className="absolute bottom-[10%] left-[30%] w-96 h-96 bg-slate-500/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000 dark:bg-slate-700/20"></div>
+            <div className={`relative bg-[#252864] overflow-hidden shadow-xl`}>
+                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-[#C9B25A] via-transparent to-transparent"></div>
+                
+                {/* Theme Toggle Button positioned in top right */}
+                <div className="absolute top-6 right-6 z-20">
+                    <button
+                        onClick={() => setIsDark(!isDark)}
+                        className="p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:text-[#C9B25A] transition-all duration-300 flex items-center justify-center shadow-lg"
+                        aria-label="Toggle Theme"
+                    >
+                        {isDark ? <Sun size={22} /> : <Moon size={22} />}
+                    </button>
                 </div>
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-                    <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-                        
-                        {/* Left: Text Content */}
-                        <div className="flex-1 text-center lg:text-left">
-                            <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full border text-sm font-semibold tracking-wide uppercase mb-8 reveal bg-[#f0f4f8] border-[#d9e2ec] text-[#0f1630] dark:bg-[#070b18] dark:border-[#0f1630] dark:text-[#d9e2ec]">
-                                <Scale className="text-[#C7AC46]" size={18} />
-                                Constitutional Body
-                            </span>
-                            
-                            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8 reveal delay-100 leading-tight">
-                                Parliamentary <br className="hidden lg:block" />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2A3C7D] to-[#C7AC46] dark:from-[#486581] dark:to-[#ead252]">Service Commission</span>
-                            </h1>
-                            
-                            <p className="mt-4 text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto lg:mx-0 reveal delay-200 leading-relaxed">
-                                Established under Article 127 of the Constitution of Kenya, 2010 to provide services and facilities that ensure the efficient and effective functioning of Parliament.
-                            </p>
-                            
-                            <div className="mt-10 flex flex-col sm:flex-row justify-center lg:justify-start gap-4 reveal delay-300">
-                                <a href="#mission" className="px-8 py-4 rounded-full bg-[#2A3C7D] text-white font-medium hover:bg-[#1e2b5e] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-2">
-                                    <span>Discover Our Mandate</span>
-                                    <ArrowDown size={20} />
-                                </a>
-                            </div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 relative z-10 flex flex-col-reverse md:flex-row items-center gap-12">
+                    <div className="flex-1 text-center md:text-left">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-[#C9B25A]/40 text-[#C9B25A] text-sm font-bold mb-6 uppercase tracking-widest backdrop-blur-sm shadow-sm">
+                            <span className="w-2 h-2 rounded-full bg-[#C9B25A] animate-pulse"></span>
+                            Jamhuri ya Kenya
                         </div>
-
-                        {/* Right: Logo Graphic */}
-                        <div className="flex-1 w-full max-w-md mx-auto lg:max-w-none relative reveal delay-200">
-                            <div className="relative w-full aspect-square flex items-center justify-center">
-                                {/* Decorative circles behind logo */}
-                                <div className="absolute inset-4 rounded-full border-2 border-dashed border-slate-200 dark:border-slate-800 animate-[spin_60s_linear_infinite]"></div>
-                                <div className="absolute inset-10 rounded-full border border-dashed border-[#d9e2ec] dark:border-[#0f1630] animate-[spin_40s_linear_infinite_reverse]"></div>
-                                
-                                {/* Logo container */}
-                               
-                                    <img src="/sessions_images/parliament.png" alt="Parliament of Kenya Emblem" className="w-full h-auto object-contain drop-shadow-md rounded-full" />
-                                
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-            {}
-            <section className="py-12 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border-y border-slate-200 dark:border-slate-800 relative z-10">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-200 dark:divide-slate-700">
-                        <div className="reveal">
-                            <div className="flex items-center justify-center mb-2 text-[#C7AC46]"><Users size={28} /></div>
-                            <p className="text-xl font-bold text-slate-900 dark:text-white mb-1 mt-3">National Assembly</p>
-                            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Service</p>
-                        </div>
-                        <div className="reveal delay-100">
-                            <div className="flex items-center justify-center mb-2 text-[#2A3C7D]"><Users size={28} /></div>
-                            <p className="text-xl font-bold text-slate-900 dark:text-white mb-1 mt-3">The Senate</p>
-                            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Service</p>
-                        </div>
-                        <div className="reveal delay-200">
-                            <div className="flex items-center justify-center mb-2 text-[#C7AC46]"><Handshake size={28} /></div>
-                            <p className="text-xl font-bold text-slate-900 dark:text-white mb-1 mt-3">Joint Services</p>
-                            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Administration</p>
-                        </div>
-                        <div className="reveal delay-300">
-                            <div className="flex items-center justify-center mb-2 text-[#2A3C7D]"><Target size={28} /></div>
-                            <p className="text-xl font-bold text-slate-900 dark:text-white mb-1 mt-3">CPST</p>
-                            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Training & Studies</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {}
-            <section id="mission" className="py-24 relative bg-slate-50 dark:bg-slate-950">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16 reveal">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">Our Driving Force</h2>
-                        <div className="w-24 h-1.5 bg-gradient-to-r from-[#2A3C7D] to-[#C7AC46] mx-auto rounded-full mb-8"></div>
-                        <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-                            The Parliamentary Service Commission strives to serve members of Parliament, employees, and the public by providing quality, impartial and efficient services anchored on the values and principles enshrined in the Constitution.
+                        <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-6 leading-tight drop-shadow-md">
+                            The Senate of the <br className="hidden md:block"/>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C9B25A] to-[#E3CE7B]">Republic of Kenya</span>
+                        </h1>
+                        <p className="text-lg md:text-xl text-blue-100/90 max-w-2xl mb-8 leading-relaxed font-light">
+                            Bunge la Seneti la Kenya. The Upper House of the Parliament of Kenya, established to protect devolution, represent counties, and uphold the constitutional rule of law.
                         </p>
                     </div>
-
-                    <div className="grid md:grid-cols-2 gap-8 reveal delay-100">
-                        {/* Vision Card */}
-                        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 md:p-10 shadow-sm border border-slate-200 dark:border-slate-800 relative overflow-hidden group">
-                            {/* Decorative background glow */}
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-[#C7AC46]/10 rounded-bl-full transition-transform group-hover:scale-110"></div>
-
-                            <div className="w-16 h-16 rounded-2xl bg-[#fcf3c7] dark:bg-[#a38b34]/20 flex items-center justify-center text-[#C7AC46] mb-6 relative z-10 border border-[#ead252]/30 dark:border-[#a38b34]/30">
-                                <Eye size={32} />
-                            </div>
-                            <h3 className="font-bold text-slate-900 dark:text-white text-2xl mb-4 relative z-10">Vision</h3>
-                            <p className="text-slate-600 dark:text-slate-400 text-lg font-medium leading-relaxed relative z-10">
-                                "Democratic and people centred Parliament."
-                            </p>
-                        </div>
-
-                        {/* Mission Card */}
-                        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 md:p-10 shadow-sm border border-slate-200 dark:border-slate-800 relative overflow-hidden group">
-                            {/* Decorative background glow */}
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-[#2A3C7D]/10 rounded-bl-full transition-transform group-hover:scale-110"></div>
-                            
-                            <div className="w-16 h-16 rounded-2xl bg-[#f0f4f8] dark:bg-[#0f1630]/30 flex items-center justify-center text-[#2A3C7D] mb-6 relative z-10 border border-[#d9e2ec] dark:border-[#0f1630]/50">
-                                <Target size={32} />
-                            </div>
-                            <h3 className="font-bold text-slate-900 dark:text-white text-2xl mb-4 relative z-10">Mission</h3>
-                            <p className="text-slate-600 dark:text-slate-400 text-lg font-medium leading-relaxed relative z-10">
-                                "To facilitate the Members of Parliament to efficiently and effectively discharge their constitutional mandate of representation, legislation and oversight."
-                            </p>
-                        </div>
+                    
+                    <div className="flex-shrink-0 relative group">
+                            {/* <div className="absolute inset-0 bg-[#C9B25A] rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                            <div className="w-64 h-64 md:w-80 md:h-80 relative bg-[var(--card)] rounded-full p-6 shadow-2xl flex items-center justify-center border-4 border-[#C9B25A]/80 z-10 hover:scale-105 transition-all duration-500 ease-out"> */}
+                             <img 
+                                src="parliament_emblem.png" 
+                                alt="Parliament of Kenya Emblem" 
+                                className="w-full h-auto object-contain drop-shadow-xl"
+                                onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    target.style.display = 'none';
+                                    target.parentElement?.insertAdjacentHTML('beforeend', '<div class="text-6xl text-[#252864]">🏛️</div>');
+                                }}
+                            />
+                        {/* </div> */}
                     </div>
                 </div>
-            </section>
-
-            {}
-            <section className="py-24 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center max-w-3xl mx-auto mb-16 reveal">
-                        <span className="text-[#2A3C7D] dark:text-[#486581] font-semibold tracking-wider uppercase text-sm mb-2 block">Foundation</span>
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Core Values</h2>
-                        <p className="text-slate-600 dark:text-slate-400 text-lg">The Parliamentary Service is committed to upholding the following core values in the discharge of its mandate.</p>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Value 1 */}
-                        <div className="bg-slate-50 dark:bg-slate-950 p-8 rounded-3xl shadow-inner border border-slate-100 dark:border-slate-800 hover:border-[#486581] dark:hover:border-[#486581] transition-all duration-300 group reveal">
-                            <div className="w-14 h-14 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-[#2A3C7D] shadow-sm mb-6 group-hover:bg-[#2A3C7D] group-hover:text-white transition-colors duration-300">
-                                <Target size={24} />
-                            </div>
-                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Professionalism</h3>
-                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                We shall maintain a high level of competence and team work in our work.
-                            </p>
-                        </div>
-
-                        {/* Value 2 */}
-                        <div className="bg-slate-50 dark:bg-slate-950 p-8 rounded-3xl shadow-inner border border-slate-100 dark:border-slate-800 hover:border-[#ead252] dark:hover:border-[#a38b34] transition-all duration-300 group reveal delay-100">
-                            <div className="w-14 h-14 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-[#C7AC46] shadow-sm mb-6 group-hover:bg-[#C7AC46] group-hover:text-white transition-colors duration-300">
-                                <Scale size={24} />
-                            </div>
-                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Impartiality</h3>
-                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                We shall remain objective and non-partisan in the delivery of service.
-                            </p>
-                        </div>
-
-                        {/* Value 3 */}
-                        <div className="bg-slate-50 dark:bg-slate-950 p-8 rounded-3xl shadow-inner border border-slate-100 dark:border-slate-800 hover:border-[#486581] dark:hover:border-[#486581] transition-all duration-300 group reveal delay-200">
-                            <div className="w-14 h-14 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-[#2A3C7D] shadow-sm mb-6 group-hover:bg-[#2A3C7D] group-hover:text-white transition-colors duration-300">
-                                <MessageSquare size={24} />
-                            </div>
-                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Responsiveness</h3>
-                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                We shall be customer focused and provide high quality service in a timely and reliable manner.
-                            </p>
-                        </div>
-
-                        {/* Value 4 */}
-                        <div className="bg-slate-50 dark:bg-slate-950 p-8 rounded-3xl shadow-inner border border-slate-100 dark:border-slate-800 hover:border-[#ead252] dark:hover:border-[#a38b34] transition-all duration-300 group reveal">
-                            <div className="w-14 h-14 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-[#C7AC46] shadow-sm mb-6 group-hover:bg-[#C7AC46] group-hover:text-white transition-colors duration-300">
-                                <Search size={24} />
-                            </div>
-                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Integrity & Accountability</h3>
-                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                We shall maintain the highest level of ethics, transparency and accountability in discharging our duties.
-                            </p>
-                        </div>
-
-                        {/* Value 5 */}
-                        <div className="bg-slate-50 dark:bg-slate-950 p-8 rounded-3xl shadow-inner border border-slate-100 dark:border-slate-800 hover:border-[#486581] dark:hover:border-[#486581] transition-all duration-300 group reveal delay-100">
-                            <div className="w-14 h-14 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-[#2A3C7D] shadow-sm mb-6 group-hover:bg-[#2A3C7D] group-hover:text-white transition-colors duration-300">
-                                <Handshake size={24} />
-                            </div>
-                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Cooperation & Consultation</h3>
-                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                We shall maintain the spirit of cooperation based on consultation and communication.
-                            </p>
-                        </div>
-
-                        {/* Value 6 */}
-                        <div className="bg-slate-50 dark:bg-slate-950 p-8 rounded-3xl shadow-inner border border-slate-100 dark:border-slate-800 hover:border-[#ead252] dark:hover:border-[#a38b34] transition-all duration-300 group reveal delay-200">
-                            <div className="w-14 h-14 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-[#C7AC46] shadow-sm mb-6 group-hover:bg-[#C7AC46] group-hover:text-white transition-colors duration-300">
-                                <Users size={24} />
-                            </div>
-                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Inclusiveness</h3>
-                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                We shall recognize diverse backgrounds to promote National integration.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {}
-            <section className="py-20 relative overflow-hidden bg-[#0f1630]">
-                {/* Decorative subtle pattern */}
-                <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg width=\\'60\\' height=\\'60\\' viewBox=\\'0 0 60 60\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'none\\' fill-rule=\\'evenodd\\'%3E%3Cg fill=\\'%23ffffff\\' fill-opacity=\\'1\\'%3E%3Cpath d=\\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')" }}></div>
                 
-                <div className="max-w-4xl mx-auto px-4 relative z-10 text-center reveal">
-                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Our Core Functions</h2>
-                    <p className="text-[#d9e2ec] text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light">
-                        As set out in Article 127(6) of the Constitution, the PSC is mandated to provide services and facilities, constitute offices in the Parliamentary Service, exercise budgetary control, and undertake programmes to promote the ideals of Parliamentary democracy.
-                    </p>
-                    <div className="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href="#" className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#C7AC46] text-[#0f1630] font-bold hover:bg-[#ead252] transition-colors shadow-lg hover:shadow-xl">
-                            <span>Read the Full Mandate</span>
-                        </a>
+                {/* Decorative Kenyan Flag bottom trim */}
+                <div className="h-3 w-full flex shadow-inner">
+                    <div className="w-1/3 bg-black"></div>
+                    <div className="w-1/3 bg-[#C4122C]"></div>
+                    <div className="w-1/3 bg-[#15008b]"></div>
+                </div>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+                <div className={`flex overflow-x-auto no-scrollbar border-b ${THEME.borderLight} transition-colors duration-300`}>
+                    <TabButton 
+                        id="overview" 
+                        label="Overview & Role" 
+                        icon={<Landmark size={20} />} 
+                        isActive={activeTab === 'overview'} 
+                        onClick={setActiveTab} 
+                    />
+                    <TabButton 
+                        id="history" 
+                        label="History" 
+                        icon={<History size={20} />} 
+                        isActive={activeTab === 'history'} 
+                        onClick={setActiveTab} 
+                    />
+                    <TabButton 
+                        id="leadership" 
+                        label="Leadership" 
+                        icon={<Users size={20} />} 
+                        isActive={activeTab === 'leadership'} 
+                        onClick={setActiveTab} 
+                    />
+                    <TabButton 
+                        id="committees" 
+                        label="Committees" 
+                        icon={<Network size={20} />} 
+                        isActive={activeTab === 'committees'} 
+                        onClick={setActiveTab} 
+                    />
+                    <TabButton 
+                        id="symbols" 
+                        label="Symbols & Traditions" 
+                        icon={<Award size={20} />} 
+                        isActive={activeTab === 'symbols'} 
+                        onClick={setActiveTab} 
+                    />
+                </div>
+            </div>
+
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 min-h-[60vh]">
+                
+                {/* OVERVIEW TAB */}
+                {activeTab === 'overview' && (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                            <div className={`${THEME.bgCard} p-8 rounded-3xl shadow-sm border ${THEME.borderLight} border-t-4 border-t-[var(--secondary)] hover:shadow-md transition-all duration-300 group`}>
+                                <div className="h-12 w-12 bg-[var(--secondary)]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[var(--secondary)] group-hover:text-[var(--primary-foreground)] transition-colors duration-500">
+                                    <Target className="text-[var(--secondary)] group-hover:text-[var(--primary-foreground)] transition-colors duration-500" size={28} />
+                                </div>
+                                <h3 className={`text-2xl font-bold ${THEME.primaryText} mb-4 transition-colors duration-300`}>Our Vision</h3>
+                                <p className={`${THEME.textBody} leading-relaxed text-lg transition-colors duration-300`}>
+                                    To be a responsive and independent Senate that protects the legacy of devolution and promotes the equitable, sustainable development of all counties in Kenya.
+                                </p>
+                            </div>
+                            <div className={`${THEME.bgCard} p-8 rounded-3xl shadow-sm border ${THEME.borderLight} border-t-4 border-t-[var(--primary)] hover:shadow-md transition-all duration-300 group`}>
+                                <div className="h-12 w-12 bg-[var(--primary)]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[var(--primary)] group-hover:text-[var(--primary-foreground)] transition-colors duration-500">
+                                    <Eye className="text-[var(--primary-text)] group-hover:text-[var(--primary-foreground)] transition-colors duration-500" size={28} />
+                                </div>
+                                <h3 className={`text-2xl font-bold ${THEME.primaryText} mb-4 transition-colors duration-300`}>Our Mission</h3>
+                                <p className={`${THEME.textBody} leading-relaxed text-lg transition-colors duration-300`}>
+                                    To serve the people of Kenya by diligently exercising our legislative, oversight, and representational authority to ensure the enduring success of devolution.
+                                </p>
+                            </div>
+                        </div>
+
+                        <SectionHeading 
+                            title="Mandate and Powers" 
+                            subtitle="The Senate serves as the crucial link between the National Government and the 47 County Governments, ensuring equitable development across the republic."
+                        />
+
+                        <div className="grid md:grid-cols-2 gap-6 mt-8">
+                            <div className="space-y-4">
+                                {roles.map((role, idx) => (
+                                    <div 
+                                        key={idx}
+                                        className={`${THEME.bgCard} border rounded-2xl overflow-hidden transition-all duration-300 ${expandedRole === idx ? 'shadow-md border-[var(--secondary)]' : `${THEME.borderLight} hover:border-[var(--muted)]`}`}
+                                    >
+                                        <button 
+                                            onClick={() => setExpandedRole(expandedRole === idx ? null : idx)}
+                                            className="w-full flex items-center justify-between p-5 text-left focus:outline-none"
+                                        >
+                                            <div className="flex items-center gap-4">
+                                                <div className={`p-2 rounded-lg transition-colors duration-300 ${expandedRole === idx ? 'bg-[var(--secondary)]/20' : 'bg-[var(--hover-overlay)]'}`}>
+                                                    {role.icon}
+                                                </div>
+                                                <h3 className={`font-bold text-lg transition-colors duration-300 ${expandedRole === idx ? THEME.primaryText : 'text-[var(--foreground)]'}`}>
+                                                    {role.title}
+                                                </h3>
+                                            </div>
+                                            <ChevronDown className={`transition-transform duration-300 ${expandedRole === idx ? 'rotate-180 text-[var(--secondary)]' : 'text-[var(--muted)]'}`} />
+                                        </button>
+                                        <div 
+                                            className={`transition-all duration-500 ease-in-out ${expandedRole === idx ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}
+                                        >
+                                            <p className={`p-5 pt-0 ${THEME.textBody} border-t ${THEME.borderLight} bg-[var(--hover-overlay)] transition-colors duration-300`}>
+                                                {role.desc}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            
+                            <div className={`${THEME.bgCard} rounded-3xl p-8 border ${THEME.borderLight} shadow-sm flex flex-col justify-center relative overflow-hidden transition-colors duration-300`}>
+                                {/* Decorative elements */}
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--hover-overlay)] rounded-bl-full -z-10 transition-colors duration-300"></div>
+                                <div className="absolute bottom-0 left-0 w-24 h-24 bg-[var(--secondary)]/5 rounded-tr-full -z-10 transition-colors duration-300"></div>
+                                
+                                <h3 className={`text-2xl font-bold ${THEME.primaryText} mb-6 flex items-center gap-3 transition-colors duration-300`}>
+                                    <Users className="text-[var(--secondary)]" />
+                                    Composition (67 Members)
+                                </h3>
+                                
+                                <div className="space-y-6">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-16 h-16 rounded-2xl bg-[#252864] text-white flex items-center justify-center text-2xl font-black shadow-md shadow-blue-900/20">47</div>
+                                        <div>
+                                            <h4 className="font-bold text-[var(--foreground)] text-lg transition-colors duration-300">Elected Senators</h4>
+                                            <p className="text-[var(--muted-foreground)] text-sm transition-colors duration-300">One elected from each of the 47 counties</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-16 h-16 rounded-2xl bg-[#C9B25A] text-white flex items-center justify-center text-2xl font-black shadow-md shadow-yellow-700/20">16</div>
+                                        <div>
+                                            <h4 className="font-bold text-[var(--foreground)] text-lg transition-colors duration-300">Women Representatives</h4>
+                                            <p className="text-[var(--muted-foreground)] text-sm transition-colors duration-300">Nominated by political parties proportionally</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-16 h-16 rounded-2xl bg-[#15008b] text-white flex items-center justify-center text-2xl font-black shadow-md shadow-green-900/20">2</div>
+                                        <div>
+                                            <h4 className="font-bold text-[var(--foreground)] text-lg transition-colors duration-300">Youth Representatives</h4>
+                                            <p className="text-[var(--muted-foreground)] text-sm transition-colors duration-300">One male, one female</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-16 h-16 rounded-2xl bg-[#C4122C] text-white flex items-center justify-center text-2xl font-black shadow-md shadow-red-900/20">2</div>
+                                        <div>
+                                            <h4 className="font-bold text-[var(--foreground)] text-lg transition-colors duration-300">PLWD Representatives</h4>
+                                            <p className="text-[var(--muted-foreground)] text-sm transition-colors duration-300">Persons with disabilities (One male, one female)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'history' && (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <SectionHeading 
+                            title="A Brief History" 
+                            subtitle="The evolution of the Kenyan Senate reflects the nation's journey towards decentralization and robust democratic governance."
+                        />
+                        
+                        <div className="relative border-l-4 border-[var(--secondary)] ml-4 md:ml-8 pl-8 py-4 space-y-12">
+                            
+                            <div className="relative">
+                                <div className="absolute w-6 h-6 bg-[#252864] rounded-full -left-[45px] top-1 border-4 border-[var(--background)] shadow-sm flex items-center justify-center transition-colors duration-300"></div>
+                                <h3 className={`text-2xl font-bold ${THEME.primaryText} transition-colors duration-300`}>1963 - Independence Senate</h3>
+                                <p className={`mt-3 ${THEME.textBody} leading-relaxed ${THEME.bgCard} p-5 rounded-2xl border ${THEME.borderLight} shadow-sm transition-colors duration-300`}>
+                                    Kenya's first constitution at independence established a bicameral legislature. The Senate was established primarily to protect the interests of the newly created regions (Majimbo system). It consisted of 41 Senators representing districts and one representing Nairobi.
+                                </p>
+                            </div>
+
+                            <div className="relative">
+                                <div className="absolute w-6 h-6 bg-[#C4122C] rounded-full -left-[45px] top-1 border-4 border-[var(--background)] shadow-sm transition-colors duration-300"></div>
+                                <h3 className={`text-2xl font-bold ${THEME.primaryText} transition-colors duration-300`}>1966 - Abolition</h3>
+                                <p className={`mt-3 ${THEME.textBody} leading-relaxed ${THEME.bgCard} p-5 rounded-2xl border ${THEME.borderLight} shadow-sm transition-colors duration-300`}>
+                                    The Majimbo system faced strong opposition from the central government. In 1966, the Senate was abolished through a constitutional amendment, and its members were absorbed into a newly formed unicameral National Assembly. Kenya remained unicameral for over four decades.
+                                </p>
+                            </div>
+
+                            <div className="relative">
+                                <div className="absolute w-6 h-6 bg-[#15008b] rounded-full -left-[45px] top-1 border-4 border-[var(--background)] shadow-sm transition-colors duration-300"></div>
+                                <h3 className={`text-2xl font-bold ${THEME.primaryText} transition-colors duration-300`}>2010 - Rebirth in the New Constitution</h3>
+                                <p className={`mt-3 ${THEME.textBody} leading-relaxed ${THEME.bgCard} p-5 rounded-2xl border ${THEME.borderLight} shadow-sm transition-colors duration-300`}>
+                                    The promulgation of the Constitution of Kenya 2010 reintroduced a bicameral Parliament. The new Senate was reborn with a specific mandate to serve as the pillar of devolution, protecting the 47 newly established County Governments and ensuring resources are shared equitably.
+                                </p>
+                            </div>
+                             
+                             <div className="relative">
+                                <div className="absolute w-6 h-6 bg-[#C9B25A] rounded-full -left-[45px] top-1 border-4 border-[var(--background)] shadow-sm transition-colors duration-300"></div>
+                                <h3 className={`text-2xl font-bold ${THEME.primaryText} transition-colors duration-300`}>2013 - 11th Parliament Convenes</h3>
+                                <p className={`mt-3 ${THEME.textBody} leading-relaxed ${THEME.bgCard} p-5 rounded-2xl border ${THEME.borderLight} shadow-sm transition-colors duration-300`}>
+                                    Following the 2013 general elections, the modern Senate officially convened, marking the operationalization of the devolved government system in Kenya.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'leadership' && (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <SectionHeading 
+                            title="Senate Leadership" 
+                            subtitle="The leaders tasked with guiding the legislative agenda, ensuring order, and managing the administration of the Senate."
+                        />
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                            {SENATE_LEADERS.map((leader, index) => (
+                                <div key={index} className={`${THEME.bgCard} rounded-3xl overflow-hidden shadow-sm border ${THEME.borderLight} hover:shadow-xl transition-all duration-300 group flex flex-col h-full`}>
+                                    <div className={`h-24 ${leader.themeColor} relative`}>
+                                        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
+                                    </div>
+                                    <div className="px-6 pb-6 pt-0 relative flex-grow flex flex-col items-center text-center">
+                                        <div className={`w-28 h-28 mx-auto -mt-14 mb-4 rounded-full border-4 border-[var(--card)] shadow-lg overflow-hidden bg-[var(--hover-overlay)] z-10 group-hover:scale-105 transition-all duration-300`}>
+                                             <img 
+                                                src={leader.image} 
+                                                alt={leader.name} 
+                                                className="w-full h-full object-cover"
+                                                onError={(e) => {
+                                                    const target = e.target as HTMLImageElement;
+                                                    target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(leader.name)}&background=334155&color=fff&size=256`;
+                                                }}
+                                            />
+                                        </div>
+                                        <h3 className={`text-xl font-bold text-[var(--foreground)] mb-1 transition-colors duration-300`}>{leader.name}</h3>
+                                        <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 ${leader.themeColor} text-white shadow-sm`}>
+                                            {leader.role}
+                                        </div>
+                                        <p className={`${THEME.textBody} text-sm leading-relaxed mt-2 transition-colors duration-300`}>
+                                            {leader.description}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'committees' && (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <SectionHeading 
+                            title="The Engine Room of the Senate" 
+                            subtitle="Committees are the core structural mechanisms where detailed legislative work, public participation, investigations, and oversight take place."
+                        />
+                        
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+                            <div className="bg-[#252864] rounded-3xl p-8 text-white shadow-lg relative overflow-hidden group">
+                                <div className="absolute right-0 top-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3 group-hover:scale-150 transition-transform duration-700"></div>
+                                <Briefcase size={40} className="mb-6 text-[#C9B25A]" />
+                                <h3 className="text-2xl font-bold mb-4">Standing Committees</h3>
+                                <p className="text-blue-100 leading-relaxed text-sm">
+                                    Permanent committees responsible for considering bills, investigating matters of public interest, and overseeing specific government ministries and departments related to devolved functions.
+                                </p>
+                            </div>
+                            
+                            <div className="bg-[#15008b] rounded-3xl p-8 text-white shadow-lg relative overflow-hidden group">
+                                <div className="absolute right-0 top-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 group-hover:scale-150 transition-transform duration-700"></div>
+                                <Target size={40} className="mb-6 text-[#C9B25A]" />
+                                <h3 className="text-2xl font-bold mb-4">Select & Ad-hoc</h3>
+                                <p className="text-green-50 leading-relaxed text-sm">
+                                    Specialized committees established for a limited time to address specific, pressing issues or to investigate particular matters, such as impeachments or emergency national crises.
+                                </p>
+                            </div>
+                            
+                            <div className="bg-[#C4122C] rounded-3xl p-8 text-white shadow-lg relative overflow-hidden group">
+                                <div className="absolute right-0 top-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 group-hover:scale-150 transition-transform duration-700"></div>
+                                <BookOpen size={40} className="mb-6 text-[#C9B25A]" />
+                                <h3 className="text-2xl font-bold mb-4">Sessional Committees</h3>
+                                <p className="text-red-50 leading-relaxed text-sm">
+                                    Committees appointed at the beginning of each parliamentary session, handling administrative, procedural, and internal matters of the Senate such as House Business and Public Accounts.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className={`${THEME.bgCard} rounded-3xl border ${THEME.borderLight} p-8 shadow-sm transition-colors duration-300`}>
+                            <h3 className={`text-xl font-bold ${THEME.primaryText} mb-6 border-b ${THEME.borderLight} pb-4 transition-colors duration-300`}>Key Oversight Committees</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {[
+                                    "County Public Accounts and Investments Committee (CPAIC)",
+                                    "Committee on Devolution and Intergovernmental Relations",
+                                    "Committee on National Security, Defence and Foreign Relations",
+                                    "Committee on Finance and Budget",
+                                    "Committee on Health",
+                                    "Committee on Justice, Legal Affairs and Human Rights",
+                                    "Committee on Agriculture, Livestock and Fisheries",
+                                    "Committee on Education"
+                                ].map((committee, idx) => (
+                                    <div key={idx} className={`flex items-center gap-3 p-4 bg-[var(--hover-overlay)] rounded-xl hover:bg-[var(--card-border)] transition-all border border-transparent cursor-default duration-300`}>
+                                        <div className="h-2.5 w-2.5 rounded-full bg-[var(--secondary)] flex-shrink-0"></div>
+                                        <span className="font-medium text-[var(--foreground)] text-sm md:text-base transition-colors duration-300">{committee}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'symbols' && (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <SectionHeading 
+                            title="Symbols of Authority" 
+                            subtitle="The traditions, emblems, and artifacts that embody the power, dignity, and historical continuity of the Senate."
+                        />
+
+                        <div className="mt-12 flex flex-col lg:flex-row gap-12 items-center">
+                            <div className="flex-1 w-full relative">
+                                <div className="absolute inset-0 bg-gradient-to-tr from-[var(--primary)]/10 to-[var(--secondary)]/10 rounded-3xl transform rotate-3 scale-105 transition-colors duration-300"></div>
+                                <div className={`${THEME.bgCard} p-8 rounded-3xl border ${THEME.borderLight} shadow-xl relative z-10 flex flex-col items-center justify-center min-h-[400px] overflow-hidden transition-colors duration-300`}>
+                                    
+                                    {/* CSS Illustrated Mace */}
+                                    <div >
+                                        {/* Mace Head */}
+                                        <Image
+                                            src="/mace.png"
+                                            alt="Senate Mace"
+                                            width={1200}
+                                            height={400}
+                                            className="object-contain"
+                                        />
+                                        
+                                        {/* Mace Base */}
+                                        {/* <div className="w-10 h-14 md:w-12 md:h-16 bg-gradient-to-br from-[#C9B25A] to-[#998132] rounded-lg absolute -right-2 shadow-lg z-10 border-l border-white/30"></div> */}
+                                    </div>
+                                    
+                                    <h3 className={`text-3xl font-extrabold ${THEME.primaryText} mb-2 mt-4 text-center transition-colors duration-300`}>The Senate Mace</h3>
+                                    <p className="text-center text-[var(--secondary)] font-bold tracking-widest uppercase text-sm mb-2">Symbol of Constitutional Authority</p>
+                                </div>
+                            </div>
+
+                            <div className="flex-1 space-y-6">
+                                <div className={`${THEME.bgCard} p-6 rounded-2xl border-l-4 border-[var(--primary)] shadow-sm hover:shadow-md transition-all duration-300`}>
+                                    <h4 className="text-xl font-bold text-[var(--foreground)] mb-3 flex items-center gap-2 transition-colors duration-300">
+                                        <Award className="text-[var(--primary-text)] transition-colors duration-300" size={20} /> Supreme Authority
+                                    </h4>
+                                    <p className={`${THEME.textBody} leading-relaxed transition-colors duration-300`}>
+                                        The Mace is the physical symbol of the authority of the Senate and the Speaker. The Senate cannot sit, and official business cannot be transacted, unless the Mace is present and placed on the central Table.
+                                    </p>
+                                </div>
+                                <div className={`${THEME.bgCard} p-6 rounded-2xl border-l-4 border-[var(--secondary)] shadow-sm hover:shadow-md transition-all duration-300`}>
+                                    <h4 className="text-xl font-bold text-[var(--foreground)] mb-3 flex items-center gap-2 transition-colors duration-300">
+                                        <Eye className="text-[var(--secondary)]" size={20} /> Design & Craftsmanship
+                                    </h4>
+                                    <p className={`${THEME.textBody} leading-relaxed transition-colors duration-300`}>
+                                        Traditionally crafted from silver, gold plating, and precious elements. It intricately features the Coat of Arms and traditional carvings representing Kenya's agricultural wealth, natural heritage, and national unity.
+                                    </p>
+                                </div>
+                                <div className={`${THEME.bgCard} p-6 rounded-2xl border-l-4 border-[#15008b] shadow-sm hover:shadow-md transition-all duration-300`}>
+                                    <h4 className="text-xl font-bold text-[var(--foreground)] mb-3 flex items-center gap-2 transition-colors duration-300">
+                                        <ShieldCheck className="text-[#15008b]" size={20} /> The Procession
+                                    </h4>
+                                    <p className={`${THEME.textBody} leading-relaxed transition-colors duration-300`}>
+                                        The Mace is carried into the Chamber by the Serjeant-at-Arms, preceding the Speaker. This solemn daily procession marks the official commencement and conclusion of parliamentary sittings.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </main>
+
+            <footer className={`bg-[#252864] pt-12 pb-8 mt-12 border-t-4 border-[#C9B25A]`}>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-white rounded-full p-2 flex items-center justify-center">
+                                <img src="parliament_emblem.png" alt="Emblem" className="w-full h-full object-contain" />
+                            </div>
+                            <div>
+                                <h3 className="text-white font-bold text-lg">Senate of Kenya</h3>
+                                <p className="text-blue-200 text-sm">Parliament Buildings, Nairobi</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <a href="#" className="text-blue-200 hover:text-[#C9B25A] transition-colors flex items-center gap-1 text-sm font-medium">
+                                <ExternalLink size={16} /> Official Website
+                            </a>
+                        </div>
+                    </div>
+                    <div className="border-t border-blue-900/50 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-blue-300 text-sm">
+                        <p>&copy; {new Date().getFullYear()} The Senate, Parliament of Kenya. All rights reserved.</p>
+                        <p className="mt-2 md:mt-0">Designed for Devolution.</p>
                     </div>
                 </div>
-            </section>
+            </footer>
         </div>
     );
 }

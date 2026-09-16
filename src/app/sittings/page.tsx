@@ -12,6 +12,7 @@ import {
   Activity,
   Camera
 } from 'lucide-react';
+import Image from 'next/image';
 
 const MASHINANI_SESSIONS = [
   {
@@ -114,14 +115,17 @@ const ImagePlaceholder = ({ label, colorClass }: { label: string, colorClass: st
 
 export default function MashinaniImpactPage() {
   return (
-    <div className="min-h-screen bg-[#050A08] text-slate-200 selection:bg-[#006A44] selection:text-white pb-24 font-sans">
+    <div className="min-h-screen bg-[#01004a] text-slate-200 selection:bg-[#0458f4] selection:text-white pb-24 font-sans">
       
       {/* HERO SECTION - FOCUS ON IMPACT */}
       <section className="relative pt-32 pb-24 px-4 overflow-hidden flex flex-col items-center justify-center min-h-[50vh]">
         {/* Heraldic Glows */}
-        <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-[#006A44] rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-[#A81C26] rounded-full mix-blend-screen filter blur-[120px] opacity-20" />
-        
+        <Image
+          src="/sessions_images/chambers.jpg"
+          alt="Heraldic Glow"
+          fill
+          className="absolute inset-0 object-cover  "
+        />
         {/* Subtle Background Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none"></div>
 
@@ -136,11 +140,11 @@ export default function MashinaniImpactPage() {
             </span>
           </div>
           
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tighter text-white drop-shadow-lg">
-            Impact of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#006A44] via-emerald-400 to-[#D4AF37]">Senate Mashinani</span>
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl bg-red-500/10 backdrop-blur-2xl p-4 rounded-xl font-black tracking-tighter text-white drop-shadow-lg">
+            Impact of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0458f4] via-blue-400 to-[#011a48]">Senate Mashinani</span>
           </h1>
           
-          <p className="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
+          <p className="text-lg sm:text-xl bg-red-500/10 backdrop-blur-2xl p-4 rounded-xl font-serif font-extrabold text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
             A comprehensive retrospective of the legislative, economic, and social impact driven by relocating the Senate to the counties — from the upcoming 5th session in Kilifi to the inaugural sitting in Uasin Gishu.
           </p>
         </div>

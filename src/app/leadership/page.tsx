@@ -100,7 +100,7 @@ const OFFICERS_DATA: Officer[] = [
 const DIRECTORATES_DATA: Directorate[] = [
   {
     id: 'dir-leg-proc',
-    title: 'Legislative and Procedural',
+    title: 'LEGISLATIVE AND PROCEDURAL SERVICES',
     head: 'Director, Legislative Services',
     category: 'LEGISLATIVE',
     iconName: 'BookOpen',
@@ -115,7 +115,7 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-committees',
-    title: 'Committees',
+    title: 'GOVERNANCE & ACCOUNTABILITY COMMITTEES',
     head: 'Director, Committee Services',
     category: 'LEGISLATIVE',
     iconName: 'Users',
@@ -130,7 +130,7 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-legal',
-    title: 'Legal Services',
+    title: 'LEGAL SERVICES',
     head: 'Director, Legal Services / Legal Counsel',
     category: 'LEGISLATIVE',
     iconName: 'Scale',
@@ -145,7 +145,7 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-hansard',
-    title: 'Hansard Department',
+    title: 'HANSARD AND AUDIO SERVICES',
     head: 'Editor-in-Chief, Hansard',
     category: 'SUPPORT',
     iconName: 'Mic',
@@ -160,22 +160,22 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-budget',
-    title: 'The Parliamentary Budget Office',
-    head: 'Director, Parliamentary Budget Office',
+    title: 'LITIGATION AND COMPLIANCE SERVICES',
+    head: 'Director, Litigation and Compliance Services',
     category: 'LEGISLATIVE',
     iconName: 'TrendingUp',
-    summary: 'Provides professional, independent, and objective analysis on national budget, economy, and financial matters.',
-    mandate: 'A non-partisan professional office that provides the Senate and its committees with objective, timely and non-partisan analysis of the national budget, the economy and financial matters relating to national and county governments.',
+    summary: 'Provides legal support, litigation management, and compliance oversight for the Senate.',
+    mandate: 'Ensures that the Senate operates within the legal framework, manages litigation involving the Senate, and oversees compliance with statutory and regulatory requirements.',
     keyFunctions: [
-      'Macroeconomic and fiscal policy analysis.',
-      'Budget analysis and costing of proposed legislation.',
-      'Preparation of budget options and briefs for Committees.',
-      'Monitoring implementation of the national and county budgets.'
+      'Providing legal advice and support to the Senate and its committees.',
+      'Managing litigation involving the Senate.',
+      'Ensuring compliance with statutory and regulatory requirements.',
+      'Drafting and reviewing legal documents and contracts.'
     ]
   },
   {
     id: 'dir-liaison',
-    title: 'Liaison Office',
+    title: 'SENATE LIAISON OFFICE',
     head: 'Director, Inter-governmental & Liaison Services',
     category: 'SUPPORT',
     iconName: 'Handshake',
@@ -190,7 +190,7 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-public-comm',
-    title: 'Public Communication & Media Relations',
+    title: 'SOCIO-ECONOMIC COMMITTEES',
     head: 'Director, Media Relations & Public Affairs',
     category: 'SUPPORT',
     iconName: 'Megaphone',
@@ -205,7 +205,7 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-finance',
-    title: 'Finance & Accounting Services',
+    title: 'FINANCE & ACCOUNTING',
     head: 'Director, Finance & Accounting',
     category: 'SUPPORT',
     iconName: 'Banknote',
@@ -235,7 +235,7 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-security',
-    title: 'Serjeant at Arms',
+    title: 'SERJEANT-AT-ARMS',
     head: 'Chief Serjeant-at-Arms',
     category: 'SUPPORT',
     iconName: 'ShieldAlert',
@@ -373,7 +373,7 @@ export default function SenateOfficersPage(): React.ReactElement | null {
         </div>
 
         {/* SEARCH AND FILTER CONTROLS BAR */}
-        <div className="mb-10 p-5 rounded-3xl border bg-white dark:bg-slate-900/80 border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none backdrop-blur-sm">
+        {/* <div className="mb-10 p-5 rounded-3xl border bg-white dark:bg-slate-900/80 border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none backdrop-blur-sm">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
                 <div className="relative md:col-span-2">
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-[#2E3A8C] dark:text-[#C7A537] mb-1.5">
@@ -407,7 +407,7 @@ export default function SenateOfficersPage(): React.ReactElement | null {
                       </select>
                 </div>
             </div>
-        </div>
+        </div> */}
         
         {/* SECTION 1: CLERKS & DEPUTY CLERKS VIEW */}
         {activeTab === 'clerks' && (
@@ -517,19 +517,19 @@ export default function SenateOfficersPage(): React.ReactElement | null {
                                   {dir.title}
                               </h3>
 
-                              <p className="text-xs font-bold text-[#C7A537] dark:text-[#C7A537] mb-3 flex items-center gap-1">
+                              {/* <p className="text-xs font-bold text-[#C7A537] dark:text-[#C7A537] mb-3 flex items-center gap-1">
                                   <Users className="w-3 h-3" /> Headed by: {dir.head}
-                              </p>
+                              </p> */}
 
-                              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                              {/* <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
                                   {dir.summary}
-                              </p>
+                              </p> */}
                           </div>
 
-                          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-[#2E3A8C] dark:text-[#C7A537]">
+                          {/* <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-[#2E3A8C] dark:text-[#C7A537]">
                               <span>Explore Full Mandate</span>
                               <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                          </div>
+                          </div> */}
                       </div>
                     ))}
                 </div>

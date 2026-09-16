@@ -460,8 +460,8 @@ const faqs: FAQItem[] = [
               <tr className="hover:bg-slate-50"><td className="p-2.5 font-bold text-[#006A44]">2018</td><td className="p-2.5 font-semibold text-slate-900">Uasin Gishu County</td><td className="p-2.5 text-slate-600">September 2018</td></tr>
               <tr className="hover:bg-slate-50"><td className="p-2.5 font-bold text-[#006A44]">2019</td><td className="p-2.5 font-semibold text-slate-900">Kitui County</td><td className="p-2.5 text-slate-600">September 2019</td></tr>
               <tr className="hover:bg-slate-50"><td className="p-2.5 font-bold text-[#006A44]">2023</td><td className="p-2.5 font-semibold text-slate-900">Turkana County</td><td className="p-2.5 text-slate-600">September 2023</td></tr>
-              <tr className="hover:bg-slate-50"><td className="p-2.5 font-bold text-[#006A44]">2025</td><td className="p-2.5 font-semibold text-slate-900">Busia County</td><td className="p-2.5 text-slate-600">October 6–10, 2025</td></tr>
-              <tr className="hover:bg-slate-50"><td className="p-2.5 font-bold text-amber-600">2026</td><td className="p-2.5 font-semibold text-slate-900">Kilifi County</td><td className="p-2.5 text-slate-600">September 21–25, 2026</td></tr>
+              <tr className="hover:bg-slate-50"><td className="p-2.5 font-bold text-[#006A44]">2025</td><td className="p-2.5 font-semibold text-slate-900">Busia County</td><td className="p-2.5 text-slate-600">October 2025</td></tr>
+              <tr className="hover:bg-slate-50"><td className="p-2.5 font-bold text-amber-600">2026</td><td className="p-2.5 font-semibold text-amber-600">Kilifi County</td><td className="p-2.5 text-amber-600">September 21–25, 2026</td></tr>
             </tbody>
           </table>
         </div>

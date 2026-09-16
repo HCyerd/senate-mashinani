@@ -11,7 +11,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/senators', label: 'Leadership' },
-  { href: '/leadership', label: 'Directorate of Leadership' },
+  { href: '/leadership', label: 'Office of the Clerk' },
   { href: '/sittings', label: 'County Sittings' }, 
   { href: '/activities', label: 'Public Outreach' }, 
   // { href: '/news', label: 'News' },

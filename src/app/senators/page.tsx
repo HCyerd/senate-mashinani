@@ -86,14 +86,14 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'maj-whip',
     role: 'Majority Whip',
-    name: 'Sen. (Dr.) Boni Khalwale',
+    name: 'Sen. David Wafula Wakoli, CBS, MP',
     honour: 'CBS',
     title: 'Chief Majority Whip',
-    countyOrSeat: 'Kakamega County',
-    party: 'UDA',
-    partyColor: 'bg-yellow-500',
+    countyOrSeat: 'Bungoma County',
+    party: 'FORD-K',
+    partyColor: 'bg-blue-500',
     category: 'Majority',
-    image: '/senators_images/Khalwale_Boni_Senator.jpg',
+    image: '/senators_images/David_Wakoli_Wafula_Senator.jpg',
     description: 'Manages party discipline, attendance, and mobilizes Majority members during critical votes.'
   },
   {
@@ -119,7 +119,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
     party: 'UDA',
     partyColor: 'bg-yellow-500',
     category: 'Majority',
-    image: '/senators_images/Keroche_Tabitha_Karanja_Senator.jpg',
+    image: '/new_sen/tabitha karanja.jpg',
     description: 'Assists the Majority Leader in steering Government legislative priorities.'
   },
   {
@@ -169,13 +169,13 @@ const SENATORS_DATA: Senator[] = [
   { id: 1, name: 'Mohamed Faki Mwinyihaji', honour: 'CBS', county: 'Mombasa', party: 'ODM', partyColor: 'bg-orange-500', type: 'Elected', image: '/senators_images/Faki_Mohamed_Mwinyihaji_Senator.jpg' },
   { id: 2, name: 'Issa Juma Boy', honour: 'CBS', county: 'Kwale', party: 'ODM', partyColor: 'bg-orange-500', type: 'Elected', image: '/senators_images/Boy_Issa_Juma_Senator.jpg' },
   { id: 3, name: 'Justice (Rtd.) Stewart Mwachiru Shadrack Madzayo', honour: 'EGH', county: 'Kilifi', party: 'ODM', partyColor: 'bg-orange-500', type: 'Elected', image: '/senators_images/Justice_Stewart_Madzayo_Senator.jpg' },
-  { id: 4, name: 'Danson Buya Mungatana', honour: 'MGH', county: 'Tana River', party: 'UDA', partyColor: 'bg-yellow-500', type: 'Elected', image: '/senators_images/Mungatana_Danson_Buya_Senator.jpg' },
+  { id: 4, name: 'Danson Buya Mungatana', honour: 'MGH', county: 'Tana River', party: 'UDA', partyColor: 'bg-yellow-500', type: 'Elected', image: '/new_sen/Sen. Danson Mungatana.jpg.jpeg' },
   { id: 5, name: 'Joseph Githuku Kamau', honour: '', county: 'Lamu', party: 'Jubilee', partyColor: 'bg-red-600', type: 'Elected', image: '/senators_images/Kamau_Joseph_Githuku_Senator.jpg' },
   { id: 6, name: 'Johnes Mwashushe Mwaruma', honour: 'CBS', county: 'Taita Taveta', party: 'ODM', partyColor: 'bg-orange-500', type: 'Elected', image: '/senators_images/Mwaruma_Johnes_M_Senator.jpg' },
   { id: 7, name: 'Abdul Mohammed Haji', honour: 'CBS', county: 'Garissa', party: 'Jubilee', partyColor: 'bg-red-600', type: 'Elected', image: '/senators_images/Haji_Abdul_Mohammed_Senator.jpg' },
   { id: 8, name: 'Abass Sheikh Mohamed', honour: 'CBS', county: 'Wajir', party: 'UDM', partyColor: 'bg-yellow-600', type: 'Elected', image: '/senators_images/Mohamed_Abass_Sheikh_Senator.jpg' },
   { id: 9, name: '(Capt.) Ali Ibrahim Roba', honour: 'EGH', county: 'Mandera', party: 'UDM', partyColor: 'bg-yellow-600', type: 'Elected', image: '/senators_images/Roba_Ali_Ibrahim_Senator.jpg' },
-  { id: 10, name: 'Mohamed Said Chute', honour: 'CBS', county: 'Marsabit', party: 'UDA', partyColor: 'bg-yellow-500', type: 'Elected', image: '/senators_images/Chute_Mohamed_Said_Senator.jpg' },
+  { id: 10, name: 'Mohamed Said Chute', honour: 'CBS', county: 'Marsabit', party: 'UDA', partyColor: 'bg-yellow-500', type: 'Elected', image: '/new_sen/Sen. Mohammed Chute.jpg.jpeg' },
   { id: 11, name: 'Fatuma Adan Dullo', honour: 'CBS', county: 'Isiolo', party: 'Jubilee', partyColor: 'bg-red-600', type: 'Elected', image: '/senators_images/Dullo_Fatuma_Adan_Senator.jpg' },
   { id: 12, name: 'Kathuri Murungi', honour: 'MGH', county: 'Meru', party: 'UDA', partyColor: 'bg-yellow-500', type: 'Elected', image: '/senators_images/Murungi_Kathuri_Senator.jpg' },
   { id: 13, name: 'Mwenda Gataya Mo Fire', honour: 'CBS', county: 'Tharaka Nithi', party: 'UDA', partyColor: 'bg-yellow-500', type: 'Elected', image: '/senators_images/Gataya_Mo_Fire_Senator.jpg' },
@@ -185,7 +185,7 @@ const SENATORS_DATA: Senator[] = [
   { id: 17, name: 'Daniel Kitonga Maanzo', honour: 'EBS', county: 'Makueni', party: 'WDM-K', partyColor: 'bg-blue-400', type: 'Elected', image: '/senators_images/Maanzo_Daniel_Kitonga_Senator.jpg' },
   { id: 18, name: 'John Muhia Methu', honour: '', county: 'Nyandarua', party: 'UDA', partyColor: 'bg-yellow-500', type: 'Elected', image: '/senators_images/Methu_John_Muhia_Senator.jpg' },
   { id: 19, name: 'Wahome Wamatinga', honour: 'CBS', county: 'Nyeri', party: 'UDA', partyColor: 'bg-yellow-500', type: 'Elected', image: '/senators_images/Wamatinga_Wahome_Senator.jpg' },
-  { id: 20, name: 'James Kamau Murango', honour: '', county: 'Kirinyaga', party: 'UDA', partyColor: 'bg-yellow-500', type: 'Elected', image: '/senators_images/Murango_James_Kamau_Senator.jpg' },
+  { id: 20, name: 'James Kamau Murango', honour: '', county: 'Kirinyaga', party: 'UDA', partyColor: 'bg-yellow-500', type: 'Elected', image: '/new_sen/Sen. Kamau Murango.jpg.jpeg' },
   { id: 21, name: 'Joe Nyutu', honour: '', county: "Murang'a", party: 'UDA', partyColor: 'bg-yellow-500', type: 'Elected', image: '/senators_images/Joe_Nyutu_Senator.jpg' },
   { id: 22, name: 'Paul Karungo Thangwa', honour: '', county: 'Kiambu', party: 'UDA', partyColor: 'bg-yellow-500', type: 'Elected', image: '/senators_images/Karungo_Paul_Thangwa_Senator.jpg' },
   { id: 23, name: 'James Lomenen Ekomwa', honour: 'CBS', county: 'Turkana', party: 'Jubilee', partyColor: 'bg-red-600', type: 'Elected', image: '/senators_images/Ekomwa_James_Lomenen_Senator.jpg' },
@@ -227,7 +227,7 @@ const SENATORS_DATA: Senator[] = [
   { id: 57, name: 'Beatrice Akinyi Ogolla', honour: '', county: 'Nominated', party: 'ODM', partyColor: 'bg-orange-500', type: 'Nominated (Women)', image: '/senators_images/Beatrice_Akinyi_Ogolla_Senator.jpg' },
   { id: 58, name: 'Hamida Ali Kibwana', honour: '', county: 'Nominated', party: 'ODM', partyColor: 'bg-orange-500', type: 'Nominated (Women)', image: '/senators_images/Hamida_Ali_Kibwana_Senator.jpg' },
   { id: 59, name: 'Betty Batuli Montet', honour: '', county: 'Nominated', party: 'ODM', partyColor: 'bg-orange-500', type: 'Nominated (Women)', image: '/senators_images/Betty_Batuli_Montet_Senator.jpg' },
-  { id: 60, name: 'Beth Kalunda Syengo', honour: '', county: 'Nominated', party: 'ODM', partyColor: 'bg-orange-500', type: 'Nominated (Women)', image: '/senators_images/Beth_Kalunda_Syengo_Senator.jpg' },
+  { id: 60, name: 'Beth Kalunda Syengo', honour: '', county: 'Nominated', party: 'ODM', partyColor: 'bg-orange-500', type: 'Nominated (Women)', image: '/new_sen/Sen. Beth Syengo.jpg.jpeg' },
   { id: 61, name: '(Prof.) Margaret Jepkoech Kamar', honour: 'EGH', county: 'Nominated', party: 'Jubilee', partyColor: 'bg-red-600', type: 'Nominated (Women)', image: '/senators_images/Margaret_Jepkoech_Kamar_Senator.jpg' },
   { id: 62, name: 'Mariam Sheikh Omar', honour: '', county: 'Nominated', party: 'UDM', partyColor: 'bg-yellow-600', type: 'Nominated (Women)', image: '/senators_images/Omar_Mariam_Sheikh_Senator.jpg' },
   { id: 63, name: 'Shakila Abdalla Mohamed', honour: '', county: 'Nominated', party: 'WDM-K', partyColor: 'bg-blue-400', type: 'Nominated (Women)', image: '/senators_images/Abdalla_Shakilla_Mohamed_Senator.jpg' },
@@ -441,9 +441,9 @@ export default function SenatorsPage(): React.ReactElement | null {
                   </div>
 
                   {/* Description / Constitutional Mandate */}
-                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t pt-4 border-slate-100 dark:border-slate-800/80">
+                  {/* <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t pt-4 border-slate-100 dark:border-slate-800/80">
                     {leader.description}
-                  </p>
+                  </p> */}
                 </div>
               </div>
             ))}
