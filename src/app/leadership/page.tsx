@@ -100,7 +100,7 @@ const OFFICERS_DATA: Officer[] = [
 const DIRECTORATES_DATA: Directorate[] = [
   {
     id: 'dir-leg-proc',
-    title: 'LEGISLATIVE AND PROCEDURAL SERVICES',
+    title: 'GOVERNANCE & ACCOUNTABILITY',
     head: 'Director, Legislative Services',
     category: 'LEGISLATIVE',
     iconName: 'BookOpen',
@@ -115,7 +115,7 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-committees',
-    title: 'GOVERNANCE & ACCOUNTABILITY COMMITTEES',
+    title: 'LITIGATION & COMPLIANCE',
     head: 'Director, Committee Services',
     category: 'LEGISLATIVE',
     iconName: 'Users',
@@ -130,7 +130,7 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-legal',
-    title: 'LEGAL SERVICES',
+    title: 'LEGISLATIVE & PROCEDURAL SERVICES',
     head: 'Director, Legal Services / Legal Counsel',
     category: 'LEGISLATIVE',
     iconName: 'Scale',
@@ -160,9 +160,9 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-budget',
-    title: 'LITIGATION AND COMPLIANCE SERVICES',
-    head: 'Director, Litigation and Compliance Services',
-    category: 'LEGISLATIVE',
+    title: 'INTERNAL AUDIT',
+    head: 'Director, Internal Audit',
+    category: 'SUPPORT',
     iconName: 'TrendingUp',
     summary: 'Provides legal support, litigation management, and compliance oversight for the Senate.',
     mandate: 'Ensures that the Senate operates within the legal framework, manages litigation involving the Senate, and oversees compliance with statutory and regulatory requirements.',
@@ -175,22 +175,22 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-liaison',
-    title: 'SENATE LIAISON OFFICE',
-    head: 'Director, Inter-governmental & Liaison Services',
+    title: 'LEGAL SERVICES',
+    head: 'Director, Legal Services',
     category: 'SUPPORT',
     iconName: 'Handshake',
-    summary: 'Manages inter-parliamentary relations, protocol, and inter-governmental coordination.',
-    mandate: 'Facilitates seamless coordination between the Senate and other arms of Government, County Governments, regional parliaments, and international bodies. Handles diplomatic protocol for visiting dignitaries.',
+    summary: 'Provides legal support, litigation management, and compliance oversight for the Senate.',
+    mandate: 'Ensures that the Senate operates within the legal framework, manages litigation involving the Senate, and oversees compliance with statutory and regulatory requirements.',
     keyFunctions: [
-      'Coordination of Senate participation in regional assemblies (EALA, PAP).',
-      'Management of diplomatic protocol and international delegations.',
-      'Liaison between the Senate and the Council of Governors (CoG).',
-      'Facilitation of Senators\' official local and international travel.'
+      'Providing legal advice and support to the Senate and its committees.',
+      'Managing litigation involving the Senate.',
+      'Ensuring compliance with statutory and regulatory requirements.',
+      'Drafting and reviewing legal documents and contracts.'
     ]
   },
   {
     id: 'dir-public-comm',
-    title: 'SOCIO-ECONOMIC COMMITTEES',
+    title: 'SPEAKER\'S OFFICE',
     head: 'Director, Media Relations & Public Affairs',
     category: 'SUPPORT',
     iconName: 'Megaphone',
@@ -205,7 +205,7 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-finance',
-    title: 'FINANCE & ACCOUNTING',
+    title: 'FINANCE & ACCOUNTING SERVICES',
     head: 'Director, Finance & Accounting',
     category: 'SUPPORT',
     iconName: 'Banknote',
@@ -220,7 +220,7 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
   {
     id: 'dir-admin-hr',
-    title: 'Administrative & Human Resource Services',
+    title: 'HUMAN CAPITAL & ADMINISTRATIVE SERVICES',
     head: 'Director, Human Resources & Admin',
     category: 'SUPPORT',
     iconName: 'Briefcase',
@@ -246,6 +246,36 @@ const DIRECTORATES_DATA: Directorate[] = [
       'Enforcement of order and decorum inside the Senate Chamber.',
       'Security screening and safety of Senate premises.',
       'Ceremonial escorts during State Openings and official sittings.'
+    ]
+  },
+  {
+    id: 'dir-supply-chain',
+    title: 'SUPPLY CHAIN MANAGEMENT',
+    head: 'Director, Supply Chain Management',
+    category: 'SUPPORT',
+    iconName: 'ShoppingCart',
+    summary: 'Oversees procurement, vendor management, and supply chain logistics for the Senate.',
+    mandate: 'Manages procurement processes, vendor relations, inventory control, and ensures timely delivery of goods and services to support the Senate’s operations.',
+    keyFunctions: [
+      'Procurement planning and execution.',
+      'Vendor management and contract administration.',
+      'Inventory control and warehouse management.',
+      'Logistics coordination for timely delivery of goods and services.'
+    ]
+  },
+    {
+    id: 'dir-socio-economic-affairs',
+    title: 'SOCIO-ECONOMIC AFFAIRS',
+    head: 'Director, Socio-Economic COMMITTEE',
+    category: 'SUPPORT',
+    iconName: 'TrendingUp',
+    summary: 'Oversees socio-economic research, policy analysis, and development initiatives for the Senate.',
+    mandate: 'Manages socio-economic research, policy formulation, and development programs to support evidence-based decision-making within the Senate.',
+    keyFunctions: [
+      'Conducting socio-economic research and analysis.',
+      'Formulating policies and development strategies.',
+      'Monitoring and evaluating socio-economic programs.',
+      'Providing advisory support on socio-economic matters.'
     ]
   }
 ];
@@ -373,7 +403,7 @@ export default function SenateOfficersPage(): React.ReactElement | null {
         </div>
 
         {/* SEARCH AND FILTER CONTROLS BAR */}
-        {/* <div className="mb-10 p-5 rounded-3xl border bg-white dark:bg-slate-900/80 border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none backdrop-blur-sm">
+        <div className="mb-10 p-5 rounded-3xl border bg-white dark:bg-slate-900/80 border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none backdrop-blur-sm">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
                 <div className="relative md:col-span-2">
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-[#2E3A8C] dark:text-[#C7A537] mb-1.5">
@@ -407,7 +437,7 @@ export default function SenateOfficersPage(): React.ReactElement | null {
                       </select>
                 </div>
             </div>
-        </div> */}
+        </div>
         
         {/* SECTION 1: CLERKS & DEPUTY CLERKS VIEW */}
         {activeTab === 'clerks' && (
