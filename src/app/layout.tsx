@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Senate Mashinani | Parliament of Kenya",
-  metadataBase: new URL("http://localhost:3000"),
+  metadataBase: new URL("https://senate-mashinani.vercel.app"),
   description:
     "The Kenya Senate Mashinani Initiative — decentralized democracy, bringing Parliament to the people across Kenya's 47 counties.",
   keywords: "Kenya Senate, Mashinani, Parliament, Devolution, Counties, Democracy",
