@@ -39,8 +39,8 @@ interface Directorate {
 const OFFICERS_DATA: Officer[] = [
   {
     id: 'c-senate',
-    name: 'Mr. Jeremiah M. Nyegenye, CBS',
-    honour: '',
+    name: 'Mr. Jeremiah M. Nyegenye',
+    honour: 'CBS',
     role: 'Clerk of the Senate & Secretary, PSC',
     category: 'CLERK',
     chamber: 'Senate of Kenya',
@@ -60,8 +60,8 @@ const OFFICERS_DATA: Officer[] = [
   // },
   {
     id: 'dc-senate-leg',
-    name: 'Ms. Eunice Gichangi, MBS',
-    honour: '',
+    name: 'Ms. Eunice Gichangi',
+    honour: 'MBS',
     role: 'Deputy Clerk (Legislative & Procedural Services)',
     color: 'blue',
     category: 'DEPUTY_CLERK',
@@ -71,8 +71,8 @@ const OFFICERS_DATA: Officer[] = [
   },
   {
     id: 'dc-senate-admin',
-    name: 'Mr. Mohamed Ali Mohamed, MBS',
-    honour: '',
+    name: 'Mr. Mohamed Ali Mohamed',
+    honour: 'MBS',
     role: 'Deputy Clerk (Administrative & Committee Services)',
     color: 'blue',                                            
     category: 'DEPUTY_CLERK',
@@ -473,9 +473,9 @@ export default function SenateOfficersPage(): React.ReactElement | null {
                                   <span className="flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-[#2E3A8C]/10 text-[#2E3A8C] dark:bg-[#C7A537]/20 dark:text-[#C7A537] border border-[#2E3A8C]/20 dark:border-[#C7A537]/30">
                                       <Building2 className="w-3 h-3 mr-1" /> {officer.chamber}
                                   </span>
-                                  <span className="text-[11px] font-black px-2.5 py-0.5 rounded-md bg-amber-500/15 text-amber-700 dark:text-[#C7A537] border border-amber-500/30 flex items-center gap-1">
+                                  {/* <span className="text-[11px] font-black px-2.5 py-0.5 rounded-md bg-amber-500/15 text-amber-700 dark:text-[#C7A537] border border-amber-500/30 flex items-center gap-1">
                                       <Award className="w-3 h-3" /> {officer.honour}
-                                  </span>
+                                  </span> */}
                               </div>
 
                               <div className="flex items-start gap-4 mb-4">
@@ -487,7 +487,7 @@ export default function SenateOfficersPage(): React.ReactElement | null {
                                           {officer.role}
                                       </span>
                                       <h3 className="text-lg font-black leading-tight text-slate-900 dark:text-white mb-1">
-                                          {officer.name}
+                                          {officer.name} {officer.honour && <span className="text-amber-300">, {officer.honour}</span>}
                                       </h3>
                                   </div>
                               </div>

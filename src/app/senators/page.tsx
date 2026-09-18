@@ -397,7 +397,7 @@ export default function SenatorsPage(): React.ReactElement | null {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-slate-200 dark:border-slate-800 gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <Crown className={`w-5 h-5 ${darkMode ? 'text-[#C7A537]' : 'text-[#2E3A8C]'}`} />
+                {/* <Crown className={`w-5 h-5 ${darkMode ? 'text-[#C7A537]' : 'text-[#2E3A8C]'}`} /> */}
                 <span className={`text-xs font-bold uppercase tracking-widest ${darkMode ? 'text-[#C7A537]' : 'text-[#2E3A8C]'}`}>
                   Parliamentary Leadership
                 </span>
@@ -411,9 +411,9 @@ export default function SenatorsPage(): React.ReactElement | null {
             <div className="flex flex-wrap gap-2">
               {[
                 { label: 'All Leadership', val: 'All' },
-                { label: 'SPEAKER\'S PANEL', val: 'Presiding' },
-                { label: 'Majority LEADERSHIP', val: 'Majority' },
-                { label: 'Minority LEADERSHIP', val: 'Minority' }
+                // { label: 'SPEAKER\'S PANEL', val: 'Presiding' },
+                // { label: 'Majority LEADERSHIP', val: 'Majority' },
+                // { label: 'Minority LEADERSHIP', val: 'Minority' }
               ].map(tab => (
                 <button
                   key={tab.val}
@@ -451,9 +451,9 @@ export default function SenatorsPage(): React.ReactElement | null {
                         : leader.category === 'Majority'
                         ? 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border border-yellow-500/20'
                         : 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20'}`}>
-                      {leader.category === 'Presiding' && <Crown className="w-3 h-3" />}
-                      {leader.category === 'Majority' && <ShieldCheck className="w-3 h-3" />}
-                      {leader.category === 'Minority' && <Star className="w-3 h-3" />}
+                      {leader.category === 'Presiding'}
+                      {leader.category === 'Majority' }
+                      {leader.category === 'Minority' }
                       {leader.category} Leadership
                     </span>
 
@@ -477,13 +477,13 @@ export default function SenatorsPage(): React.ReactElement | null {
                         {leader.role}
                       </span>
                       <h3 className="text-lg font-black leading-tight text-slate-900 dark:text-white mb-1.5 flex flex-wrap items-center gap-1.5">
-                        <span>{leader.name}</span>
-                        {leader.honour && (
-                          <span className="inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-md bg-amber-500/15 text-amber-700 dark:text-[#C7A537] border border-amber-500/30">
-                            <Award className="w-3 h-3" />
-                            {leader.honour}
-                          </span>
-                        )}
+                        <span>{leader.name}, {leader.honour}</span>
+                        {/* {leader.honour && ( */}
+                          {/* // <span className="inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-md bg-amber-500/15 text-amber-700 dark:text-[#C7A537] border border-amber-500/30"> */}
+                            {/* <Award className="w-3 h-3" /> */}
+                            {/* {leader.honour} */}
+                          {/* </span> */}
+                        {/* // )} */}
                       </h3>
                       <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1">
                         <MapPin className="w-3 h-3 text-slate-400" />
@@ -655,23 +655,19 @@ export default function SenatorsPage(): React.ReactElement | null {
                         {senator.type}
                       </span>
 
-                      {senator.honour && (
-                        <span className="px-2.5 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-[#C7A537] text-[#2E3A8C] shadow-lg flex items-center gap-1">
-                          <Award className="w-3 h-3" />
-                          {senator.honour}
-                        </span>
-                      )}
+                      {/* {senator.honour && ( */}
+                        {/* // <span className="px-2.5 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-[#C7A537] text-[#2E3A8C] shadow-lg flex items-center gap-1"> */}
+                          {/* <Award className="w-3 h-3" /> */}
+                          {/* {senator.honour} */}
+                        {/* </span> */}
+                      {/* // )} */}
                     </div>
 
                     {/* Senator Name Overlay with Honours Tag */}
                     <div className="absolute bottom-4 left-4 right-4">
                       <h3 className="text-xl font-black text-white leading-tight flex flex-wrap items-center gap-1.5">
                         <span>{senator.name}</span>
-                        {senator.honour && (
-                          <span className="text-amber-300 text-xs font-bold">
-                            , {senator.honour}
-                          </span>
-                        )}
+                        {senator.honour && <span className="text-amber-300">, {senator.honour}</span>}
                       </h3>
                     </div>
                   </div>
