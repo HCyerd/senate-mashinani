@@ -160,6 +160,58 @@ const HOUSE_LEADERSHIP: Leader[] = [
     category: 'Minority',
     image: '/senators_images/Oketch_Eddy_Gicheru_Senator.jpg',
     description: 'Assists the Chief Minority Whip in organizing legislative actions and coalition unity.'
+  },
+  {
+    id: 'dep-munma',
+    role: 'Presiding Officer',
+    name: 'Sen. Catherine Mumma',
+    honour: '',
+    title: 'Presiding Officer',
+    countyOrSeat: 'NOMINATED',
+    party: 'ODM',
+    partyColor: 'bg-orange-500',
+    category: 'Presiding',
+    image: '/senators_images/Catherine_Muyeka_Mumma_Senator.jpg',
+    description: 'Assists the Speaker in presiding over Senate sessions and maintaining order in the chamber.'
+  },
+  {
+    id: 'presiding-abdul-haji',
+    role: 'Presiding Officer',
+    name: 'Sen. Abdul Haji',
+    honour: '',
+    title: 'Presiding Officer',
+    countyOrSeat: 'Garissa County',
+    party: 'Jubilee',
+    partyColor: 'bg-red-600',
+    category: 'Presiding',
+    image: '/senators_images/Haji_Abdul_Mohammed_Senator.jpg',
+    description: 'Assists the Speaker in presiding over Senate sessions and maintaining order in the chamber.'
+  },
+  {
+    id: 'presiding-maina',
+    role: 'Presiding Officer',
+    name: 'Sen. Veronica Maina',
+    honour: '',
+    title: 'Presiding Officer',
+    countyOrSeat: 'Nominated',
+    party: 'UDA',
+    partyColor: 'bg-yellow-500',
+    category: 'Presiding',
+    image: '/senators_images/Veronica_Waheti_Nduati_Senator.jpg',
+    description: 'Assists the Speaker in presiding over Senate sessions and maintaining order in the chamber.'
+  },
+  {
+    id: 'presiding-wakili-kiprotic',
+    role: 'Presiding Officer',
+    name: 'Sen. Wakili Kiprotich Sigei Hilary, CBS',
+    honour: '',
+    title: 'Presiding Officer',
+    countyOrSeat: 'Bomet County',
+    party: 'UDA',
+    partyColor: 'bg-yellow-500',
+    category: 'Presiding',
+    image: '/senators_images/Hillary_Kiprotich_Sigei_Senator.jpg',
+    description: 'Assists the Speaker in presiding over Senate sessions and maintaining order in the chamber.'
   }
 ];
 

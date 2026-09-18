@@ -492,9 +492,9 @@ export default function SenateOfficersPage(): React.ReactElement | null {
                                   </div>
                               </div>
 
-                              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t pt-4 border-slate-100 dark:border-slate-800">
+                              {/* <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t pt-4 border-slate-100 dark:border-slate-800">
                                   {officer.description}
-                              </p>
+                              </p> */}
                           </div>
                       </div>
                     ))}
