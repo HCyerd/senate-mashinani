@@ -58,6 +58,17 @@ const OFFICERS_DATA: Officer[] = [
   //   image: '/CoN.jpg',
   //   description: 'The Chief Executive Officer of the National Assembly and chief custodian of all Assembly records, bills, and constitutional procedural proceedings.'
   // },
+    {
+    id: 'dc-senate-admin',
+    name: 'Mr. Mohamed Ali Mohamed',
+    honour: 'MBS',
+    role: 'Deputy Clerk (Administrative & Committee Services)',
+    color: 'blue',                                            
+    category: 'DEPUTY_CLERK',
+    chamber: 'Senate of Kenya',
+    image: '/mba.jpg',
+    description: 'Coordinates Senate Standing and Select Committees, administrative operations, public outreach initiatives, and infrastructure logisitics.'
+  },
   {
     id: 'dc-senate-leg',
     name: 'Ms. Eunice Gichangi',
@@ -69,17 +80,7 @@ const OFFICERS_DATA: Officer[] = [
     image: '/Ms._Eunice_Gichangi.jpg',
     description: 'Oversees the preparation of Order Papers, Motions, Legislative Bills tracking, Table Office operations, and Chamber proceedings management.'
   },
-  {
-    id: 'dc-senate-admin',
-    name: 'Mr. Mohamed Ali Mohamed',
-    honour: 'MBS',
-    role: 'Deputy Clerk (Administrative & Committee Services)',
-    color: 'blue',                                            
-    category: 'DEPUTY_CLERK',
-    chamber: 'Senate of Kenya',
-    image: '/mba.jpg',
-    description: 'Coordinates Senate Standing and Select Committees, administrative operations, public outreach initiatives, and infrastructure logisitics.'
-  },
+
   // {
   //   id: 'dc-assembly-leg',
   //   name: 'Mr. Jeremiah Ndombi',
@@ -483,9 +484,9 @@ export default function SenateOfficersPage(): React.ReactElement | null {
                                       <img src={officer.image} alt={officer.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                                   </div>
                                   <div className="min-w-0">
-                                      <span className="text-[11px] font-extrabold uppercase tracking-wider block text-[#2E3A8C] dark:text-[#C7A537] mb-1">
+                                      {/* <span className="text-[11px] font-extrabold uppercase tracking-wider block text-[#2E3A8C] dark:text-[#C7A537] mb-1">
                                           {officer.role}
-                                      </span>
+                                      </span> */}
                                       <h3 className="text-lg font-black leading-tight text-slate-900 dark:text-white mb-1">
                                           {officer.name} {officer.honour && <span className="text-amber-300">, {officer.honour}</span>}
                                       </h3>

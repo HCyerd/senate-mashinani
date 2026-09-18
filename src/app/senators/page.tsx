@@ -12,7 +12,7 @@ interface Leader {
   countyOrSeat: string;
   party: string;
   partyColor: string;
-  category: 'Presiding' | 'Majority' | 'Minority';
+  category: 'Presiding' | 'Majority' | 'Minority' | 'deputy-speaker' | 'speaker';
   image: string;
   description: string;
   honour?: string;
@@ -34,34 +34,34 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'spk-1',
     role: 'Speaker of the Senate',
-    name: 'Rt. Hon. Amason Jeffah Kingi',
-    honour: 'EGH',
+    name: 'Rt. Hon. Amason Jeffah Kingi, EGH',
+    honour: '',
     title: 'Head of the Senate & Presiding Officer',
     countyOrSeat: 'Ex-Officio Member',
     party: 'PAA / Independent Speaker',
     partyColor: 'bg-amber-500',
-    category: 'Presiding',
+    category: 'speaker',
     image: '/senators_images/Amason_Jeffah_Kingi_Senator.png',
     description: 'Presides over Senate proceedings, maintains order, and protects the rights and privileges of Senators.'
   },
   {
     id: 'dspk-1',
     role: 'Deputy Speaker of the Senate',
-    name: 'Sen. Kathuri Murungi',
-    honour: 'MGH',
+    name: 'Sen. Kathuri Murungi, MGH',
+    honour: '',
     title: 'Deputy Presiding Officer',
     countyOrSeat: 'Meru County',
     party: 'UDA',
     partyColor: 'bg-yellow-500',
-    category: 'Presiding',
+    category: 'deputy-speaker',
     image: '/senators_images/Murungi_Kathuri_Senator.jpg',
     description: 'Presides over house sittings in the absence of the Speaker and chairs the Committee of the Whole House.'
   },
   {
     id: 'maj-lead',
     role: 'Senate Majority Leader',
-    name: 'Sen. Aaron Kipkirui Cheruiyot',
-    honour: 'EGH',
+    name: 'Sen. Aaron Kipkirui Cheruiyot, EGH',
+    honour: '',
     title: 'Leader of Majority Party',
     countyOrSeat: 'Kericho County',
     party: 'UDA',
@@ -73,8 +73,8 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'min-lead',
     role: 'Senate Minority Leader',
-    name: 'Sen. Justice (Rtd.) Stewart Mwachiru Shadrack Madzayo',
-    honour: 'EGH',
+    name: 'Sen. Justice (Rtd.) Stewart Mwachiru Shadrack Madzayo, EGH',
+    honour: '',
     title: 'Leader of Minority Party / Opposition',
     countyOrSeat: 'Kilifi County',
     party: 'ODM',
@@ -87,7 +87,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
     id: 'maj-whip',
     role: 'Senate Majority Whip',
     name: 'Sen. David Wafula Wakoli, CBS, MP',
-    honour: 'CBS',
+    honour: '',
     title: 'Senate Chief Majority Whip',
     countyOrSeat: 'Bungoma County',
     party: 'FORD-K',
@@ -99,8 +99,8 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'min-whip',
     role: 'Senate Minority Whip',
-    name: 'Sen. Ledama Olekina',
-    honour: 'CBS',
+    name: 'Sen. Ledama Olekina, CBS',
+    honour: '',
     title: 'Chief Minority Whip',
     countyOrSeat: 'Narok County',
     party: 'ODM',
@@ -112,8 +112,8 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'dep-maj-lead',
     role: 'Senate Deputy Majority Leader',
-    name: 'Sen. Tabitha Karanja Keroche',
-    honour: 'MGH',
+    name: 'Sen. Tabitha Karanja Keroche, MGH',
+    honour: '',
     title: 'Deputy Leader of Government Business',
     countyOrSeat: 'Nakuru County',
     party: 'UDA',
@@ -125,8 +125,8 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'dep-min-lead',
     role: 'Senate Deputy Minority Leader',
-    name: 'Sen. Enoch Kiio Wambua',
-    honour: 'CBS',
+    name: 'Sen. Enoch Kiio Wambua, CBS',
+    honour: '',
     title: 'Deputy Leader of Minority Party',
     countyOrSeat: 'Kitui County',
     party: 'WDM-K',
@@ -138,8 +138,8 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'dep-maj-whip',
     role: 'Senate Deputy Majority Whip',
-    name: 'Sen. (Dr.) Steve Lelegwe Ltumbesi',
-    honour: 'CBS',
+    name: 'Sen. (Dr.) Steve Lelegwe Ltumbesi, CBS',
+    honour: '',
     title: 'Deputy Whip (Majority)',
     countyOrSeat: 'Samburu County',
     party: 'UDA',
@@ -164,8 +164,8 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'dep-munma',
     role: 'Senate Presiding Officer',
-    name: 'Sen. Catherine Mumma',
-    honour: 'CBS',
+    name: 'Sen. Catherine Mumma, CBS',
+    honour: '',
     title: 'Presiding Officer',
     countyOrSeat: 'NOMINATED',
     party: 'ODM',
@@ -177,8 +177,8 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'presiding-abdul-haji',
     role: 'Senate Presiding Officer',
-    name: 'Sen. Abdul Haji',
-    honour: 'CBS',
+    name: 'Sen. Abdul Haji, CBS',
+    honour: '',
     title: 'Presiding Officer',
     countyOrSeat: 'Garissa County',
     party: 'Jubilee',
@@ -190,8 +190,8 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'presiding-maina',
     role: 'Senate Presiding Officer',
-    name: 'Sen. Veronica Maina',
-    honour: 'CBS',
+    name: 'Sen. Veronica Maina, CBS',
+    honour: '',
     title: 'Presiding Officer',
     countyOrSeat: 'Nominated',
     party: 'UDA',
@@ -203,8 +203,8 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'presiding-wakili-kiprotic',
     role: 'Senate Presiding Officer',
-    name: 'Sen. Wakili Kiprotich Sigei Hilary',
-    honour: 'CBS',
+    name: 'Sen. Wakili Kiprotich Sigei Hilary, CBS',
+    honour: '',
     title: 'Presiding Officer',
     countyOrSeat: 'Bomet County',
     party: 'UDA',
@@ -327,7 +327,14 @@ export default function SenatorsPage(): React.ReactElement | null {
 
   // Filtered House Leadership calculation
   const filteredLeadership = useMemo(() => {
-    if (leadershipCategory === 'All') return HOUSE_LEADERSHIP;
+    // Remove Presiding leaders from the "All" (main) leadership tab
+    if (leadershipCategory === 'All') {
+      return HOUSE_LEADERSHIP.filter(l => l.category !== 'Presiding');
+    }
+    else if (leadershipCategory === 'panel') {
+      return HOUSE_LEADERSHIP.filter(l => ['speaker', 'deputy-speaker', 'Presiding'].includes(l.category));
+    }
+    // Otherwise, show the specifically selected category
     return HOUSE_LEADERSHIP.filter(l => l.category === leadershipCategory);
   }, [leadershipCategory]);
 
@@ -390,7 +397,7 @@ export default function SenatorsPage(): React.ReactElement | null {
           </p>
         </div>
 
-        {/* ========================================== */}
+      {/* ========================================== */}
         {/* SECTION 1: HOUSE LEADERSHIP & OFFICE BEARERS */}
         {/* ========================================== */}
         <section className="mb-16">
@@ -410,10 +417,10 @@ export default function SenatorsPage(): React.ReactElement | null {
             {/* Leadership Category Tabs */}
             <div className="flex flex-wrap gap-2">
               {[
-                { label: 'All Leadership', val: 'All' },
-                // { label: 'SPEAKER\'S PANEL', val: 'Presiding' },
-                // { label: 'Majority LEADERSHIP', val: 'Majority' },
-                // { label: 'Minority LEADERSHIP', val: 'Minority' }
+                { label: 'Leadership', val: 'All' },
+                { label: 'SPEAKER\'S PANEL', val: 'panel' },
+                { label: 'Majority LEADERSHIP', val: 'Majority' },
+                { label: 'Minority LEADERSHIP', val: 'Minority' }
               ].map(tab => (
                 <button
                   key={tab.val}
@@ -451,9 +458,6 @@ export default function SenatorsPage(): React.ReactElement | null {
                         : leader.category === 'Majority'
                         ? 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border border-yellow-500/20'
                         : 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20'}`}>
-                      {leader.category === 'Presiding'}
-                      {leader.category === 'Majority' }
-                      {leader.category === 'Minority' }
                       {leader.category} Leadership
                     </span>
 
@@ -468,7 +472,11 @@ export default function SenatorsPage(): React.ReactElement | null {
                       <img 
                         src={leader.image} 
                         alt={leader.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 bg-slate-200"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://placehold.co/150x200/cccccc/000000?text=No+Image';
+                        }}
                       />
                     </div>
                     <div className="min-w-0">
@@ -477,7 +485,7 @@ export default function SenatorsPage(): React.ReactElement | null {
                         {leader.role}
                       </span>
                       <h3 className="text-lg font-black leading-tight text-slate-900 dark:text-white mb-1.5 flex flex-wrap items-center gap-1.5">
-                        <span>{leader.name}, {leader.honour}</span>
+                        <span>{leader.name}</span>
                         {/* {leader.honour && ( */}
                           {/* // <span className="inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-md bg-amber-500/15 text-amber-700 dark:text-[#C7A537] border border-amber-500/30"> */}
                             {/* <Award className="w-3 h-3" /> */}

@@ -62,7 +62,7 @@ export function Footer() {
             </div>
 
             {/* Col 2: Navigation */}
-            <div>
+            {/* <div>
               <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-4">Quick Navigation</h4>
               <ul className="space-y-2.5 text-xs">
                 <li><a href="#about" className="hover:text-emerald-400 transition">About Senate Mashinani</a></li>
@@ -72,17 +72,18 @@ export function Footer() {
                 <li><a href="#order-paper" className="hover:text-emerald-400 transition">Order Paper & Broadcast</a></li>
                 <li><a href="#petition" className="hover:text-emerald-400 transition">Sauti ya Mashinani Portal</a></li>
               </ul>
-            </div>
+            </div> */}
 
             {/* Col 3: Host Counties */}
             <div>
               <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-4">Host Counties</h4>
               <ul className="space-y-2.5 text-xs">
+                <li className="flex items-center gap-2 text-amber-300"><span className="w-1.5 h-1.5 rounded-full bg-blue-400" /> Kilifi County (5th Edition)</li>
                 <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Busia County (4th Edition)</li>
                 <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-amber-400" /> Turkana County (3rd Edition)</li>
                 <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-red-400" /> Kitui County (2nd Edition)</li>
                 <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-slate-400" /> Uasin Gishu (Inaugural)</li>
-                <li className="pt-2 text-[11px] text-amber-300 font-semibold">Next County Selection in Progress</li>
+                
               </ul>
             </div>
 

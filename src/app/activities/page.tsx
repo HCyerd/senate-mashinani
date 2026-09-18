@@ -162,17 +162,17 @@ export default function ProgramsPage() {
 
       {}
       {/* Custom Hero with reduced height and text overlay */}
-      <div className="relative w-full min-h-[340px] flex items-center justify-center overflow-hidden bg-slate-900 border-b border-red-900/20">
+      <div className="relative w-full min-h-[540px] flex items-center justify-center overflow-hidden bg-slate-900 border-b border-red-900/20">
         {/* Background Image Layer */}
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/sessions_images/vss.jpeg')" }} 
         />
         {/* Theme Overlay (Deep Maroon/Red overlay for readability and branding) */}
-        <div className="absolute inset-0 z-10 " />
+        {/* <div className="absolute inset-0 z-10 " /> */}
         
         {/* Foreground Content */}
-        <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-12">
+        {/* <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-12">
           <span className="inline-flex items-center justify-center py-1.5 px-4 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-5 border border-amber-500/30 shadow-sm">
             Capacity Development
           </span>
@@ -182,17 +182,17 @@ export default function ProgramsPage() {
           <p className="text-base md:text-lg  bg-blue-500/70 rounded-xl p-2  text-white text-xs font-bold tracking-widest uppercase mb-5 border border-amber-500/30 shadow-sm max-w-2xl mx-auto leading-relaxed drop-shadow-sm font-medium">
             Explore learning, civic engagement, and institutional exchange programmes coordinated by the Senate Liaison Office under the Office of the Clerk of the Senate.
           </p>
-        </div>
+        </div> */}
       </div>
 
       {}
       {/* Programs Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-14">
-          <p className="text-sm font-bold text-red-800 uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
-            <span className="w-8 h-0.5 bg-red-800/30"></span>
+          <p className="text-sm font-bold text-amber-400 uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
+            <span className="w-8 h-0.5 bg-amber-400/30"></span>
             Pathways
-            <span className="w-8 h-0.5 bg-red-800/30"></span>
+            <span className="w-8 h-0.5 bg-amber-400/30"></span>
           </p>
           <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">Explore Our Programmes</h2>
         </div>
