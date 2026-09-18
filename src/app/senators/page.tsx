@@ -85,10 +85,10 @@ const HOUSE_LEADERSHIP: Leader[] = [
   },
   {
     id: 'maj-whip',
-    role: 'Majority Whip',
+    role: 'Senate Majority Whip',
     name: 'Sen. David Wafula Wakoli, CBS, MP',
     honour: 'CBS',
-    title: 'Chief Majority Whip',
+    title: 'Senate Chief Majority Whip',
     countyOrSeat: 'Bungoma County',
     party: 'FORD-K',
     partyColor: 'bg-blue-500',
@@ -98,7 +98,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   },
   {
     id: 'min-whip',
-    role: 'Minority Whip',
+    role: 'Senate Minority Whip',
     name: 'Sen. Ledama Olekina',
     honour: 'CBS',
     title: 'Chief Minority Whip',
@@ -111,7 +111,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   },
   {
     id: 'dep-maj-lead',
-    role: 'Deputy Majority Leader',
+    role: 'Senate Deputy Majority Leader',
     name: 'Sen. Tabitha Karanja Keroche',
     honour: 'MGH',
     title: 'Deputy Leader of Government Business',
@@ -124,7 +124,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   },
   {
     id: 'dep-min-lead',
-    role: 'Deputy Minority Leader',
+    role: 'Senate Deputy Minority Leader',
     name: 'Sen. Enoch Kiio Wambua',
     honour: 'CBS',
     title: 'Deputy Leader of Minority Party',
@@ -137,7 +137,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   },
   {
     id: 'dep-maj-whip',
-    role: 'Deputy Majority Whip',
+    role: 'Senate Deputy Majority Whip',
     name: 'Sen. (Dr.) Steve Lelegwe Ltumbesi',
     honour: 'CBS',
     title: 'Deputy Whip (Majority)',
@@ -150,7 +150,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   },
   {
     id: 'dep-min-whip',
-    role: 'Deputy Minority Whip',
+    role: 'Senate Deputy Minority Whip',
     name: 'Sen. Eddy Oketch',
     honour: '',
     title: 'Deputy Whip (Minority)',
@@ -163,7 +163,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   },
   {
     id: 'dep-munma',
-    role: 'Presiding Officer',
+    role: 'Senate Presiding Officer',
     name: 'Sen. Catherine Mumma',
     honour: '',
     title: 'Presiding Officer',
@@ -176,7 +176,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   },
   {
     id: 'presiding-abdul-haji',
-    role: 'Presiding Officer',
+    role: 'Senate Presiding Officer',
     name: 'Sen. Abdul Haji',
     honour: '',
     title: 'Presiding Officer',
@@ -189,7 +189,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   },
   {
     id: 'presiding-maina',
-    role: 'Presiding Officer',
+    role: 'Senate Presiding Officer',
     name: 'Sen. Veronica Maina',
     honour: '',
     title: 'Presiding Officer',
@@ -202,7 +202,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   },
   {
     id: 'presiding-wakili-kiprotic',
-    role: 'Presiding Officer',
+    role: 'Senate Presiding Officer',
     name: 'Sen. Wakili Kiprotich Sigei Hilary, CBS',
     honour: '',
     title: 'Presiding Officer',
