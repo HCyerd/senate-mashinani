@@ -16,6 +16,7 @@ interface Officer {
   name: string;
   honour: string;
   role: string;
+  color: string; // Used for theming or categorization
   category: string;
   chamber: string;
   image: string;
@@ -28,6 +29,7 @@ interface Directorate {
   head: string;
   category: string;
   iconName: string; // Used to map to Lucide icons
+  color: string; // Used for theming or categorization
   summary: string;
   mandate: string;
   keyFunctions: string[];
@@ -43,6 +45,7 @@ const OFFICERS_DATA: Officer[] = [
     category: 'CLERK',
     chamber: 'Senate of Kenya',
     image: '/CoS.jpg',
+    color: 'blue',          
     description: 'The Chief Executive Officer of the Senate, principal advisor on parliamentary procedure to the Speaker, and Secretary to the Parliamentary Service Commission (PSC). He holds both Bachelor and Master of Laws degrees from the University of Nairobi.'
   },
   // {
@@ -60,6 +63,7 @@ const OFFICERS_DATA: Officer[] = [
     name: 'Ms. Eunice Gichangi',
     honour: 'MBS',
     role: 'Deputy Clerk (Legislative & Procedural Services)',
+    color: 'blue',
     category: 'DEPUTY_CLERK',
     chamber: 'Senate of Kenya',
     image: '/Ms._Eunice_Gichangi.jpg',
@@ -70,6 +74,7 @@ const OFFICERS_DATA: Officer[] = [
     name: 'Mr. Mohamed Ali Mohamed',
     honour: 'MBS',
     role: 'Deputy Clerk (Administrative & Committee Services)',
+    color: 'blue',                                            
     category: 'DEPUTY_CLERK',
     chamber: 'Senate of Kenya',
     image: '/mba.jpg',
@@ -101,9 +106,10 @@ const DIRECTORATES_DATA: Directorate[] = [
   {
     id: 'dir-leg-proc',
     title: 'GOVERNANCE & ACCOUNTABILITY',
-    head: 'Director, Legislative Services',
+    head: 'Mr. Njenga Njuguna, OGW',
     category: 'LEGISLATIVE',
     iconName: 'BookOpen',
+    color: 'blue',
     summary: 'Manages Chamber business, Order Papers, Votes and Proceedings, and procedural advice to the Speaker.',
     mandate: 'Responsible for the core legislative pipeline of the Senate. Compiles the daily Order Paper, records official Votes and Proceedings, manages Table Office operations, tracks Senate Bills, and advises Senators on Standing Orders.',
     keyFunctions: [
@@ -114,11 +120,12 @@ const DIRECTORATES_DATA: Directorate[] = [
     ]
   },
   {
-    id: 'dir-committees',
-    title: 'LITIGATION & COMPLIANCE',
-    head: 'Director, Committee Services',
-    category: 'LEGISLATIVE',
+    id: 'dir-compliance',
+    title: 'LITIGATION & COMPLIANCE SERVICES',
+    head: 'Mr. Antony Njoroge, OGW',
+    category: 'COMPLIANCE',
     iconName: 'Users',
+    color: 'blue',
     summary: 'Coordinates Standing, Sectoral, and Select Committees of the Senate for county oversight.',
     mandate: 'Facilitates the oversight and investigative role of the Senate through its Standing and Select Committees. Manages public petitions, public hearings in counties (Senate Mashinani), and committee report drafting.',
     keyFunctions: [
@@ -129,11 +136,12 @@ const DIRECTORATES_DATA: Directorate[] = [
     ]
   },
   {
-    id: 'dir-legal',
+    id: 'dir-dlps',
     title: 'LEGISLATIVE & PROCEDURAL SERVICES',
-    head: 'Director, Legal Services / Legal Counsel',
+    head: 'Mr. Njenga Ruge, OGW',
     category: 'LEGISLATIVE',
     iconName: 'Scale',
+    color: 'blue',
     summary: 'Provides legal counsel, bill drafting, litigation representation, and statutory reviews.',
     mandate: 'Acts as the primary legal advisor to the Senate, Speaker, Committees, and Parliamentary Service Commission. Drafts legislative bills and amendments, represents Senate in court, and reviews statutory instruments.',
     keyFunctions: [
@@ -146,9 +154,10 @@ const DIRECTORATES_DATA: Directorate[] = [
   {
     id: 'dir-hansard',
     title: 'HANSARD AND AUDIO SERVICES',
-    head: 'Editor-in-Chief, Hansard',
+    head: 'Mr. Abdulmajid Ahmed',
     category: 'SUPPORT',
     iconName: 'Mic',
+    color: 'blue',
     summary: 'Official verbatim reporting, audio recording, indexing, and publication of Senate proceedings.',
     mandate: 'Produces the official verbatim report (Hansard) of all sittings of the Senate Chamber and Committee proceedings. Ensures permanent archival indexing of parliamentary debates and decisions.',
     keyFunctions: [
@@ -159,26 +168,12 @@ const DIRECTORATES_DATA: Directorate[] = [
     ]
   },
   {
-    id: 'dir-budget',
-    title: 'INTERNAL AUDIT',
-    head: 'Director, Internal Audit',
-    category: 'SUPPORT',
-    iconName: 'TrendingUp',
-    summary: 'Provides legal support, litigation management, and compliance oversight for the Senate.',
-    mandate: 'Ensures that the Senate operates within the legal framework, manages litigation involving the Senate, and oversees compliance with statutory and regulatory requirements.',
-    keyFunctions: [
-      'Providing legal advice and support to the Senate and its committees.',
-      'Managing litigation involving the Senate.',
-      'Ensuring compliance with statutory and regulatory requirements.',
-      'Drafting and reviewing legal documents and contracts.'
-    ]
-  },
-  {
-    id: 'dir-liaison',
+    id: 'dir-legal',
     title: 'LEGAL SERVICES',
-    head: 'Director, Legal Services',
-    category: 'SUPPORT',
-    iconName: 'Handshake',
+    head: 'Ms. Elizabeth Muhia',
+    category: 'LEGAL',
+    iconName: 'Legal',
+    color: 'blue',
     summary: 'Provides legal support, litigation management, and compliance oversight for the Senate.',
     mandate: 'Ensures that the Senate operates within the legal framework, manages litigation involving the Senate, and oversees compliance with statutory and regulatory requirements.',
     keyFunctions: [
@@ -189,26 +184,28 @@ const DIRECTORATES_DATA: Directorate[] = [
     ]
   },
   {
-    id: 'dir-public-comm',
+    id: 'dir-speaker',
     title: 'SPEAKER\'S OFFICE',
-    head: 'Director, Media Relations & Public Affairs',
+    head: 'Ms. Benedict Furaha',
     category: 'SUPPORT',
     iconName: 'Megaphone',
-    summary: 'Drives civic education, public outreach, media relations, broadcasting, and Senate Mashinani.',
-    mandate: 'Enhances public understanding of the Senate mandate and county devolution. Manages media relations, digital channels, civic education programs, and public access during Senate Mashinani sittings.',
+    color: 'blue',
+    summary: 'Drives the daily operations and public engagement of the Speaker\'s Office.',
+    mandate: 'Manages the daily operations, public engagement, and administrative functions of the Speaker\'s Office.',
     keyFunctions: [
-      'Media accreditation and parliamentary press corps relations.',
-      'Management of Senate digital platforms and live broadcasts.',
-      'Public education campaigns on devolution and Senate role.',
-      'Corporate communications and crisis management.'
+      'Management of the Speaker\'s Office administrative functions.',
+      'Management of Senate digital platforms and live broadcasts by the Speaker\'s Office.',
+      'Public education campaigns on devolution and Senate role coordinated by the Speaker\'s Office.',
+      'Corporate communications and crisis management handled by the Speaker\'s Office.'
     ]
   },
   {
     id: 'dir-finance',
     title: 'FINANCE & ACCOUNTING SERVICES',
-    head: 'Director, Finance & Accounting',
-    category: 'SUPPORT',
+    head: 'Mr. Daniel Ngumbao',
+    category: 'FINANCE',
     iconName: 'Banknote',
+    color: 'blue',
     summary: 'Manages Senate financial budgeting, Senator emoluments, fiscal reporting, and auditing.',
     mandate: 'Ensures prudent financial management, budgeting, and accounting for all Senate operations and Parliamentary Service Commission allocations in accordance with the Public Finance Management (PFM) Act.',
     keyFunctions: [
@@ -219,26 +216,12 @@ const DIRECTORATES_DATA: Directorate[] = [
     ]
   },
   {
-    id: 'dir-admin-hr',
-    title: 'HUMAN CAPITAL & ADMINISTRATIVE SERVICES',
-    head: 'Director, Human Resources & Admin',
-    category: 'SUPPORT',
-    iconName: 'Briefcase',
-    summary: 'Oversees staff recruitment, training, logistics, capacity building, and administrative infrastructure.',
-    mandate: 'Manages human capital development, staff welfare, administrative logistics, office allocation, and capacity-building programs to support the legislative functions of the Senate.',
-    keyFunctions: [
-      'Recruitment, deployment, and performance management of technical staff.',
-      'Staff capacity building and continuous professional development.',
-      'Management of Senate physical infrastructure and office allocations.',
-      'Transport, travel logistics, and general administrative services.'
-    ]
-  },
-  {
     id: 'dir-security',
     title: 'SERJEANT-AT-ARMS',
-    head: 'Chief Serjeant-at-Arms',
-    category: 'SUPPORT',
+    head: 'Maj. (Rtd) Samson Sorobit, OGW',
+    category: 'SECURITY',
     iconName: 'ShieldAlert',
+    color: 'blue',
     summary: 'Maintains physical security, chamber decorum, custody of the Mace, and safety operations.',
     mandate: 'Responsible for maintaining order and decorum within the Senate precincts, safeguarding the Speaker and Senators, enforcing security protocols, and managing ceremonial proceedings.',
     keyFunctions: [
@@ -251,9 +234,10 @@ const DIRECTORATES_DATA: Directorate[] = [
   {
     id: 'dir-supply-chain',
     title: 'SUPPLY CHAIN MANAGEMENT',
-    head: 'Director, Supply Chain Management',
-    category: 'SUPPORT',
+    head: 'Mr. Richard Kemboi',
+    category: 'SUPPLY',
     iconName: 'ShoppingCart',
+    color: 'blue',
     summary: 'Oversees procurement, vendor management, and supply chain logistics for the Senate.',
     mandate: 'Manages procurement processes, vendor relations, inventory control, and ensures timely delivery of goods and services to support the Senate’s operations.',
     keyFunctions: [
@@ -265,10 +249,11 @@ const DIRECTORATES_DATA: Directorate[] = [
   },
     {
     id: 'dir-socio-economic-affairs',
-    title: 'SOCIO-ECONOMIC AFFAIRS',
-    head: 'Director, Socio-Economic COMMITTEE',
-    category: 'SUPPORT',
+    title: 'SOCIO-ECONOMIC COMMITTEE',
+    head: 'Ms. Mary Chesire, OGW',
+    category: 'ECONOMIC',
     iconName: 'TrendingUp',
+    color: 'blue',
     summary: 'Oversees socio-economic research, policy analysis, and development initiatives for the Senate.',
     mandate: 'Manages socio-economic research, policy formulation, and development programs to support evidence-based decision-making within the Senate.',
     keyFunctions: [
@@ -276,6 +261,22 @@ const DIRECTORATES_DATA: Directorate[] = [
       'Formulating policies and development strategies.',
       'Monitoring and evaluating socio-economic programs.',
       'Providing advisory support on socio-economic matters.'
+    ]
+  },
+   {
+    id: 'dir-liason',
+    title: 'SENATE LIASON OFFICE',
+    head: 'Dr. Brenda Ogembo',
+    category: 'ADMINISTRATION',
+    iconName: 'Users',
+    color: 'blue',
+    summary: 'Coordinates communication and collaboration between the Senate and external stakeholders.',
+    mandate: 'Manages liaison activities, facilitates inter-departmental communication, and ensures effective engagement with external partners to support the Senate’s operations.',
+    keyFunctions: [
+      'Facilitating communication between the Senate and external stakeholders.',
+      'Coordinating inter-departmental collaboration within the Senate.',
+      'Organizing meetings and official visits.',
+      'Providing advisory support on liaison matters.'
     ]
   }
 ];
@@ -547,19 +548,19 @@ export default function SenateOfficersPage(): React.ReactElement | null {
                                   {dir.title}
                               </h3>
 
-                              {/* <p className="text-xs font-bold text-[#C7A537] dark:text-[#C7A537] mb-3 flex items-center gap-1">
+                              <p className="text-xs font-bold text-[#C7A537] dark:text-[#C7A537] mb-3 flex items-center gap-1">
                                   <Users className="w-3 h-3" /> Headed by: {dir.head}
-                              </p> */}
+                              </p>
 
-                              {/* <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
                                   {dir.summary}
-                              </p> */}
+                              </p>
                           </div>
 
-                          {/* <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-[#2E3A8C] dark:text-[#C7A537]">
+                          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-[#2E3A8C] dark:text-[#C7A537]">
                               <span>Explore Full Mandate</span>
                               <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                          </div> */}
+                          </div>
                       </div>
                     ))}
                 </div>
@@ -572,7 +573,7 @@ export default function SenateOfficersPage(): React.ReactElement | null {
       {/* DIRECTORATE DETAIL MODAL */}
       {selectedDirectorate && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm transition-opacity animate-in fade-in duration-300">
-            <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className={`relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-[${selectedDirectorate.color}] dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-2xl animate-in zoom-in-95 duration-300`}>
                 <button 
                   onClick={() => setSelectedDirectorate(null)} 
                   className="absolute top-5 right-5 w-10 h-10 rounded-full flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"

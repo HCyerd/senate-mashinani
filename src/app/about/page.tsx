@@ -207,7 +207,7 @@ export default function AboutSenate() {
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C9B25A] to-[#E3CE7B]">Republic of Kenya</span>
                         </h1>
                         <p className="text-lg md:text-xl text-blue-100/90 max-w-2xl mb-8 leading-relaxed font-light">
-                            Bunge la Seneti la Kenya. The Upper House of the Parliament of Kenya, established to protect devolution, represent counties, and uphold the constitutional rule of law.
+                            Bunge la Seneti la Kenya. The Parliament of Kenya, established to protect devolution, represent counties, and uphold the constitutional rule of law.
                         </p>
                     </div>
                     

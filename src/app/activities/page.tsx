@@ -141,7 +141,7 @@ const impact = [
 
 export default function ProgramsPage() {
   return (
-    <div className="bg-slate-50 min-h-screen font-sans">
+    <div className="bg-blue-800 min-h-screen font-sans">
       
       {/* Official Senate Document Notice Banner */}
       {/* <div className="bg-red-950 text-white py-2.5 px-4 border-b-[3px] border-amber-500 shadow-sm relative z-50">
@@ -197,12 +197,12 @@ export default function ProgramsPage() {
           <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">Explore Our Programmes</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 ">
           {capacityPrograms.map((program) => (
             <a 
               key={program.title} 
               href={program.href} 
-              className={`bg-white border ${program.border} p-8 rounded-xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden`}
+              className={`bg-blue-900 border text-white ${program.border} p-8 rounded-xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden`}
             >
               <div className={`absolute top-0 left-0 w-full h-1 ${program.bg.replace('bg-', 'bg-').replace('50', '500')}`} />
               
@@ -211,42 +211,42 @@ export default function ProgramsPage() {
               </div>
               
               <div className="flex items-start justify-between gap-2 mb-3">
-                <h3 className="text-xl font-bold text-slate-900 leading-tight">{program.title}</h3>
+                <h3 className="text-xl font-bold text-white leading-tight">{program.title}</h3>
               </div>
               
               <span className={`inline-block text-xs font-bold uppercase tracking-wider ${program.color} ${program.bg} px-3 py-1 rounded-full mb-4`}>
                 {program.duration}
               </span>
               
-              <p className="text-sm font-semibold text-slate-700 mb-3 border-l-2 border-slate-200 pl-3">{program.audience}</p>
-              <p className="text-sm text-slate-600 leading-relaxed mb-6">{program.description}</p>
+              <p className="text-sm font-semibold text-white mb-3 border-l-2 border-white/30 pl-3">{program.audience}</p>
+              <p className="text-sm text-white leading-relaxed mb-6">{program.description}</p>
               
-              <span className={`mt-auto inline-flex items-center gap-2 text-sm font-bold ${program.color}`}>
+              {/* <span className={`mt-auto inline-flex items-center gap-2 text-sm font-bold ${program.color}`}>
                 Learn more 
                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-2" />
-              </span>
+              </span> */}
             </a>
           ))}
         </div>
       </section>
 
       {/* Program Structure & High School Attachment */}
-      <section className="bg-white border-y border-slate-200 py-24 relative overflow-hidden">
+      <section className="bg-blue-600 border-y border-slate-200 py-24 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-50/50 via-white to-white opacity-60 pointer-events-none"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
           
-          <div className="bg-slate-50 p-8 md:p-10 rounded-2xl border border-slate-100 shadow-sm">
+          <div className="bg-blue-800 p-8 md:p-10 rounded-2xl border border-slate-100 shadow-sm">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center">
                 <GraduationCap className="text-red-800" size={20} />
               </div>
-              <p className="text-sm font-bold text-red-800 uppercase tracking-widest">Internship &amp; Attachment</p>
+              <p className="text-sm font-bold text-white uppercase tracking-widest">Internship &amp; Attachment</p>
             </div>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-8">Standard Program Structure</h2>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-8">Standard Program Structure</h2>
             <ul className="space-y-5">
               {structure.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-4 text-slate-600 group">
+                <li key={idx} className="flex items-start gap-4 text-white group">
                   <div className="mt-0.5 bg-white rounded-full p-1 shadow-sm border border-slate-100 group-hover:border-red-200 transition-colors">
                     <CheckCircle2 size={18} className="text-red-700" />
                   </div>
@@ -256,21 +256,21 @@ export default function ProgramsPage() {
             </ul>
           </div>
 
-          <div className="bg-slate-50 p-8 md:p-10 rounded-2xl border border-slate-100 shadow-sm">
+          <div className="bg-blue-800 p-8 md:p-10 rounded-2xl border border-slate-100 shadow-sm">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center">
                 <School className="text-amber-700" size={20} />
               </div>
-              <p className="text-sm font-bold text-amber-700 uppercase tracking-widest">Voluntary Service Scheme</p>
+              <p className="text-sm font-bold text-amber-50 uppercase tracking-widest">Voluntary Service Scheme</p>
             </div>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-6">High School Attachment</h2>
-            <p className="text-slate-600 text-[15px] leading-relaxed mb-8 bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-50 mb-6">High School Attachment</h2>
+            <p className="text-white text-[15px] leading-relaxed mb-8 font-serif italic bg-amber-500/20 p-5 rounded-xl border border-slate-100 shadow-sm">
               A structured two-week attachment giving high school students an opportunity to learn, observe, and gain practical exposure within the Senate of Kenya. All public and private high school students are eligible to apply through an official request letter to the Office of the Clerk of the Senate.
             </p>
-            <h4 className="font-bold text-slate-900 mb-4 text-sm uppercase tracking-wide">Key Highlights:</h4>
+            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wide">Key Highlights:</h4>
             <ul className="space-y-4">
               {vssHighlights.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-4 text-slate-600">
+                <li key={idx} className="flex items-start gap-4 text-white">
                   <span className="w-2 h-2 rounded-full bg-amber-500 flex-shrink-0 mt-2 shadow-sm" />
                   <span className="text-[15px] leading-relaxed">{item}</span>
                 </li>
@@ -283,7 +283,7 @@ export default function ProgramsPage() {
 
       {}
       {/* Impact Section */}
-      <section className="bg-red-950 py-24 text-white relative">
+      <section className="bg-amber-700 py-24 text-white relative">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500 via-transparent to-transparent pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-14">
@@ -292,8 +292,8 @@ export default function ProgramsPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {impact.map((item, i) => (
-              <div key={i} className="bg-red-900/50 hover:bg-red-900 border border-red-800/60 p-8 rounded-xl flex flex-col items-center text-center transition-colors">
-                <div className="w-12 h-12 rounded-full bg-red-950 flex items-center justify-center mb-6 shadow-inner border border-red-800/80">
+              <div key={i} className="bg-slate-900 hover:bg-blue-900 border border-amber-800/60 p-8 rounded-xl flex flex-col items-center text-center transition-colors">
+                <div className="w-12 h-12 rounded-full bg-amber-950 flex items-center justify-center mb-6 shadow-inner border border-amber-800/80">
                   <Users size={22} className="text-amber-400" />
                 </div>
                 <p className="text-sm text-red-50/90 font-medium leading-relaxed">{item}</p>
@@ -305,7 +305,7 @@ export default function ProgramsPage() {
 
       {}
       {/* CTA */}
-      <section className="py-24 bg-amber-50/50">
+      {/* <section className="py-24 bg-amber-50/50">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <div className="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center mx-auto mb-6 border border-amber-100">
             <FileText size={28} className="text-amber-600" />
@@ -322,7 +322,7 @@ export default function ProgramsPage() {
             <ArrowRight size={20} />
           </a>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }
