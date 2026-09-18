@@ -39,8 +39,8 @@ interface Directorate {
 const OFFICERS_DATA: Officer[] = [
   {
     id: 'c-senate',
-    name: 'Mr. Jeremiah M. Nyegenye',
-    honour: 'CBS',
+    name: 'Mr. Jeremiah M. Nyegenye, CBS',
+    honour: '',
     role: 'Clerk of the Senate & Secretary, PSC',
     category: 'CLERK',
     chamber: 'Senate of Kenya',
@@ -60,8 +60,8 @@ const OFFICERS_DATA: Officer[] = [
   // },
   {
     id: 'dc-senate-leg',
-    name: 'Ms. Eunice Gichangi',
-    honour: 'MBS',
+    name: 'Ms. Eunice Gichangi, MBS',
+    honour: '',
     role: 'Deputy Clerk (Legislative & Procedural Services)',
     color: 'blue',
     category: 'DEPUTY_CLERK',
@@ -71,8 +71,8 @@ const OFFICERS_DATA: Officer[] = [
   },
   {
     id: 'dc-senate-admin',
-    name: 'Mr. Mohamed Ali Mohamed',
-    honour: 'MBS',
+    name: 'Mr. Mohamed Ali Mohamed, MBS',
+    honour: '',
     role: 'Deputy Clerk (Administrative & Committee Services)',
     color: 'blue',                                            
     category: 'DEPUTY_CLERK',
