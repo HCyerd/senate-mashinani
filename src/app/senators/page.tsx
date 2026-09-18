@@ -411,9 +411,9 @@ export default function SenatorsPage(): React.ReactElement | null {
             <div className="flex flex-wrap gap-2">
               {[
                 { label: 'All Leadership', val: 'All' },
-                { label: 'Presiding Officers', val: 'Presiding' },
-                { label: 'Majority Party', val: 'Majority' },
-                { label: 'Minority Party', val: 'Minority' }
+                { label: 'SPEAKER\'S PANEL', val: 'Presiding' },
+                { label: 'Majority LEADERSHIP', val: 'Majority' },
+                { label: 'Minority LEADERSHIP', val: 'Minority' }
               ].map(tab => (
                 <button
                   key={tab.val}
