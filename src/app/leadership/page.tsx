@@ -107,7 +107,7 @@ const DIRECTORATES_DATA: Directorate[] = [
     id: 'dir-leg-proc',
     title: 'GOVERNANCE & ACCOUNTABILITY',
     head: 'Mr. Njenga Njuguna, OGW',
-    category: 'LEGISLATIVE',
+    category: 'ACCOUNTABILITY',
     iconName: 'BookOpen',
     color: 'blue',
     summary: 'Manages Chamber business, Order Papers, Votes and Proceedings, and procedural advice to the Speaker.',
@@ -247,27 +247,27 @@ const DIRECTORATES_DATA: Directorate[] = [
       'Logistics coordination for timely delivery of goods and services.'
     ]
   },
-    {
-    id: 'dir-socio-economic-affairs',
-    title: 'SOCIO-ECONOMIC COMMITTEE',
-    head: 'Ms. Mary Chesire, OGW',
-    category: 'ECONOMIC',
-    iconName: 'TrendingUp',
-    color: 'blue',
-    summary: 'Oversees socio-economic research, policy analysis, and development initiatives for the Senate.',
-    mandate: 'Manages socio-economic research, policy formulation, and development programs to support evidence-based decision-making within the Senate.',
-    keyFunctions: [
-      'Conducting socio-economic research and analysis.',
-      'Formulating policies and development strategies.',
-      'Monitoring and evaluating socio-economic programs.',
-      'Providing advisory support on socio-economic matters.'
-    ]
-  },
+  //   {
+  //   id: 'dir-socio-economic-affairs',
+  //   title: 'SOCIO-ECONOMIC COMMITTEE',
+  //   head: 'Ms. Mary Chesire, OGW',
+  //   category: 'ECONOMIC',
+  //   iconName: 'TrendingUp',
+  //   color: 'blue',
+  //   summary: 'Oversees socio-economic research, policy analysis, and development initiatives for the Senate.',
+  //   mandate: 'Manages socio-economic research, policy formulation, and development programs to support evidence-based decision-making within the Senate.',
+  //   keyFunctions: [
+  //     'Conducting socio-economic research and analysis.',
+  //     'Formulating policies and development strategies.',
+  //     'Monitoring and evaluating socio-economic programs.',
+  //     'Providing advisory support on socio-economic matters.'
+  //   ]
+  // },
    {
     id: 'dir-liason',
     title: 'SENATE LIASON OFFICE',
     head: 'Dr. Brenda Ogembo',
-    category: 'ADMINISTRATION',
+    category: 'LIAISON',
     iconName: 'Users',
     color: 'blue',
     summary: 'Coordinates communication and collaboration between the Senate and external stakeholders.',

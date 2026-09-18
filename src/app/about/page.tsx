@@ -119,40 +119,40 @@ export default function AboutSenate() {
     const [isDark, setIsDark] = useState<boolean>(false);
 
     // CSS Variables for dynamic styling
-    const themeStyles = `
-        .senate-app {
-            --background: #F9FAFB;
-            --foreground: #0f172a;
-            --card: #ffffff;
-            --card-border: #e2e8f0;
-            --muted: #64748b;
-            --muted-foreground: #475569;
-            --primary: #252864;
-            --primary-foreground: #ffffff;
-            --primary-text: #252864;
-            --secondary: #C9B25A;
-            --secondary-text: #C9B25A;
-            --accent-green: #15008b;
-            --accent-red: #C4122C;
-            --hover-overlay: rgba(0,0,0,0.05);
-        }
-        .senate-app.dark-theme {
-            --background: #020617;
-            --foreground: #f8fafc;
-            --card: #0f172a;
-            --card-border: #1e293b;
-            --muted: #94a3b8;
-            --muted-foreground: #cbd5e1;
-            --primary: #15173e; 
-            --primary-foreground: #ffffff;
-            --primary-text: #ffffff;
-            --secondary: #C9B25A;
-            --secondary-text: #d4c178;
-            --accent-green: #00b359;
-            --accent-red: #e62240;
-            --hover-overlay: rgba(255,255,255,0.05);
-        }
-    `;
+    // const themeStyles = `
+    //     .senate-app {
+    //         --background: #F9FAFB;
+    //         --foreground: #0f172a;
+    //         --card: #ffffff;
+    //         --card-border: #e2e8f0;
+    //         --muted: #64748b;
+    //         --muted-foreground: #475569;
+    //         --primary: #252864;
+    //         --primary-foreground: #ffffff;
+    //         --primary-text: #252864;
+    //         --secondary: #C9B25A;
+    //         --secondary-text: #C9B25A;
+    //         --accent-green: #15008b;
+    //         --accent-red: #C4122C;
+    //         --hover-overlay: rgba(0,0,0,0.05);
+    //     }
+    //     .senate-app.dark-theme {
+    //         --background: #020617;
+    //         --foreground: #f8fafc;
+    //         --card: #0f172a;
+    //         --card-border: #1e293b;
+    //         --muted: #94a3b8;
+    //         --muted-foreground: #cbd5e1;
+    //         --primary: #15173e; 
+    //         --primary-foreground: #ffffff;
+    //         --primary-text: #ffffff;
+    //         --secondary: #C9B25A;
+    //         --secondary-text: #d4c178;
+    //         --accent-green: #00b359;
+    //         --accent-red: #e62240;
+    //         --hover-overlay: rgba(255,255,255,0.05);
+    //     }
+    // `;
 
     const roles = [
         {
@@ -171,7 +171,7 @@ export default function AboutSenate() {
             desc: "Determines the allocation of national revenue among counties, as provided in Article 217, and exercises oversight over national revenue allocated to the county governments."
         },
         {
-            title: "Oversight & Impeachment",
+            title: "Oversight",
             icon: <ShieldCheck className={THEME.primaryText} />,
             desc: "Participates in the oversight of State officers. Has powers to determine any resolution to remove the President, Deputy President, County Governors, and Deputy Governors from office."
         }
@@ -179,14 +179,14 @@ export default function AboutSenate() {
 
     return (
         <div className={`senate-app min-h-screen bg-[var(--background)] text-[var(--foreground)] font-sans selection:bg-[var(--secondary)] selection:text-[var(--primary-foreground)] transition-colors duration-300 ${isDark ? 'dark-theme' : ''}`}>
-            <style dangerouslySetInnerHTML={{ __html: themeStyles }} />
+            {/* <style dangerouslySetInnerHTML={{ __html: themeStyles }} /> */}
             
             {}
             <div className={`relative bg-[#252864] overflow-hidden shadow-xl`}>
                 <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-[#C9B25A] via-transparent to-transparent"></div>
                 
                 {/* Theme Toggle Button positioned in top right */}
-                <div className="absolute top-6 right-6 z-20">
+                {/* <div className="absolute top-6 right-6 z-20">
                     <button
                         onClick={() => setIsDark(!isDark)}
                         className="p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:text-[#C9B25A] transition-all duration-300 flex items-center justify-center shadow-lg"
@@ -194,7 +194,7 @@ export default function AboutSenate() {
                     >
                         {isDark ? <Sun size={22} /> : <Moon size={22} />}
                     </button>
-                </div>
+                </div> */}
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 relative z-10 flex flex-col-reverse md:flex-row items-center gap-12">
                     <div className="flex-1 text-center md:text-left">
@@ -512,7 +512,7 @@ export default function AboutSenate() {
                             <h3 className={`text-xl font-bold ${THEME.primaryText} mb-6 border-b ${THEME.borderLight} pb-4 transition-colors duration-300`}>Key Oversight Committees</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {[
-                                    "County Public Accounts and Investments Committee (CPAIC)",
+                                    "Committee on County Public Investments and Special Funds (CPISFC)",
                                     "Committee on Devolution and Intergovernmental Relations",
                                     "Committee on National Security, Defence and Foreign Relations",
                                     "Committee on Finance and Budget",
