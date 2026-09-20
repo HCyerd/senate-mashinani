@@ -306,8 +306,8 @@ export default function AboutSenate() {
                         </div>
 
         {/* User's provided code structure, updated for alignment */}
-        <div className={`${THEME.bgCard} p-8 rounded-3xl shadow-sm border ${THEME.borderLight} hover:shadow-md transition-all duration-300`}>
-          <div className={`${THEME.bgCard} p-8 rounded-3xl shadow-sm border ${THEME.borderLight} border-t-4 border-t-blue-500 hover:shadow-md transition-all duration-300 group`}>
+      
+          <div className={`${THEME.bgCard} p-8 mb-8 rounded-3xl shadow-sm border ${THEME.borderLight} border-t-4 border-t-blue-500 hover:shadow-md transition-all duration-300 group`}>
             
             {}
             {/* Removed text-center from h3 */}
@@ -330,7 +330,7 @@ export default function AboutSenate() {
 
             </div>
           </div>
-        </div>
+     
   
 
 
@@ -624,31 +624,6 @@ export default function AboutSenate() {
                     </div>
                 )}
             </main>
-
-            <footer className={`bg-[#252864] pt-12 pb-8 mt-12 border-t-4 border-[#C9B25A]`}>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-white rounded-full p-2 flex items-center justify-center">
-                                <img src="parliament_emblem.png" alt="Emblem" className="w-full h-full object-contain" />
-                            </div>
-                            <div>
-                                <h3 className="text-white font-bold text-lg">Senate of Kenya</h3>
-                                <p className="text-blue-200 text-sm">Parliament Buildings, Nairobi</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-4">
-                            <a href="#" className="text-blue-200 hover:text-[#C9B25A] transition-colors flex items-center gap-1 text-sm font-medium">
-                                <ExternalLink size={16} /> Official Website
-                            </a>
-                        </div>
-                    </div>
-                    <div className="border-t border-blue-900/50 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-blue-300 text-sm">
-                        <p>&copy; {new Date().getFullYear()} The Senate, Parliament of Kenya. All rights reserved.</p>
-                        <p className="mt-2 md:mt-0">Designed for Devolution.</p>
-                    </div>
-                </div>
-            </footer>
         </div>
     );
 }
