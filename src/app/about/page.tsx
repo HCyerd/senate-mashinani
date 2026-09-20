@@ -304,14 +304,35 @@ export default function AboutSenate() {
                             </div>
                             
                         </div>
-                        <div className={`${THEME.bgCard} p-8 mb-7 rounded-3xl shadow-sm border ${THEME.borderLight}  hover:shadow-md transition-all duration-300`}>
-                             <div className={`${THEME.bgCard} p-8 rounded-3xl shadow-sm border ${THEME.borderLight} border-t-4 border-t-[var(--primary)] hover:shadow-md transition-all duration-300 group`}>
-                                <h3 className={`text-2xl font-bold ${THEME.primaryText} flex flex-col text-center  mb-4 transition-colors duration-300`}>Our Core Values</h3>
-                                <p className={`${THEME.textBody} flex flex-col text-center leading-relaxed text-lg transition-colors duration-300`}>
-                                    Professionalism<br/> Impartiality<br/> Responsiveness<br/> Integrity and Accountability<br/> Cooperation and Consultation<br/> Inclusiveness
-                                </p>
-                            </div>
-                        </div>
+
+        {/* User's provided code structure, updated for alignment */}
+        <div className={`${THEME.bgCard} p-8 rounded-3xl shadow-sm border ${THEME.borderLight} hover:shadow-md transition-all duration-300`}>
+          <div className={`${THEME.bgCard} p-8 rounded-3xl shadow-sm border ${THEME.borderLight} border-t-4 border-t-blue-500 hover:shadow-md transition-all duration-300 group`}>
+            
+            {}
+            {/* Removed text-center from h3 */}
+            <h1 className={`text-2xl font-bold ${THEME.primaryText} mb-4 leading-relaxedtransition-colors duration-300 text-center`}>
+              Our Core Values
+            </h1>
+            
+        
+            <div className={`${THEME.textBody} flex justify-center leading-relaxed text-lg transition-colors duration-300`}>
+              
+             
+              <ol className="list-decimal list-inside font-bold font-serif text-left">
+                <li>Professionalism</li>
+                <li>Impartiality</li>
+                <li>Responsiveness</li>
+                <li>Integrity and Accountability</li>
+                <li>Cooperation and Consultation</li>
+                <li>Inclusiveness</li>
+              </ol>
+
+            </div>
+          </div>
+        </div>
+  
+
 
                         <SectionHeading 
                             title="Mandate and Powers" 
