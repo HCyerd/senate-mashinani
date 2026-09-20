@@ -18,7 +18,8 @@ import {
     BookOpen,
     Briefcase,
     Sun,
-    Moon
+    Moon,
+    Check
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -280,7 +281,7 @@ export default function AboutSenate() {
                 
                 {/* OVERVIEW TAB */}
                 {activeTab === 'overview' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">                        
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
                             <div className={`${THEME.bgCard} p-8 rounded-3xl shadow-sm border ${THEME.borderLight} border-t-4 border-t-[var(--secondary)] hover:shadow-md transition-all duration-300 group`}>
@@ -289,7 +290,7 @@ export default function AboutSenate() {
                                 </div>
                                 <h3 className={`text-2xl font-bold ${THEME.primaryText} mb-4 transition-colors duration-300`}>Our Vision</h3>
                                 <p className={`${THEME.textBody} leading-relaxed text-lg transition-colors duration-300`}>
-                                    To be a responsive and independent Senate that protects the legacy of devolution and promotes the equitable, sustainable development of all counties in Kenya.
+                                    Democratic and People Centered Parliament
                                 </p>
                             </div>
                             <div className={`${THEME.bgCard} p-8 rounded-3xl shadow-sm border ${THEME.borderLight} border-t-4 border-t-[var(--primary)] hover:shadow-md transition-all duration-300 group`}>
@@ -298,7 +299,16 @@ export default function AboutSenate() {
                                 </div>
                                 <h3 className={`text-2xl font-bold ${THEME.primaryText} mb-4 transition-colors duration-300`}>Our Mission</h3>
                                 <p className={`${THEME.textBody} leading-relaxed text-lg transition-colors duration-300`}>
-                                    To serve the people of Kenya by diligently exercising our legislative, oversight, and representational authority to ensure the enduring success of devolution.
+                                    To facilitate Members of Parliament to effectively and efficiently discharge their constitutional mandate of representation, legislation and oversight
+                                </p>
+                            </div>
+                            
+                        </div>
+                        <div className={`${THEME.bgCard} p-8 mb-7 rounded-3xl shadow-sm border ${THEME.borderLight}  hover:shadow-md transition-all duration-300`}>
+                             <div className={`${THEME.bgCard} p-8 rounded-3xl shadow-sm border ${THEME.borderLight} border-t-4 border-t-[var(--primary)] hover:shadow-md transition-all duration-300 group`}>
+                                <h3 className={`text-2xl font-bold ${THEME.primaryText} flex flex-col text-center  mb-4 transition-colors duration-300`}>Our Core Values</h3>
+                                <p className={`${THEME.textBody} flex flex-col text-center leading-relaxed text-lg transition-colors duration-300`}>
+                                    Professionalism<br/> Impartiality<br/> Responsiveness<br/> Integrity and Accountability<br/> Cooperation and Consultation<br/> Inclusiveness
                                 </p>
                             </div>
                         </div>
