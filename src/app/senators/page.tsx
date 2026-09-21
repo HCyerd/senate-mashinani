@@ -675,7 +675,7 @@ export default function SenatorsPage(): React.ReactElement | null {
                     <div className="absolute bottom-4 left-4 right-4">
                       <h3 className="text-xl font-black text-white leading-tight flex flex-wrap items-center gap-1.5">
                         <span>{senator.name}</span>
-                        {senator.honour && <span className="text-amber-300">, {senator.honour}, MP</span>}
+                        {senator.honour && <span>, {senator.honour}, MP</span>}
                       </h3>
                     </div>
                   </div>
