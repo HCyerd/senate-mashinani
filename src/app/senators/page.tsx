@@ -712,10 +712,10 @@ export default function SenatorsPage(): React.ReactElement | null {
                     </div>
 
                     {/* View Profile Action */}
-                    <button className={`w-full mt-6 py-3 rounded-2xl text-xs font-bold tracking-widest uppercase transition-all duration-300
+                    {/* <button className={`w-full mt-6 py-3 rounded-2xl text-xs font-bold tracking-widest uppercase transition-all duration-300
                       ${themeColors.buttonBg} ${themeColors.accentHover}`}>
                       View Profile
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               ))}
