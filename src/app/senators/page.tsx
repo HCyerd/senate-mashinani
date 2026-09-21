@@ -34,7 +34,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'spk-1',
     role: 'Speaker of the Senate',
-    name: 'Rt. Hon. Amason Jeffah Kingi, EGH',
+    name: 'Rt. Hon. Amason Jeffah Kingi, EGH, MP',
     honour: '',
     title: 'Head of the Senate & Presiding Officer',
     countyOrSeat: 'Ex-Officio Member',
@@ -47,7 +47,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'dspk-1',
     role: 'Deputy Speaker of the Senate',
-    name: 'Sen. Kathuri Murungi, MGH',
+    name: 'Sen. Kathuri Murungi, MGH, MP',
     honour: '',
     title: 'Deputy Presiding Officer',
     countyOrSeat: 'Meru County',
@@ -60,7 +60,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'maj-lead',
     role: 'Senate Majority Leader',
-    name: 'Sen. Aaron Kipkirui Cheruiyot, EGH',
+    name: 'Sen. Aaron Kipkirui Cheruiyot, EGH, MP',
     honour: '',
     title: 'Leader of Majority Party',
     countyOrSeat: 'Kericho County',
@@ -73,7 +73,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'min-lead',
     role: 'Senate Minority Leader',
-    name: 'Sen. Justice (Rtd.) Stewart Mwachiru Shadrack Madzayo, EGH',
+    name: 'Sen. Justice (Rtd.) Stewart Mwachiru Shadrack Madzayo, EGH, MP',
     honour: '',
     title: 'Leader of Minority Party / Opposition',
     countyOrSeat: 'Kilifi County',
@@ -99,7 +99,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'min-whip',
     role: 'Senate Minority Whip',
-    name: 'Sen. Ledama Olekina, CBS',
+    name: 'Sen. Ledama Olekina, CBS, MP',
     honour: '',
     title: 'Chief Minority Whip',
     countyOrSeat: 'Narok County',
@@ -112,7 +112,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'dep-maj-lead',
     role: 'Senate Deputy Majority Leader',
-    name: 'Sen. Tabitha Karanja Keroche, MGH',
+    name: 'Sen. Tabitha Karanja Keroche, MGH, MP',
     honour: '',
     title: 'Deputy Leader of Government Business',
     countyOrSeat: 'Nakuru County',
@@ -125,7 +125,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'dep-min-lead',
     role: 'Senate Deputy Minority Leader',
-    name: 'Sen. Enoch Kiio Wambua, CBS',
+    name: 'Sen. Enoch Kiio Wambua, CBS, MP',
     honour: '',
     title: 'Deputy Leader of Minority Party',
     countyOrSeat: 'Kitui County',
@@ -138,7 +138,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'dep-maj-whip',
     role: 'Senate Deputy Majority Whip',
-    name: 'Sen. (Dr.) Steve Lelegwe Ltumbesi, CBS',
+    name: 'Sen. (Dr.) Steve Lelegwe Ltumbesi, CBS, MP',
     honour: '',
     title: 'Deputy Whip (Majority)',
     countyOrSeat: 'Samburu County',
@@ -151,7 +151,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'dep-min-whip',
     role: 'Senate Deputy Minority Whip',
-    name: 'Sen. Eddy Oketch',
+    name: 'Sen. Eddy Oketch, MP',
     honour: '',
     title: 'Deputy Whip (Minority)',
     countyOrSeat: 'Migori County',
@@ -164,7 +164,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'dep-munma',
     role: 'Senate Presiding Officer',
-    name: 'Sen. Catherine Mumma, CBS',
+    name: 'Sen. Catherine Mumma, CBS, MP',
     honour: '',
     title: 'Presiding Officer',
     countyOrSeat: 'NOMINATED',
@@ -177,7 +177,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'presiding-abdul-haji',
     role: 'Senate Presiding Officer',
-    name: 'Sen. Abdul Haji, CBS',
+    name: 'Sen. Abdul Haji, CBS, MP',
     honour: '',
     title: 'Presiding Officer',
     countyOrSeat: 'Garissa County',
@@ -190,7 +190,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'presiding-maina',
     role: 'Senate Presiding Officer',
-    name: 'Sen. Veronica Maina, CBS',
+    name: 'Sen. Veronica Maina, CBS, MP',
     honour: '',
     title: 'Presiding Officer',
     countyOrSeat: 'Nominated',
@@ -203,7 +203,7 @@ const HOUSE_LEADERSHIP: Leader[] = [
   {
     id: 'presiding-wakili-kiprotic',
     role: 'Senate Presiding Officer',
-    name: 'Sen. Wakili Kiprotich Sigei Hilary, CBS',
+    name: 'Sen. Wakili Kiprotich Sigei Hilary, CBS, MP',
     honour: '',
     title: 'Presiding Officer',
     countyOrSeat: 'Bomet County',
