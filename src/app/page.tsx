@@ -22,62 +22,12 @@ import {
   Sparkles,
   ArrowRight,
   Info,
-  CalendarCheck
+  CalendarCheck,
+  Play
 } from 'lucide-react';
+import Image from 'next/image';
 
-interface HostEdition {
-  id: string;
-  name: string;
-  county: string;
-  edition: string;
-  date: string;
-  region: string;
-  assembly: string;
-  hostSenator: string;
-  status: 'Concluded' | 'Upcoming' | 'In Session';
-  image: string;
-  summary: string;
-  highlights: string[];
-  keyCommittees: string[];
-  hansardRecord: string;
-}
-
-interface DevolutionBill {
-  id: string;
-  title: string;
-  description: string;
-  county: string;
-  committee: string;
-  status: string;
-  statusType: 'success' | 'warning' | 'info' | 'purple';
-  keywords: string[];
-  fullBrief: string;
-}
-
-interface OrderPaperSession {
-  id: string;
-  dayKey: 'day1' | 'day2' | 'day3' | 'day4' | 'day5';
-  dayLabel: string;
-  dateStr: string;
-  time: string;
-  venue: string;
-  category: string;
-  categoryColor: string;
-  title: string;
-  description: string;
-  mover?: string;
-  keyParticipants?: string;
-  type: 'Plenary' | 'Committee' | 'Baraza' | 'Inspection' | 'Protocol';
-  status: 'Concluded' | 'In Progress' | 'Upcoming';
-}
-
-export interface FAQItem {
-  id: number;
-  q: string;
-  a: React.ReactNode;
-}
-
-const HOST_EDITIONS: HostEdition[] = [
+const HOST_EDITIONS = [
   {
     id: 'kilifi',
     name: 'Kilifi County',
@@ -185,7 +135,7 @@ const HOST_EDITIONS: HostEdition[] = [
   }
 ];
 
-const DEVOLUTION_BILLS: DevolutionBill[] = [
+const DEVOLUTION_BILLS = [
   {
     id: 'b1',
     title: 'The Mung Beans (Ndengu) Bill',
@@ -243,7 +193,7 @@ const DEVOLUTION_BILLS: DevolutionBill[] = [
   }
 ];
 
-const ORDER_PAPER_ITEMS: OrderPaperSession[] = [
+const ORDER_PAPER_ITEMS = [
   {
     id: 'op1',
     dayKey: 'day1',
@@ -351,7 +301,7 @@ const ORDER_PAPER_ITEMS: OrderPaperSession[] = [
   }
 ];
 
-const faqs: FAQItem[] = [
+const faqs = [
   {
     id: 1,
     q: "1. What is the legal basis for Senate Mashinani?",
@@ -434,22 +384,25 @@ const faqs: FAQItem[] = [
 
 export default function App() {
   // Navigation & audio states
-  const [audioEnabled, setAudioEnabled] = useState<boolean>(false);
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [audioEnabled, setAudioEnabled] = useState(false);
+  const audioCtxRef = useRef(null);
+  const [openFaq, setOpenFaq] = useState(null);
+
+  // Video state
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   // Filter & Search states
-  const [selectedEditionTab, setSelectedEditionTab] = useState<string>('all');
-  const [billSearchQuery, setBillSearchQuery] = useState<string>('');
+  const [selectedEditionTab, setSelectedEditionTab] = useState('all');
+  const [billSearchQuery, setBillSearchQuery] = useState('');
 
   // Kilifi Program interactive filter states
-  const [activeDayFilter, setActiveDayFilter] = useState<string>('all');
-  const [activeTypeFilter, setActiveTypeFilter] = useState<string>('all');
+  const [activeDayFilter, setActiveDayFilter] = useState('all');
+  const [activeTypeFilter, setActiveTypeFilter] = useState('all');
 
   // Modals state
-  const [activeEditionModal, setActiveEditionModal] = useState<HostEdition | null>(null);
-  const [activeBillModal, setActiveBillModal] = useState<DevolutionBill | null>(null);
-  const [liveStreamModalOpen, setLiveStreamModalOpen] = useState<boolean>(false);
+  const [activeEditionModal, setActiveEditionModal] = useState(null);
+  const [activeBillModal, setActiveBillModal] = useState(null);
+  const [liveStreamModalOpen, setLiveStreamModalOpen] = useState(false);
 
   // Live chamber quote cycler
   const hansardQuotes = [
@@ -458,13 +411,13 @@ export default function App() {
     `"Salt mining companies in Magarini must remit equitable royalties directly to host community trusts." — Committee on Natural Resources`,
     `"Devolution oversight must ensure county health facilities like Kilifi County Hospital are fully resourced." — Majority Leader`
   ];
-  const [quoteIndex, setQuoteIndex] = useState<number>(0);
+  const [quoteIndex, setQuoteIndex] = useState(0);
 
-  const playCivicTone = (frequency = 440, type: OscillatorType = 'sine', duration = 0.15) => {
+  const playCivicTone = (frequency = 440, type = 'sine', duration = 0.15) => {
     if (!audioEnabled) return;
     try {
       if (!audioCtxRef.current) {
-        const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
         audioCtxRef.current = new AudioContextClass();
       }
       if (audioCtxRef.current.state === 'suspended') {
@@ -497,7 +450,6 @@ export default function App() {
       setTimeout(() => playCivicTone(587.33, 'sine', 0.2), 50); // D5
     }
   };
-
 
   const filteredBills = useMemo(() => {
     if (!billSearchQuery.trim()) return DEVOLUTION_BILLS;
@@ -587,19 +539,6 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
       {/* Kenya Flag Ribbon */}
       <div className="h-2 w-full bg-gradient-to-r from-black via-[#A81C26] via-white to-[#0656ea]" />
 
-      {/* Floating Sound Toggle */}
-      {/* <button
-        onClick={toggleSound}
-        className="fixed bottom-6 right-6 z-50 p-3.5 rounded-full bg-[var(--card)] text-[var(--foreground)] shadow-2xl border border-[var(--card-border)] hover:bg-[var(--card-border)] hover:scale-110 transition-all flex items-center justify-center group"
-        title="Toggle civic chimes"
-      >
-        {audioEnabled ? (
-          <Volume2 className="w-5 h-5 text-[var(--primary)]" />
-        ) : (
-          <VolumeX className="w-5 h-5 text-[var(--muted)] group-hover:text-[var(--foreground)]" />
-        )}
-      </button> */}
-
       {/* Hero Section */}
       <section className="relative bg-[#020617] text-white overflow-hidden transition-colors duration-300">
         <div className="absolute inset-0 z-0">
@@ -616,7 +555,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Hero Left Copy */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-[var(--gold)]">
                 <span className="w-2 h-2 rounded-full bg-[var(--gold)] animate-ping" />
                 Article 126(1) Resolution · Democracy Beyond Nairobi
@@ -657,102 +596,136 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
               </div>
 
               {/* Key Quantitative Stats */}
-              <div className="grid grid-cols-3 gap-4 pt-8 border-t border-slate-800">
-                <div>
-                  <p className="text-2xl sm:text-3xl font-extrabold text-white">47</p>
-                  <p className="text-xs text-slate-400 uppercase tracking-wider font-medium mt-0.5">Counties Represented</p>
-                </div>
-                <div>
-                  <p className="text-2xl sm:text-3xl font-extrabold text-[var(--gold)]">4</p>
-                  <p className="text-xs text-slate-400 uppercase tracking-wider font-medium mt-0.5">Historic Sittings</p>
-                </div>
-                <div>
-                  <p className="text-2xl sm:text-3xl font-extrabold text-blue-400">100%</p>
-                  <p className="text-xs text-slate-400 uppercase tracking-wider font-medium mt-0.5">Binding Hansard Power</p>
-                </div>
+            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-slate-800">
+              <div>
+                <p className="text-2xl sm:text-3xl font-extrabold text-white">47</p>
+                <p className="text-xs text-slate-400 uppercase tracking-wider font-medium mt-0.5">Counties Represented</p>
+              </div>
+              <div>
+                <p className="text-2xl sm:text-3xl font-extrabold text-[var(--gold)]">4</p>
+                <p className="text-xs text-slate-400 uppercase tracking-wider font-medium mt-0.5">Historic Sittings</p>
+              </div>
+              <div>
+                <p className="text-2xl sm:text-3xl font-extrabold text-blue-400">100%</p>
+                <p className="text-xs text-slate-400 uppercase tracking-wider font-medium mt-0.5">Binding Hansard Power</p>
               </div>
             </div>
+          </div>
 
-            {/* Spotlight Assembly Card */}
-            <div className="lg:col-span-5">
-              <div className="relative bg-gradient-to-b from-slate-900/95 to-slate-900/90 border border-slate-700/60 rounded-3xl p-6 backdrop-blur-xl shadow-2xl overflow-hidden">
-                <div className="flex items-center justify-between pb-4 border-b border-slate-800">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-blue-400 animate-ping" />
-                    <span className="text-xs font-bold uppercase tracking-wider text-blue-400">
-                      Next Sitting Assembly
-                    </span>
-                  </div>
-                  <span className="text-xs text-[var(--gold)] bg-amber-950/80 px-2.5 py-1 rounded-full border border-amber-800">
-                    5th Edition · Sept 2026
+          {/* Spotlight Assembly Card */}
+          <div className="lg:col-span-6">
+            <div className="relative bg-gradient-to-b from-slate-900/95 to-slate-900/90 border border-slate-700/60 rounded-3xl p-6 backdrop-blur-xl shadow-2xl overflow-hidden">
+              
+              <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-red-400">
+                    Live Sitting Assembly
                   </span>
                 </div>
+                <span className="text-xs text-[var(--gold)] bg-amber-950/80 px-2.5 py-1 rounded-full border border-amber-800">
+                  Ongoing · 5th Edition
+                </span>
+              </div>
 
-                <div className="mt-4 space-y-4">
-                  <div className="relative h-44 rounded-2xl overflow-hidden group">
-                    <img
-                      src="/sessions_images/kilifi.png"
-                      alt="Kilifi Coastal County"
-                      className="w-full h-full object-fit group-hover:scale-105 transition duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-                    <div className="absolute bottom-3 left-4 right-4 flex justify-between items-end">
-                      <div>
-                        <span className="text-[10px] font-bold text-[var(--gold)] uppercase tracking-wider">Host Assembly</span>
-                        <h3 className="text-lg font-bold text-white">Kilifi County Assembly</h3>
-                        <p className="text-xs text-slate-300">Blue Economy, Salt Mining Royalties & Land Rights</p>
+              <div className="mt-4 space-y-4">
+                
+                {/* VIDEO PLAYER COMPONENT */}
+                <div 
+                  className="relative h-48 sm:h-56 rounded-2xl overflow-hidden group cursor-pointer border border-slate-700/80 shadow-inner bg-black"
+                  onClick={() => setIsVideoPlaying(true)}
+                >
+                  {!isVideoPlaying ? (
+                    <>
+                      <Image
+                        src="/sessions_images/kilifi.png"
+                        alt="Kilifi Coastal County Session Thumbnail"
+                        width={640}
+                        height={360}
+                        
+                        className="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-90"
+                      />
+                      <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/20 transition-colors duration-500 flex items-center justify-center backdrop-blur-[1px] group-hover:backdrop-blur-0">
+                        <div className="w-16 h-16 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center border border-white/30 shadow-2xl group-hover:bg-[var(--primary)] group-hover:scale-110 transition-all duration-300">
+                          <Play className="w-8 h-8 ml-1 fill-white" />
+                        </div>
                       </div>
-                      <span className="px-2.5 py-1 bg-[var(--gold)] text-slate-950 text-[10px] font-extrabold uppercase rounded shadow">
-                        Upcoming
-                      </span>
-                    </div>
-                  </div>
+                    </>
+                  ) : (
+                    <iframe 
+                      className="w-full h-full absolute inset-0"
+                      src="https://www.youtube.com/embed/JUB87VKMCbQ?si=8_EpGnV5lnZIxeD-&autoplay=1" 
+                      title="YouTube video player" 
+                      frameBorder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                      referrerPolicy="strict-origin-when-cross-origin" 
+                      allowFullScreen
+                    ></iframe>
+                  )}
+                </div>
 
-                  <div className="bg-slate-800/60 rounded-xl p-4 border border-slate-700/50 space-y-2.5 text-xs text-slate-300">
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold flex items-center gap-1.5 text-slate-400">
-                        <Users className="w-3.5 h-3.5 text-[var(--gold)]" /> Host Senator:
-                      </span>
-                      <span className="text-white font-medium">Sen. Stewart Madzayo, EGH, MP</span>
+                {/* DECORATIONS BELOW THE IFRAME */}
+                <div className="space-y-1.5 pt-1">
+                  <span className="text-[10px] font-bold text-[var(--gold)] uppercase tracking-wider">Host Assembly</span>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="text-lg font-bold text-white">Kilifi County Assembly</h3>
+                      <p className="text-xs text-slate-300">Blue Economy, Salt Mining Royalties & Land Rights</p>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold flex items-center gap-1.5 text-slate-400">
-                        <FileText className="w-3.5 h-3.5 text-blue-400" /> House Mandate:
-                      </span>
-                      <span className="text-white font-medium">Adopted Senate Motion (6th May 2026)</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold flex items-center gap-1.5 text-slate-400">
-                        <Shield className="w-3.5 h-3.5 text-blue-400" /> Key Focus:
-                      </span>
-                      <span className="text-white font-medium">Coastal Blue Economy & Salt Royalties</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-2 flex gap-3">
-                    <button
-                      onClick={() => setActiveEditionModal(HOST_EDITIONS[0])}
-                      className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[var(--gold)] to-yellow-600 hover:from-yellow-400 hover:to-[var(--gold)] text-slate-950 font-bold text-xs uppercase tracking-wider transition text-center shadow"
-                    >
-                      View Kilifi Sitting Brief
-                    </button>
-                    <button
-                      onClick={() => setActiveEditionModal(HOST_EDITIONS[1])}
-                      className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white text-xs font-semibold flex items-center justify-center transition"
-                      title="Inspect Busia 4th Edition"
-                    >
-                      <Info className="w-4 h-4 text-blue-400" />
-                    </button>
+                    <span className="px-2.5 py-1 bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] font-extrabold uppercase rounded shadow animate-pulse">
+                      Ongoing
+                    </span>
                   </div>
                 </div>
+
+                {/* INFO LIST */}
+                <div className="bg-slate-800/60 rounded-xl p-4 border border-slate-700/50 space-y-3 text-xs text-slate-300">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                    <span className="font-semibold flex items-center gap-1.5 text-slate-400 shrink-0">
+                      <Users className="w-3.5 h-3.5 text-[var(--gold)]" /> Host Senator:
+                    </span>
+                    <span className="text-white font-medium text-left sm:text-right">Sen. Stewart Madzayo, EGH, MP</span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                    <span className="font-semibold flex items-center gap-1.5 text-slate-400 shrink-0">
+                      <FileText className="w-3.5 h-3.5 text-blue-400" /> House Mandate:
+                    </span>
+                    <span className="text-white font-medium text-left sm:text-right">Adopted Senate Motion (6th May 2026)</span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                    <span className="font-semibold flex items-center gap-1.5 text-slate-400 shrink-0">
+                      <Shield className="w-3.5 h-3.5 text-blue-400" /> Key Focus:
+                    </span>
+                    <span className="text-white font-medium text-left sm:text-right">Coastal Blue Economy & Salt Royalties</span>
+                  </div>
+                </div>
+
+                {/* ACTIONS */}
+                <div className="pt-2 flex gap-3">
+                  <button
+                    onClick={() => setActiveEditionModal(HOST_EDITIONS[0])}
+                    className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[var(--gold)] to-yellow-600 hover:from-yellow-400 hover:to-[var(--gold)] text-slate-950 font-bold text-xs uppercase tracking-wider transition text-center shadow"
+                  >
+                    View Kilifi Sitting Brief
+                  </button>
+                  <button
+                    onClick={() => setActiveEditionModal(HOST_EDITIONS[1])}
+                    className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white text-xs font-semibold flex items-center justify-center transition"
+                    title="Inspect Busia 4th Edition"
+                  >
+                    <Info className="w-4 h-4 text-blue-400" />
+                  </button>
+                </div>
+
               </div>
             </div>
-
           </div>
-        </div>
-      </section>
 
-      {/* Senate Dispatch Marquee */}
+        </div>
+      </div>
+    </section>
+
+    {/* Senate Dispatch Marquee */}
       <div className="bg-[var(--card)] text-[var(--foreground)] border-y border-[var(--card-border)] py-3 px-4 relative z-10 transition-colors duration-300">
         <style>{`
           @keyframes marquee {
@@ -849,7 +822,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
             </div>
 
             <div>
-              <div className="flex items-center w-full h-full">           
+              <div className="flex items-center w-full h-full">            
                 <img
                   src="/sessions_images/chambers.jpg"
                   alt="Host Counties Selection"
