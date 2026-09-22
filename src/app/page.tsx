@@ -685,7 +685,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                     Live Sitting Assembly
                   </span>
                 </div>
-                <span className="text-xs text-[#D4AF37] bg-amber-950/80 px-2.5 py-1 rounded-full border border-amber-800">
+                <span className=" text-[#D4AF37] px-2.5 py-1  ">
                   5th Edition
                 </span>
               </div>
