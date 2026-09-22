@@ -1101,12 +1101,15 @@ export default function App() {
                   <div className="pt-4 border-t border-[var(--card-border)] space-y-2 transition-colors">
                     <div className="text-[11px] text-[var(--muted)] flex items-center justify-between transition-colors">
                       <span className="truncate max-w-[200px]" title={ed.assembly}>{ed.assembly}</span>
-                      {/* <button
-                        onClick={() => setActiveEditionModal(ed)}
-                        className="text-[var(--primary)] hover:opacity-80 font-bold flex items-center gap-1 shrink-0 transition-colors"
+                      <button
+                        onClick={() => {
+                          playCivicTone(587.33, 'triangle', 0.15);
+                          setActiveEditionModal(ed);
+                        }}
+                        className="text-blue-600 dark:text-blue-400 hover:text-blue-500 font-bold flex items-center gap-1 shrink-0 transition-colors"
                       >
                         Full Record <ChevronRight className="w-4 h-4" />
-                      </button> */}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -1268,23 +1271,67 @@ export default function App() {
       </section>
 
       {}
+    
+      {}
       {activeEditionModal && (
         <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="card max-w-2xl w-full p-6 sm:p-8 text-[var(--foreground)] shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 transition-colors">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 text-slate-900 dark:text-white shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 transition-colors">
             <button
               onClick={() => setActiveEditionModal(null)}
-              className="absolute top-5 right-5 text-[var(--muted)] hover:text-[var(--foreground)] p-1 rounded-lg hover:bg-[var(--background)] transition"
+              className="absolute top-5 right-5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              aria-label="Close modal"
             >
               <X className="w-6 h-6" />
             </button>
+
             <div className="space-y-4">
-              <h3 className="text-2xl font-extrabold text-[var(--foreground)] transition-colors">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#D4AF37] animate-ping" />
+                <span className="text-xs uppercase font-bold text-[#D4AF37]">
+                  {activeEditionModal.status === 'Upcoming' ? 'Official Proclamation' : 'Official Parliamentary Hansard'}
+                </span>
+              </div>
+              <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white transition-colors">
                 {activeEditionModal.name} ({activeEditionModal.edition})
               </h3>
-              <div className="pt-6 mt-4 border-t border-[var(--card-border)] flex justify-end transition-colors">
+              <div className="pb-2 border-b border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 space-y-1 transition-colors">
+                <p><strong>Sitting Dates:</strong> {activeEditionModal.date}</p>
+                <p><strong>Chamber Venue:</strong> {activeEditionModal.assembly}</p>
+                <p><strong>Host Senator:</strong> {activeEditionModal.hostSenator}</p>
+                <p className="text-blue-600 dark:text-blue-400 font-mono text-[11px] transition-colors">{activeEditionModal.hansardRecord}</p>
+              </div>
+
+              <div className="space-y-3 pt-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 transition-colors">
+                  Substantive Inquiries & Grassroots Outcomes:
+                </h4>
+                <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 transition-colors">
+                  {activeEditionModal.highlights.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="text-blue-600 dark:text-blue-400 font-bold mt-0.5 transition-colors">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="pt-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5 transition-colors">
+                  Participating Senate Standing Committees:
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {activeEditionModal.keyCommittees.map((c, i) => (
+                    <span key={i} className="text-xs bg-slate-50 dark:bg-slate-800 px-2.5 py-1 rounded border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 transition-colors">
+                      {c}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-6 mt-4 border-t border-slate-200 dark:border-slate-800 flex justify-end transition-colors">
                 <button
                   onClick={() => setActiveEditionModal(null)}
-                  className="px-5 py-2.5 rounded-xl bg-[var(--background)] border border-[var(--card-border)] hover:opacity-80 text-[var(--foreground)] font-bold text-xs transition-colors"
+                  className="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs transition-colors"
                 >
                   Close Record
                 </button>
@@ -1293,6 +1340,8 @@ export default function App() {
           </div>
         </div>
       )}
+
+     
 
     </div>
   );
