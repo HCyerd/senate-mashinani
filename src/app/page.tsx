@@ -180,73 +180,308 @@ const DEVOLUTION_BILLS: Bill[] = [
 ];
 
 const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
+  // DAY TWO
   {
     id: 'op1',
-    dayKey: 'day1',
-    dayLabel: 'Day 1',
-    dateStr: 'Mon 21 Sep 2026',
-    time: '08:30 AM',
-    venue: 'Malindi Airport & Chamber Forecourt',
-    category: 'Ceremonial & Protocol',
-    title: 'Arrival of Senate Mace & Ceremonial Reception',
-    description: 'Official reception of the Senate Mace and the Speaker’s procession, formally establishing the host assembly as the sovereign precinct of the Senate.',
-    keyParticipants: 'Speaker Amason Kingi, Governor Gideon Mung\'aro, Speaker Teddy Mwambire',
-    type: 'Protocol',
+    dayKey: 'day2',
+    dayLabel: 'Sun 20 Sep',
+    dateStr: 'Sun 20 Sep 2026',
+    time: '02:00 PM',
+    venue: 'Malindi Women\'s Prison',
+    category: 'Outreach',
+    title: 'KEWOSA Visit to Malindi Women\'s Prison',
+    description: 'Kenya Women Senators\' Association (KEWOSA) visit and outreach to the Malindi Women\'s Prison facility.',
+    type: 'Committee',
     status: 'Completed'
   },
   {
     id: 'op2',
     dayKey: 'day2',
-    dayLabel: 'Day 2',
-    dateStr: 'Tue 22 Sep 2026',
-    time: '09:00 AM',
-    venue: 'Kilifi Assembly Chambers',
-    category: 'Chamber Plenary',
-    title: 'Sitting No. 01: Official Inaugural Addresses',
-    description: 'Special inaugural addresses on the state of devolution in the Coast Region, intergovernmental relations, and the official opening of the 5th Mashinani.',
-    mover: 'Speaker of the Senate, Hon. Amason Jeffah Kingi',
-    type: 'Plenary',
-    status: 'Completed' // Updated based on 6:47 PM EAT
+    dayLabel: 'Sun 20 Sep',
+    dateStr: 'Sun 20 Sep 2026',
+    time: '03:00 PM',
+    venue: 'Town Secondary School, Malindi',
+    category: 'Protocol & Sports',
+    title: 'Football Match: Senate vs Kilifi County Assembly',
+    description: 'Friendly football match engaging Senators and Kilifi County Assembly Members to build rapport ahead of the sittings.',
+    type: 'Protocol',
+    status: 'Completed'
   },
+
+  // DAY THREE
   {
     id: 'op3',
-    dayKey: 'day2',
-    dayLabel: 'Day 2',
-    dateStr: 'Tue 22 Sep 2026',
-    time: '02:30 PM',
-    venue: 'Kilifi Assembly Chambers',
-    category: 'Chamber Debate',
-    title: 'Coastal Blue Economy & Maritime Safety Corridors Motion',
-    description: 'Debate on a motion seeking the allocation of funds for cold storage facilities at landing sites and strict demarcation of artisanal fisherfolk corridors.',
-    mover: 'Senate Minority Leader, Sen. Stewart Madzayo',
-    type: 'Plenary',
-    status: 'Completed' // Updated based on 6:47 PM EAT
+    dayKey: 'day3',
+    dayLabel: 'Mon 21 Sep',
+    dateStr: 'Mon 21 Sep 2026',
+    time: '08:30 AM',
+    venue: 'Malindi and Ganze Sub-Counties',
+    category: 'Inspection Visit',
+    title: 'Finance & Roads Committees Joint Inspection',
+    description: 'Joint inspection visit to inspect projects funded by the Equalization Fund in Malindi and Ganze Sub-Counties.',
+    mover: 'Finance & Budget / Roads & Transportation',
+    type: 'Inspection',
+    status: 'Completed'
   },
   {
     id: 'op4',
     dayKey: 'day3',
-    dayLabel: 'Day 3',
-    dateStr: 'Wed 23 Sep 2026',
+    dayLabel: 'Mon 21 Sep',
+    dateStr: 'Mon 21 Sep 2026',
     time: '09:00 AM',
-    venue: 'Magarini Sub-County Hall',
-    category: 'Committee Inquiry',
-    title: 'Salt Mining Royalties & Aquifer Protection Hearings',
-    description: 'On-site public hearings into environmental degradation, freshwater aquifer contamination, and unpaid community royalties by large-scale salt harvesting firms.',
-    mover: 'Standing Committee on Lands, Environment & Natural Resources',
-    type: 'Committee',
-    status: 'Upcoming'
+    venue: 'Malindi and Marafa Hospitals',
+    category: 'Inspection Visit',
+    title: 'Health & CPAC Joint Inspection of Healthcare Facilities',
+    description: 'Joint inspection visit to Malindi Sub-County Hospital and Marafa Sub-County Hospital to assess the provision of healthcare services.',
+    mover: 'Health / CPAC',
+    type: 'Inspection',
+    status: 'Completed'
   },
   {
     id: 'op5',
     dayKey: 'day3',
-    dayLabel: 'Day 3',
+    dayLabel: 'Mon 21 Sep',
+    dateStr: 'Mon 21 Sep 2026',
+    time: '09:00 AM',
+    venue: 'Meeting Room 2, Ground Floor, New Assembly Building',
+    category: 'Committee Inquiry',
+    title: 'Lands & Environment Committee Meeting on Mining',
+    description: 'Meeting with the Ministry of Environment, Ministry of Mining and Blue Economy, and Mining Companies on environmental obligations and impact assessments.',
+    mover: 'Land, Environment & Natural Resources',
+    type: 'Committee',
+    status: 'Completed'
+  },
+  {
+    id: 'op6',
+    dayKey: 'day3',
+    dayLabel: 'Mon 21 Sep',
+    dateStr: 'Mon 21 Sep 2026',
+    time: '01:00 PM',
+    venue: 'Magarini Sub-County',
+    category: 'Inspection Visit',
+    title: 'Inspection of Salt Mining & Sand Quarries',
+    description: 'Inspection visits to Krystalline Salt Limited (Marereni) and Mjana Heri sand quarries to assess environmental audit compliance.',
+    mover: 'Land, Environment & Natural Resources',
+    type: 'Inspection',
+    status: 'Completed'
+  },
+  {
+    id: 'op7',
+    dayKey: 'day3',
+    dayLabel: 'Mon 21 Sep',
+    dateStr: 'Mon 21 Sep 2026',
+    time: '02:00 PM',
+    venue: 'Tent 1, New Assembly Building Grounds',
+    category: 'Committee Inquiry',
+    title: 'CPAC Meeting on Outstanding Pending Bills',
+    description: 'Meeting with the Suppliers\' Association of Kilifi County and other affected vendors to deliberate on outstanding pending bills.',
+    mover: 'County Public Accounts Committee',
+    type: 'Committee',
+    status: 'Completed'
+  },
+
+  // DAY FOUR
+  {
+    id: 'op8',
+    dayKey: 'day4',
+    dayLabel: 'Tue 22 Sep',
+    dateStr: 'Tue 22 Sep 2026',
+    time: '07:30 AM',
+    venue: 'Kilifi Central Fish Landing Site',
+    category: 'Inspection Visit',
+    title: 'Blue Economy & Fisheries Joint Inspection',
+    description: 'Joint inspection of cold storage, fish banda, and solar projects; stakeholder engagement with beach management units.',
+    mover: 'Agriculture / Energy / Lands',
+    type: 'Inspection',
+    status: 'Completed'
+  },
+  {
+    id: 'op9',
+    dayKey: 'day4',
+    dayLabel: 'Tue 22 Sep',
+    dateStr: 'Tue 22 Sep 2026',
+    time: '08:30 AM',
+    venue: 'Meeting Room 3, New Assembly Building',
+    category: 'Committee Inquiry',
+    title: 'Finance & Budget: Kilifi Pending Bills',
+    description: 'Meeting with the Kilifi County Executive to deliberate on the status of pending bills.',
+    mover: 'Standing Committee on Finance and Budget',
+    type: 'Committee',
+    status: 'Completed'
+  },
+  {
+    id: 'op10',
+    dayKey: 'day4',
+    dayLabel: 'Tue 22 Sep',
+    dateStr: 'Tue 22 Sep 2026',
+    time: '09:00 AM',
+    venue: 'Malindi Sub-County',
+    category: 'Inspection Visit',
+    title: 'Education Committee ECDE Inspection',
+    description: 'Inspection of Sabaki, Malindi Central, and Sir Ali Bin Salim ECDE Centres to verify Auditor General recommendations.',
+    mover: 'Standing Committee on Education',
+    type: 'Inspection',
+    status: 'Completed'
+  },
+  {
+    id: 'op11',
+    dayKey: 'day4',
+    dayLabel: 'Tue 22 Sep',
+    dateStr: 'Tue 22 Sep 2026',
+    time: '11:30 AM',
+    venue: 'Meeting Room 3, New Assembly Building',
+    category: 'Committee Inquiry',
+    title: 'National Security Meeting with Governor',
+    description: 'Deliberation on the prevailing security situation, emerging threats, and disaster management with the Governor and County Commissioner.',
+    mover: 'National Security, Defence & Foreign Relations',
+    type: 'Committee',
+    status: 'Completed'
+  },
+  {
+    id: 'op12',
+    dayKey: 'day4',
+    dayLabel: 'Tue 22 Sep',
+    dateStr: 'Tue 22 Sep 2026',
+    time: '02:30 PM',
+    venue: 'Kilifi County Assembly Chamber',
+    category: 'Chamber Plenary',
+    title: 'Senate Plenary Sitting',
+    description: 'Consideration of Bills, Motions, Petitions and Statements.',
+    mover: 'Speaker of the Senate',
+    type: 'Plenary',
+    status: 'Completed' // Evaluated as completed given current time context
+  },
+
+  // DAY FIVE
+  {
+    id: 'op13',
+    dayKey: 'day5',
+    dayLabel: 'Wed 23 Sep',
     dateStr: 'Wed 23 Sep 2026',
     time: '09:30 AM',
-    venue: 'Kilifi County Referral Hospital',
-    category: 'Forensic Audit / Inspection',
-    title: 'CPAC Audit of Devolved Healthcare',
-    description: 'Direct interrogation of the County Executive regarding stalled infrastructure projects, pending bills, and the Auditor General’s report on health expenditure.',
-    mover: 'County Public Accounts Committee (CPAC)',
+    venue: 'Kilifi County Assembly Chamber',
+    category: 'Chamber Plenary',
+    title: 'Senate Plenary: Responses to Questions by CSs',
+    description: 'Responses to Questions by Cabinet Secretaries for ICT, Youth Affairs, Education, and Mining & Blue Economy.',
+    mover: 'Speaker of the Senate',
+    type: 'Plenary',
+    status: 'Upcoming'
+  },
+  {
+    id: 'op14',
+    dayKey: 'day5',
+    dayLabel: 'Wed 23 Sep',
+    dateStr: 'Wed 23 Sep 2026',
+    time: '02:30 PM',
+    venue: 'Kilifi County Assembly Chamber',
+    category: 'Chamber Plenary',
+    title: 'Senate Plenary Sitting',
+    description: 'Consideration of Bills, Motions, Petitions and Statements.',
+    mover: 'Speaker of the Senate',
+    type: 'Plenary',
+    status: 'Upcoming'
+  },
+
+  // DAY SIX
+  {
+    id: 'op15',
+    dayKey: 'day6',
+    dayLabel: 'Thu 24 Sep',
+    dateStr: 'Thu 24 Sep 2026',
+    time: '08:00 AM',
+    venue: 'Tezo Cashew Processing Plant',
+    category: 'Inspection Visit',
+    title: 'Agro-processing & Labour Inspection',
+    description: 'Joint visit to assess workplace safety standards, labour practices, and value addition at the Tezo Cashew Processing Plant.',
+    mover: 'Agriculture / Labour & Social Welfare',
+    type: 'Inspection',
+    status: 'Upcoming'
+  },
+  {
+    id: 'op16',
+    dayKey: 'day6',
+    dayLabel: 'Thu 24 Sep',
+    dateStr: 'Thu 24 Sep 2026',
+    time: '09:00 AM',
+    venue: 'Malindi Marine National Park and Reserve',
+    category: 'Inspection Visit',
+    title: 'Tourism & Trade Inspection Visit',
+    description: 'Inspection of Malindi Marine National Park and Reserve and the Mambrui Sand Dunes with the County Assembly Committee.',
+    mover: 'Trade, Industrialization & Tourism',
+    type: 'Inspection',
+    status: 'Upcoming'
+  },
+  {
+    id: 'op17',
+    dayKey: 'day6',
+    dayLabel: 'Thu 24 Sep',
+    dateStr: 'Thu 24 Sep 2026',
+    time: '11:30 AM',
+    venue: 'Tent 1, New Assembly Building Grounds',
+    category: 'Committee Inquiry',
+    title: 'Education Meeting with Governor',
+    description: 'Meeting with the Governor of Kilifi County to assess the Auditor General\'s Report on ECDE provision.',
+    mover: 'Standing Committee on Education',
+    type: 'Committee',
+    status: 'Upcoming'
+  },
+  {
+    id: 'op18',
+    dayKey: 'day6',
+    dayLabel: 'Thu 24 Sep',
+    dateStr: 'Thu 24 Sep 2026',
+    time: '02:30 PM',
+    venue: 'Kilifi County Assembly Chamber',
+    category: 'Chamber Plenary',
+    title: 'Senate Plenary Sitting',
+    description: 'Consideration of Bills, Motions, Petitions and Statements.',
+    mover: 'Speaker of the Senate',
+    type: 'Plenary',
+    status: 'Upcoming'
+  },
+
+  // DAY SEVEN
+  {
+    id: 'op19',
+    dayKey: 'day7',
+    dayLabel: 'Fri 25 Sep',
+    dateStr: 'Fri 25 Sep 2026',
+    time: '09:00 AM',
+    venue: 'Meeting Room 2, New Assembly Building',
+    category: 'Committee Inquiry',
+    title: 'Health Meeting with Governor',
+    description: 'Deliberations on healthcare provision and findings from the Malindi and Marafa hospital oversight visits.',
+    mover: 'Standing Committee on Health',
+    type: 'Committee',
+    status: 'Upcoming'
+  },
+  {
+    id: 'op20',
+    dayKey: 'day7',
+    dayLabel: 'Fri 25 Sep',
+    dateStr: 'Fri 25 Sep 2026',
+    time: '10:00 AM',
+    venue: 'Tana River County',
+    category: 'Committee Inquiry',
+    title: 'CPAC Meeting: Tana River Suppliers',
+    description: 'Meeting with the Suppliers\' Association of Tana River County to deliberate on outstanding pending bills.',
+    mover: 'County Public Accounts Committee',
+    type: 'Committee',
+    status: 'Upcoming'
+  },
+
+  // DAY EIGHT
+  {
+    id: 'op21',
+    dayKey: 'day8',
+    dayLabel: 'Sat 26 Sep',
+    dateStr: 'Sat 26 Sep 2026',
+    time: '10:00 AM',
+    venue: 'Tana River County',
+    category: 'Inspection Visit',
+    title: 'CPAC Tana River Projects Inspection',
+    description: 'Inspection visits to ongoing development projects by the Tana River County Government.',
+    mover: 'County Public Accounts Committee',
     type: 'Inspection',
     status: 'Upcoming'
   }
@@ -294,8 +529,8 @@ export default function App() {
   const [selectedEditionTab, setSelectedEditionTab] = useState<string>('all');
   const [billSearchQuery, setBillSearchQuery] = useState<string>('');
 
-  // Default active tab to Tue 22 Sep (day 2) based on current real-world time context
-  const [activeDayFilter, setActiveDayFilter] = useState<string>('day2');
+  // Default active tab to Tue 22 Sep (day4) based on current real-world time context mapped to the new schedule
+  const [activeDayFilter, setActiveDayFilter] = useState<string>('day4');
   const [activeTypeFilter, setActiveTypeFilter] = useState<string>('all');
 
   const [activeEditionModal, setActiveEditionModal] = useState<Edition | null>(null);
@@ -456,7 +691,6 @@ export default function App() {
               </div>
             </div>
 
-            {}
             <div className="lg:col-span-6 w-full">
               <div className="relative card p-6 overflow-hidden backdrop-blur-md bg-[var(--card)]/80">
                 
@@ -473,7 +707,6 @@ export default function App() {
                 </div>
 
                 <div className="w-full h-full mt-4 space-y-4">
-                  {/* Fixed aspect ratio and removed specific heights */}
                   <div 
                     className="relative w-full aspect-video rounded-xl overflow-hidden group cursor-pointer border border-[var(--card-border)] bg-black"
                     onClick={() => setIsVideoPlaying(true)}
@@ -531,15 +764,6 @@ export default function App() {
                       <span className="font-medium text-left sm:text-right">Adopted Senate Motion (6th May 2026)</span>
                     </div>
                   </div>
-
-                  {/* <div className="pt-2 flex gap-3">
-                    <button
-                      onClick={() => setActiveEditionModal(HOST_EDITIONS[0])}
-                      className="flex-1 py-2.5 rounded-xl bg-[var(--gold)] text-slate-900 hover:opacity-90 font-bold text-xs uppercase tracking-wider transition text-center shadow"
-                    >
-                      View Kilifi Sitting Brief
-                    </button>
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -548,7 +772,6 @@ export default function App() {
         </div>
       </section>
 
-      {}
       <div className="bg-[var(--card)] text-[var(--foreground)] border-y border-[var(--card-border)] py-3 px-4 relative z-10 transition-colors duration-300">
         <style>{`
           @keyframes marquee {
@@ -619,7 +842,6 @@ export default function App() {
         </div>
       </div>
 
-      {}
       <section id="about" className="py-20 bg-[var(--background)] w-full transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
@@ -663,7 +885,6 @@ export default function App() {
         </div>
       </section>
 
-      {}
       <section id="pillars" className="py-20 bg-[var(--card)]/50 border-t border-[var(--card-border)] transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -755,7 +976,6 @@ export default function App() {
         </div>
       </section>
 
-      {}
       <section id="editions" className="py-20 bg-[var(--background)] relative transition-colors duration-300 border-t border-[var(--card-border)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
@@ -878,16 +1098,18 @@ export default function App() {
           <div className="card p-4 shadow-sm mb-8 space-y-3 transition-colors">
             <div className="flex items-center justify-between flex-wrap gap-3">
               <span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)] flex items-center gap-1.5 transition-colors">
-                <Calendar className="w-4 h-4 text-[var(--primary)]" /> Select Sitting Day:
+                <Calendar className="w-4 h-4 text-[var(--gold)]" /> Select Sitting Day:
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {[
-                  { key: 'all', label: 'All 5 Days' },
-                  { key: 'day1', label: 'Day 1: Mon 21 Sep' },
-                  { key: 'day2', label: 'Day 2: Tue 22 Sep' }, // Active default
-                  { key: 'day3', label: 'Day 3: Wed 23 Sep' },
-                  { key: 'day4', label: 'Day 4: Thu 24 Sep' },
-                  { key: 'day5', label: 'Day 5: Fri 25 Sep' },
+                  { key: 'all', label: 'All Days' },
+                  { key: 'day2', label: 'Sun 20 Sep' },
+                  { key: 'day3', label: 'Mon 21 Sep' },
+                  { key: 'day4', label: 'Tue 22 Sep' }, 
+                  { key: 'day5', label: 'Wed 23 Sep' },
+                  { key: 'day6', label: 'Thu 24 Sep' },
+                  { key: 'day7', label: 'Fri 25 Sep' },
+                  { key: 'day8', label: 'Sat 26 Sep' },
                 ].map((tab) => (
                   <button
                     key={tab.key}
@@ -909,7 +1131,7 @@ export default function App() {
             <div className="lg:col-span-7 card shadow-sm overflow-hidden transition-colors duration-300">
               <div className="p-6 border-b border-[var(--card-border)] flex items-center justify-between bg-[var(--background)] transition-colors">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-[var(--gold)] text-[var(--primary)] flex items-center justify-center">
                     <CalendarCheck className="w-5 h-5" />
                   </div>
                   <div>
@@ -917,7 +1139,7 @@ export default function App() {
                     <p className="text-xs text-[var(--muted)] transition-colors">Kilifi County Assembly Chambers, Malindi</p>
                   </div>
                 </div>
-                <span className="text-xs font-bold text-[var(--primary)] bg-[var(--primary)]/10 px-3 py-1 rounded-full transition-colors">
+                <span className="text-xs font-bold text-[var(--primary)] bg-[var(--gold)] px-3 py-1 rounded-full transition-colors">
                   {filteredProgramSessions.length} Scheduled
                 </span>
               </div>
@@ -943,7 +1165,7 @@ export default function App() {
                         <span className="text-[10px] font-mono font-bold text-[var(--muted)] bg-[var(--background)] px-2 py-1 rounded block whitespace-nowrap transition-colors border border-[var(--card-border)]">
                           {item.time}
                         </span>
-                        <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[var(--primary)]/10 text-[var(--primary)] border border-[var(--primary)]/20 block transition-colors">
+                        <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[var(--gold)] text-[var(--primary)] border border-[var(--primary)]/20 block transition-colors">
                           {item.dayLabel}
                         </span>
                       </div>
@@ -960,9 +1182,9 @@ export default function App() {
                       </div>
 
                       <span className={`text-xs font-bold shrink-0 px-2 py-1 rounded transition-colors border ${
-                        item.status === 'Completed' ? 'text-[var(--muted)] border-[var(--card-border)] bg-[var(--background)]' :
-                        item.status === 'Ongoing' ? 'text-[var(--accent)] border-[var(--accent)]/30 bg-[var(--accent)]/10 animate-pulse' :
-                        'text-[var(--primary)] border-[var(--primary)]/30 bg-[var(--primary)]/10'
+                        item.status === 'Completed' ? 'text-white border-[var(--card-border)] bg-green-700' :
+                        item.status === 'Ongoing' ? 'text-white border-[var(--accent)] bg-[var(--accent)] animate-pulse' :
+                        'text-white border-[var(--primary)]/30 bg-[var(--primary)]'
                       }`}>
                         {item.status}
                       </span>
