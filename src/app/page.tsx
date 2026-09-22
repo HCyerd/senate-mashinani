@@ -686,7 +686,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                   </span>
                 </div>
                 <span className="text-xs text-[#D4AF37] bg-amber-950/80 px-2.5 py-1 rounded-full border border-amber-800">
-                  Ongoing · 5th Edition
+                  5th Edition
                 </span>
               </div>
 
