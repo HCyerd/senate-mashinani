@@ -1046,7 +1046,7 @@ export default function App() {
                       <h3 className="text-xl font-bold text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors">
                         {ed.name}
                       </h3>
-                      <span className="text-[11px] text-[var(--primary-light)] font-semibold">{ed.region}</span>
+                      <span className="text-[11px] text-[var(--foreground)] font-semibold">{ed.region}</span>
                     </div>
                     <p className="text-xs text-[var(--gold)] font-bold mt-1 mb-2">
                       Host: {ed.hostSenator}
@@ -1059,12 +1059,12 @@ export default function App() {
                   <div className="pt-4 border-t border-[var(--card-border)] space-y-2 transition-colors">
                     <div className="text-[11px] text-[var(--muted)] flex items-center justify-between transition-colors">
                       <span className="truncate max-w-[200px]" title={ed.assembly}>{ed.assembly}</span>
-                      <button
+                      {/* <button
                         onClick={() => setActiveEditionModal(ed)}
                         className="text-[var(--primary)] hover:opacity-80 font-bold flex items-center gap-1 shrink-0 transition-colors"
                       >
                         Full Record <ChevronRight className="w-4 h-4" />
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>

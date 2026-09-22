@@ -6,7 +6,7 @@
   --card: #ffffff;
   --card-border: #e2e8f0;
   --muted: #64748b;
-  --primary: #0000a0;
+  --primary: #0080ff;
   --primary-light: #0000ff;
   --accent: #A81C26;
   --gold: #F4C300;
@@ -14,12 +14,12 @@
 }
 
 .dark {
-  --background: #0f172a;
+  --background: #36006c;
   --foreground: #e6edf3;
   --card: #1e293b;
   --card-border: #334155;
   --muted: #94a3b8;
-  --primary: #0000a0;
+  --primary: #0080ff;
   --primary-light: #0000ff;
   --accent: #f87171;
   --gold: #fbbf24;
