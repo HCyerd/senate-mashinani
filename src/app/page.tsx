@@ -25,7 +25,6 @@ import {
   CalendarCheck,
   Play
 } from 'lucide-react';
-import Image from 'next/image';
 
 interface Edition {
   id: string;
@@ -615,16 +614,6 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-20 pb-20 sm:pb-28">
-          {/* <div className="flex justify-end mb-4">
-             <button
-               onClick={toggleSound}
-               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-semibold backdrop-blur transition-all text-white"
-             >
-               {audioEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
-               {audioEnabled ? 'Sound On' : 'Sound Off'}
-             </button>
-          </div> */}
-
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Hero Left Copy */}
@@ -686,11 +675,11 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
           </div>
 
           {}
-          <div className="lg:col-span-6">
-            <div className="relative bg-gradient-to-b from-slate-900/95 to-slate-900/90 border border-slate-700/60 rounded-3xl p-6 backdrop-blur-xl shadow-2xl overflow-hidden">
+          <div className="lg:col-span-6 w-full">
+            <div className="relative bg-gradient-to-b w-full from-slate-900/95 to-slate-900/90 border border-slate-700/60 rounded-3xl p-6 overflow-hidden">
               
-              <div className="flex items-center justify-between pb-4 border-b border-slate-800">
-                <div className="flex items-center gap-2">
+              <div className="flex items-center justify-between w-full pb-4 border-b border-slate-800">
+                <div className="flex items-center w-full gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
                   <span className="text-xs font-bold uppercase tracking-wider text-red-400">
                     Live Sitting Assembly
@@ -701,32 +690,35 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                 </span>
               </div>
 
-              <div className="mt-4 space-y-4">
+              <div className="w-full h-full mt-4 space-y-4">
                 
-                {/* VIDEO PLAYER COMPONENT */}
+                {/* 
+                  FIX: Replaced 'h-full sm:h-56' with 'aspect-video'. 
+                  This enforces a responsive 16:9 ratio that dynamically scales to 100% of the container width on all devices.
+                */}
                 <div 
-                  className="relative h-full sm:h-56 rounded-2xl overflow-hidden group cursor-pointer border border-slate-700/80 bg-slate-900"
+                  className="relative w-full aspect-video rounded-2xl overflow-hidden group cursor-pointer border border-slate-700/80 bg-slate-900"
                   onClick={() => setIsVideoPlaying(true)}
                 >
                   {!isVideoPlaying ? (
                     <>
-                      <Image
+                      <img
                         src="/sessions_images/kilifi.png"
                         alt="Kilifi Coastal County Session Thumbnail"
-                        width={1240}
-                        height={660}
-                        className="w-full h-full object-fit group-hover:scale-105 transition duration-500 opacity-90"
+                        width={1920}
+                        height={1080}
+                        className="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-90"
                       />
                       <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/20 transition-colors duration-500 flex items-center justify-center">
-                        {/* <div className="w-16 h-1 text-white rounded-full flex items-center justify-center border border-white/30 shadow-2xl group-hover:bg-blue-600 group-hover:scale-110 transition-all duration-300">
+                        <div className="w-16 h-1 text-white rounded-full flex items-center justify-center  group-hover:scale-110 transition-all duration-300">
                           <Play className="w-8 h-8 ml-1 fill-white" />
-                        </div> */}
+                        </div>
                       </div>
                     </>
                   ) : (
                     <iframe 
                       className="w-full h-full absolute inset-0"
-                      src="https://www.youtube.com/embed/JUB87VKMCbQ?si=j6b0NWZMmYbCvUgD" 
+                      src="https://www.youtube.com/embed/JUB87VKMCbQ?si=j6b0NWZMmYbCvUgD&autoplay=1" 
                       title="YouTube video player" 
                       frameBorder="0" 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -797,7 +789,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
       </div>
     </section>
 
-    {}
+      {}
       <div className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white border-y border-slate-200 dark:border-slate-800 py-3 px-4 relative z-10 transition-colors duration-300">
         <style>{`
           @keyframes marquee {
