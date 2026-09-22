@@ -88,7 +88,7 @@ const HOST_EDITIONS: Edition[] = [
     region: 'Coast Region',
     assembly: 'Kilifi County Assembly Chambers, Malindi',
     hostSenator: 'Sen. Stewart Madzayo, EGH, MP (Senate Minority Leader)',
-    status: 'Upcoming',
+    status: 'Ongoing',
     image: '/sessions_images/kilifi.jpeg',
     summary: 'Approved by Senate Motion on May 6, 2026. Convening to address Coast blue economy financing, salt mining royalties to indigenous host communities, and historical land injustice title adjudications.',
     highlights: [
@@ -258,7 +258,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Official reception of the Senate Mace and the Speaker’s procession, formally establishing the host assembly as the sovereign precinct of the Senate.',
     keyParticipants: 'Speaker Amason Kingi, Governor Gideon Mung\'aro, Speaker Teddy Mwambire',
     type: 'Protocol',
-    status: 'Upcoming'
+    status: 'Completed'
   },
   {
     id: 'op2',
@@ -273,7 +273,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Special inaugural addresses on the state of devolution in the Coast Region, intergovernmental relations, and the official opening of the 5th Mashinani.',
     mover: 'Speaker of the Senate, Hon. Amason Jeffah Kingi',
     type: 'Plenary',
-    status: 'Upcoming'
+    status: 'Completed'
   },
   {
     id: 'op3',
@@ -288,7 +288,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Debate on a motion seeking the allocation of funds for cold storage facilities at landing sites and strict demarcation of artisanal fisherfolk corridors.',
     mover: 'Senate Minority Leader, Sen. Stewart Madzayo',
     type: 'Plenary',
-    status: 'Upcoming'
+    status: 'Ongoing'
   },
   {
     id: 'op4',
@@ -447,7 +447,7 @@ export default function App() {
   const [billSearchQuery, setBillSearchQuery] = useState<string>('');
 
   // Kilifi Program interactive filter states
-  const [activeDayFilter, setActiveDayFilter] = useState<string>('all');
+  const [activeDayFilter, setActiveDayFilter] = useState<string>('day2');
   const [activeTypeFilter, setActiveTypeFilter] = useState<string>('all');
 
   // Modals state
@@ -821,30 +821,38 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
               <div className="flex gap-8 items-center px-4">
                 <span className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
-                  Senate Resolution of March 8, 2023 mandates annual grassroots sittings under Article 126(1).
+                  KILIFI: Five-day 5th Edition of Senate Mashinani officially underway to deliberate on coastal blue economy and land rights.
                 </span>
                 <span className="flex items-center gap-2 text-slate-800 dark:text-slate-200">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
-                  County Public Accounts Committee (CPAC) interrogates devolved audit reports on-site in Busia.
+                  Women Senators (KEWOSA) visit Malindi Women's Prison to assess rehabilitation programs and challenges facing inmates.
                 </span>
                 <span className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
-                  Clerk of the Senate technical inspection audits assembly chambers for Hansard transmission.
+                  Senate Agriculture, Lands & Energy Committees conduct joint oversight visits at Kilifi Central Fish Landing Site.
+                </span>
+                 <span className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
+                  Kilifi County Assembly suspends its regular plenary and committee sittings until Sept 28 to host the historic event.
                 </span>
               </div>
               {/* Duplicated Set for Seamless Infinite Scroll */}
               <div className="flex gap-8 items-center px-4" aria-hidden="true">
                 <span className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
-                  Senate Resolution of March 8, 2023 mandates annual grassroots sittings under Article 126(1).
+                  KILIFI: Five-day 5th Edition of Senate Mashinani officially underway to deliberate on coastal blue economy and land rights.
                 </span>
                 <span className="flex items-center gap-2 text-slate-800 dark:text-slate-200">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
-                  County Public Accounts Committee (CPAC) interrogates devolved audit reports on-site in Busia.
+                  Women Senators (KEWOSA) visit Malindi Women's Prison to assess rehabilitation programs and challenges facing inmates.
                 </span>
                 <span className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
-                  Clerk of the Senate technical inspection audits assembly chambers for Hansard transmission.
+                  Senate Agriculture, Lands & Energy Committees conduct joint oversight visits at Kilifi Central Fish Landing Site.
+                </span>
+                 <span className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
+                  Kilifi County Assembly suspends its regular plenary and committee sittings until Sept 28 to host the historic event.
                 </span>
               </div>
             </div>
