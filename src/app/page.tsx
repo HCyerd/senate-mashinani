@@ -27,7 +27,59 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 
-const HOST_EDITIONS = [
+interface Edition {
+  id: string;
+  name: string;
+  county: string;
+  edition: string;
+  date: string;
+  region: string;
+  assembly: string;
+  hostSenator: string;
+  status: string;
+  image: string;
+  summary: string;
+  highlights: string[];
+  keyCommittees: string[];
+  hansardRecord: string;
+}
+
+interface Bill {
+  id: string;
+  title: string;
+  description: string;
+  county: string;
+  committee: string;
+  status: string;
+  statusType: 'success' | 'info' | 'warning' | 'purple' | string;
+  keywords: string[];
+  fullBrief: string;
+}
+
+interface OrderPaperItem {
+  id: string;
+  dayKey: string;
+  dayLabel: string;
+  dateStr: string;
+  time: string;
+  venue: string;
+  category: string;
+  categoryColor: string;
+  title: string;
+  description: string;
+  mover?: string;
+  keyParticipants?: string;
+  type: string;
+  status: string;
+}
+
+interface Faq {
+  id: number;
+  q: string;
+  a: React.ReactNode;
+}
+
+const HOST_EDITIONS: Edition[] = [
   {
     id: 'kilifi',
     name: 'Kilifi County',
@@ -135,7 +187,7 @@ const HOST_EDITIONS = [
   }
 ];
 
-const DEVOLUTION_BILLS = [
+const DEVOLUTION_BILLS: Bill[] = [
   {
     id: 'b1',
     title: 'The Mung Beans (Ndengu) Bill',
@@ -193,7 +245,7 @@ const DEVOLUTION_BILLS = [
   }
 ];
 
-const ORDER_PAPER_ITEMS = [
+const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
   {
     id: 'op1',
     dayKey: 'day1',
@@ -301,13 +353,13 @@ const ORDER_PAPER_ITEMS = [
   }
 ];
 
-const faqs = [
+const faqs: Faq[] = [
   {
     id: 1,
     q: "1. What is the legal basis for Senate Mashinani?",
     a: (
       <>
-        The program is anchored in <strong>Article 126(1)</strong> of the Constitution of Kenya, which states that a sitting of either House of Parliament may be held at any place within Kenya and commence at any time the House appoints.<br /><br />It also supports the Senate's core constitutional mandate under <strong>Article 96</strong> to represent and protect the interests of counties and their governments.
+        The program is anchored in <strong>Article 126(1)</strong> of the Constitution of Kenya, which states that a sitting of either House of Parliament may be held at any place within Kenya and commence at any time the House appoints.<br /><br />It also supports the Senate&apos;s core constitutional mandate under <strong>Article 96</strong> to represent and protect the interests of counties and their governments.
       </>
     )
   },
@@ -384,25 +436,25 @@ const faqs = [
 
 export default function App() {
   // Navigation & audio states
-  const [audioEnabled, setAudioEnabled] = useState(false);
-  const audioCtxRef = useRef(null);
-  const [openFaq, setOpenFaq] = useState(null);
+  const [audioEnabled, setAudioEnabled] = useState<boolean>(false);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   // Video state
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState<boolean>(false);
 
   // Filter & Search states
-  const [selectedEditionTab, setSelectedEditionTab] = useState('all');
-  const [billSearchQuery, setBillSearchQuery] = useState('');
+  const [selectedEditionTab, setSelectedEditionTab] = useState<string>('all');
+  const [billSearchQuery, setBillSearchQuery] = useState<string>('');
 
   // Kilifi Program interactive filter states
-  const [activeDayFilter, setActiveDayFilter] = useState('all');
-  const [activeTypeFilter, setActiveTypeFilter] = useState('all');
+  const [activeDayFilter, setActiveDayFilter] = useState<string>('all');
+  const [activeTypeFilter, setActiveTypeFilter] = useState<string>('all');
 
   // Modals state
-  const [activeEditionModal, setActiveEditionModal] = useState(null);
-  const [activeBillModal, setActiveBillModal] = useState(null);
-  const [liveStreamModalOpen, setLiveStreamModalOpen] = useState(false);
+  const [activeEditionModal, setActiveEditionModal] = useState<Edition | null>(null);
+  const [activeBillModal, setActiveBillModal] = useState<Bill | null>(null);
+  const [liveStreamModalOpen, setLiveStreamModalOpen] = useState<boolean>(false);
 
   // Live chamber quote cycler
   const hansardQuotes = [
@@ -411,19 +463,28 @@ export default function App() {
     `"Salt mining companies in Magarini must remit equitable royalties directly to host community trusts." — Committee on Natural Resources`,
     `"Devolution oversight must ensure county health facilities like Kilifi County Hospital are fully resourced." — Majority Leader`
   ];
-  const [quoteIndex, setQuoteIndex] = useState(0);
+  const [quoteIndex, setQuoteIndex] = useState<number>(0);
 
-  const playCivicTone = (frequency = 440, type = 'sine', duration = 0.15) => {
+  const playCivicTone = (frequency = 440, type: OscillatorType = 'sine', duration = 0.15) => {
     if (!audioEnabled) return;
     try {
-      if (!audioCtxRef.current) {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        audioCtxRef.current = new AudioContextClass();
+      let ctx = audioCtxRef.current;
+      
+      // Strict null check for the TS compiler
+      if (!ctx) {
+        // Explicit any cast to satisfy TS when pulling vendor prefixes from window
+        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+        if (!AudioContextClass) return; // Silent fallback if not supported in environment
+        
+        ctx = new AudioContextClass();
+        audioCtxRef.current = ctx;
       }
-      if (audioCtxRef.current.state === 'suspended') {
-        audioCtxRef.current.resume();
+      
+      if (ctx.state === 'suspended') {
+        ctx.resume();
       }
-      const ctx = audioCtxRef.current;
+      
+      // ctx is safely guaranteed to be an AudioContext here
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
@@ -438,8 +499,9 @@ export default function App() {
 
       osc.start();
       osc.stop(ctx.currentTime + duration);
-    } catch {
-      // Graceful fallback if browser policies block audio
+    } catch (e) {
+      // Graceful fallback if browser policies block audio or during strict preview sandboxing
+      console.warn("Audio playback not supported or prevented.", e);
     }
   };
 
@@ -534,7 +596,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
   };
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] font-sans antialiased selection:bg-[var(--primary)] selection:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] font-sans antialiased selection:bg-[var(--primary)] selection:text-white transition-colors duration-300 pb-10">
       
       {/* Kenya Flag Ribbon */}
       <div className="h-2 w-full bg-gradient-to-r from-black via-[#A81C26] via-white to-[#0656ea]" />
@@ -545,6 +607,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
           <img
             src="/sessions_images/senate.jpg"
             alt="Senate Chamber in session"
+            onError={(e) => { e.currentTarget.src = 'https://placehold.co/1200x800/020617/ffffff?text=Senate+Chamber'; }}
             className="w-full h-full object-cover object-center opacity-95 filter saturate-150 scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/85 to-transparent" />
@@ -552,22 +615,32 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-20 pb-20 sm:pb-28">
+          {/* <div className="flex justify-end mb-4">
+             <button
+               onClick={toggleSound}
+               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-semibold backdrop-blur transition-all text-white"
+             >
+               {audioEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+               {audioEnabled ? 'Sound On' : 'Sound Off'}
+             </button>
+          </div> */}
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Hero Left Copy */}
             <div className="lg:col-span-6 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-[var(--gold)]">
-                <span className="w-2 h-2 rounded-full bg-[var(--gold)] animate-ping" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-[#D4AF37]">
+                <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-ping" />
                 Article 126(1) Resolution · Democracy Beyond Nairobi
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
                 Taking Parliament <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-[var(--gold)] to-blue-200">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-[#D4AF37] to-blue-200">
                   To The Grassroots 
                 </span>
               </h1>
-              <h5 className="text-lg italic sm:text-xl lg:text-2xl font-extrabold tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-[var(--gold)] to-blue-400 font-serif">
+              <h5 className="text-lg italic sm:text-xl lg:text-2xl font-extrabold tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-[#D4AF37] to-blue-400 font-serif">
                 Devolution In Action 
               </h5>
 
@@ -581,7 +654,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                   onClick={() => playCivicTone(440, 'sine', 0.1)}
                   className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm bg-white/15 hover:bg-white/25 text-white border border-white/20 backdrop-blur-md transition-all"
                 >
-                  <MapPin className="w-4 h-4 text-[var(--gold)]" />
+                  <MapPin className="w-4 h-4 text-[#D4AF37]" />
                   Explore Host Counties
                 </a>
 
@@ -602,7 +675,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                 <p className="text-xs text-slate-400 uppercase tracking-wider font-medium mt-0.5">Counties Represented</p>
               </div>
               <div>
-                <p className="text-2xl sm:text-3xl font-extrabold text-[var(--gold)]">4</p>
+                <p className="text-2xl sm:text-3xl font-extrabold text-[#D4AF37]">5</p>
                 <p className="text-xs text-slate-400 uppercase tracking-wider font-medium mt-0.5">Historic Sittings</p>
               </div>
               <div>
@@ -612,7 +685,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
             </div>
           </div>
 
-          {/* Spotlight Assembly Card */}
+          {}
           <div className="lg:col-span-6">
             <div className="relative bg-gradient-to-b from-slate-900/95 to-slate-900/90 border border-slate-700/60 rounded-3xl p-6 backdrop-blur-xl shadow-2xl overflow-hidden">
               
@@ -623,7 +696,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                     Live Sitting Assembly
                   </span>
                 </div>
-                <span className="text-xs text-[var(--gold)] bg-amber-950/80 px-2.5 py-1 rounded-full border border-amber-800">
+                <span className="text-xs text-[#D4AF37] bg-amber-950/80 px-2.5 py-1 rounded-full border border-amber-800">
                   Ongoing · 5th Edition
                 </span>
               </div>
@@ -632,7 +705,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                 
                 {/* VIDEO PLAYER COMPONENT */}
                 <div 
-                  className="relative h-48 sm:h-56 rounded-2xl overflow-hidden group cursor-pointer border border-slate-700/80 shadow-inner bg-black"
+                  className="relative h-full sm:h-56 rounded-2xl overflow-hidden group cursor-pointer border border-slate-700/80 bg-slate-900"
                   onClick={() => setIsVideoPlaying(true)}
                 >
                   {!isVideoPlaying ? (
@@ -640,21 +713,20 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                       <Image
                         src="/sessions_images/kilifi.png"
                         alt="Kilifi Coastal County Session Thumbnail"
-                        width={640}
-                        height={360}
-                        
-                        className="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-90"
+                        width={1240}
+                        height={660}
+                        className="w-full h-full object-fit group-hover:scale-105 transition duration-500 opacity-90"
                       />
-                      <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/20 transition-colors duration-500 flex items-center justify-center backdrop-blur-[1px] group-hover:backdrop-blur-0">
-                        <div className="w-16 h-16 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center border border-white/30 shadow-2xl group-hover:bg-[var(--primary)] group-hover:scale-110 transition-all duration-300">
+                      <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/20 transition-colors duration-500 flex items-center justify-center">
+                        {/* <div className="w-16 h-1 text-white rounded-full flex items-center justify-center border border-white/30 shadow-2xl group-hover:bg-blue-600 group-hover:scale-110 transition-all duration-300">
                           <Play className="w-8 h-8 ml-1 fill-white" />
-                        </div>
+                        </div> */}
                       </div>
                     </>
                   ) : (
                     <iframe 
                       className="w-full h-full absolute inset-0"
-                      src="https://www.youtube.com/embed/JUB87VKMCbQ?si=8_EpGnV5lnZIxeD-&autoplay=1" 
+                      src="https://www.youtube.com/embed/FgQ20vUb_6c?si=0vO6WFxxlTkWMKmc" 
                       title="YouTube video player" 
                       frameBorder="0" 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -666,7 +738,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
 
                 {/* DECORATIONS BELOW THE IFRAME */}
                 <div className="space-y-1.5 pt-1">
-                  <span className="text-[10px] font-bold text-[var(--gold)] uppercase tracking-wider">Host Assembly</span>
+                  <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider">Host Assembly</span>
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="text-lg font-bold text-white">Kilifi County Assembly</h3>
@@ -682,7 +754,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                 <div className="bg-slate-800/60 rounded-xl p-4 border border-slate-700/50 space-y-3 text-xs text-slate-300">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                     <span className="font-semibold flex items-center gap-1.5 text-slate-400 shrink-0">
-                      <Users className="w-3.5 h-3.5 text-[var(--gold)]" /> Host Senator:
+                      <Users className="w-3.5 h-3.5 text-[#D4AF37]" /> Host Senator:
                     </span>
                     <span className="text-white font-medium text-left sm:text-right">Sen. Stewart Madzayo, EGH, MP</span>
                   </div>
@@ -704,7 +776,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                 <div className="pt-2 flex gap-3">
                   <button
                     onClick={() => setActiveEditionModal(HOST_EDITIONS[0])}
-                    className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[var(--gold)] to-yellow-600 hover:from-yellow-400 hover:to-[var(--gold)] text-slate-950 font-bold text-xs uppercase tracking-wider transition text-center shadow"
+                    className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-yellow-600 hover:from-yellow-400 hover:to-[#D4AF37] text-slate-950 font-bold text-xs uppercase tracking-wider transition text-center shadow"
                   >
                     View Kilifi Sitting Brief
                   </button>
@@ -725,8 +797,8 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
       </div>
     </section>
 
-    {/* Senate Dispatch Marquee */}
-      <div className="bg-[var(--card)] text-[var(--foreground)] border-y border-[var(--card-border)] py-3 px-4 relative z-10 transition-colors duration-300">
+    {}
+      <div className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white border-y border-slate-200 dark:border-slate-800 py-3 px-4 relative z-10 transition-colors duration-300">
         <style>{`
           @keyframes marquee {
             0% { transform: translateX(0%); }
@@ -746,40 +818,40 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
           }
         `}</style>
         <div className="max-w-7xl mx-auto flex items-center gap-4 text-xs font-medium overflow-hidden">
-          <div className="flex items-center gap-1.5 bg-[var(--gold)] text-slate-950 px-2.5 py-1 rounded font-bold uppercase tracking-wider shrink-0 shadow-sm z-20">
+          <div className="flex items-center gap-1.5 bg-[#D4AF37] text-slate-950 px-2.5 py-1 rounded font-bold uppercase tracking-wider shrink-0 shadow-sm z-20">
             <Radio className="w-3.5 h-3.5 text-slate-950" />
             Senate Dispatch
           </div>
           
           <div className="flex-1 overflow-hidden relative flex items-center fade-edges">
-            <div className="animate-marquee flex gap-8 whitespace-nowrap text-[var(--muted)]">
+            <div className="animate-marquee flex gap-8 whitespace-nowrap text-slate-500 dark:text-slate-400">
               {/* First Set of Content */}
               <div className="flex gap-8 items-center px-4">
                 <span className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
                   Senate Resolution of March 8, 2023 mandates annual grassroots sittings under Article 126(1).
                 </span>
-                <span className="flex items-center gap-2 text-[var(--foreground)]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--gold)]" />
+                <span className="flex items-center gap-2 text-slate-800 dark:text-slate-200">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
                   County Public Accounts Committee (CPAC) interrogates devolved audit reports on-site in Busia.
                 </span>
                 <span className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
                   Clerk of the Senate technical inspection audits assembly chambers for Hansard transmission.
                 </span>
               </div>
               {/* Duplicated Set for Seamless Infinite Scroll */}
               <div className="flex gap-8 items-center px-4" aria-hidden="true">
                 <span className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
                   Senate Resolution of March 8, 2023 mandates annual grassroots sittings under Article 126(1).
                 </span>
-                <span className="flex items-center gap-2 text-[var(--foreground)]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--gold)]" />
+                <span className="flex items-center gap-2 text-slate-800 dark:text-slate-200">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
                   County Public Accounts Committee (CPAC) interrogates devolved audit reports on-site in Busia.
                 </span>
                 <span className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
                   Clerk of the Senate technical inspection audits assembly chambers for Hansard transmission.
                 </span>
               </div>
@@ -788,25 +860,25 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
         </div>
       </div>
 
-      {/* About Section */}
-      <section id="about" className="py-20 bg-[var(--background)] w-full transition-colors duration-300">
+      {}
+      <section id="about" className="py-20 bg-white dark:bg-slate-950 w-full transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <span className="text-xs font-bold uppercase tracking-widest text-[var(--primary)] bg-[var(--primary)]/10 px-3.5 py-1.5 rounded-full border border-[var(--primary)]/20">
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-100 dark:bg-blue-900/30 px-3.5 py-1.5 rounded-full border border-blue-200 dark:border-blue-800">
               Devolution In Real Action
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] mt-4 transition-colors">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4 transition-colors">
               Demystifying Parliament for All Kenyans
             </h2>
-            <div className="w-16 h-1 bg-[var(--accent)] mx-auto mt-3 rounded-full" />
-            <p className="text-base sm:text-lg text-[var(--muted)] mt-4 leading-relaxed transition-colors">
+            <div className="w-16 h-1 bg-red-600 mx-auto mt-3 rounded-full" />
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 mt-4 leading-relaxed transition-colors">
               Senate Mashinani is Kenya&apos;s celebrated democratic innovation, globally recognized for dismantling the geographic distance between national legislators and grassroots citizens.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-4 text-[var(--muted)] leading-relaxed text-sm sm:text-base transition-colors">
-              <h3 className="text-2xl font-bold text-[var(--foreground)] transition-colors">
+            <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed text-sm sm:text-base transition-colors">
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white transition-colors">
                 The Constitutional Anchor
               </h3>
               <p>
@@ -815,20 +887,19 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
               <p>
                 Instead of requiring citizens to travel hundreds of kilometers to Nairobi, the Speaker of the Senate, the ceremonial Mace, all 67 Senators, the Clerk of the Senate, Hansard reporters, and standing committees relocate to a host County Assembly for a full working week.
               </p>
-              <div className="p-4 bg-[var(--card)] rounded-xl border-l-4 border-[var(--primary)] text-xs sm:text-sm text-[var(--muted)] italic transition-colors shadow-sm">
+              <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border-l-4 border-blue-600 text-xs sm:text-sm text-slate-600 dark:text-slate-400 italic transition-colors shadow-sm">
                 &ldquo;The Senate plays the critical interlinkage role between the National and County levels of government. There is need to enhance interaction between the Senate and County Governments, bringing the Senate closer to the Counties and the general public.&rdquo;
-                <div className="font-bold text-[var(--foreground)] mt-2 not-italic">— Sen. Aaron Cheruiyot, E.G.H., member for Kericho County, Majority Leader of the Senate</div>
+                <div className="font-bold text-slate-900 dark:text-white mt-2 not-italic">— Sen. Aaron Cheruiyot, E.G.H., member for Kericho County, Majority Leader of the Senate</div>
               </div>
             </div>
 
             <div>
-              <div className="flex items-center w-full h-full">            
+              <div className="flex items-center w-full h-full bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700">            
                 <img
                   src="/sessions_images/chambers.jpg"
                   alt="Host Counties Selection"
-                  width={800}
-                  height={400}
-                  className="rounded-xl border border-[var(--card-border)] shadow-sm transition-colors"
+                  onError={(e) => { e.currentTarget.src = 'https://placehold.co/800x400/0f172a/ffffff?text=Senate+Chamber'; }}
+                  className="w-full h-auto object-cover transition-colors"
                 />
               </div>
             </div>
@@ -836,18 +907,18 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
         </div>
       </section>
 
-      {/* Pillars Section */}
-      <section id="pillars" className="py-20 bg-[var(--card)] border-t border-[var(--card-border)] transition-colors duration-300">
+      {}
+      <section id="pillars" className="py-20 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-widest text-[var(--primary)] bg-[var(--primary)]/10 px-3.5 py-1.5 rounded-full border border-[var(--primary)]/20">
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-100 dark:bg-blue-900/30 px-3.5 py-1.5 rounded-full border border-blue-200 dark:border-blue-800">
               Strategic Roadmap
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] mt-4 transition-colors">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4 transition-colors">
               The 4 Core Pillars of Senate Mashinani
             </h2>
-            <div className="w-16 h-1 bg-[var(--accent)] mx-auto mt-3 rounded-full" />
-            <p className="text-base text-[var(--muted)] mt-4 transition-colors">
+            <div className="w-16 h-1 bg-red-600 mx-auto mt-3 rounded-full" />
+            <p className="text-base text-slate-600 dark:text-slate-400 mt-4 transition-colors">
               Codified by the Parliament of Kenya and recognized in international legislative governance forums as best practice for public accountability.
             </p>
           </div>
@@ -855,76 +926,76 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             {/* Pillar 1 */}
-            <div className="bg-[var(--background)] rounded-2xl p-6 border border-[var(--card-border)] shadow-sm hover:shadow-xl hover:border-[var(--primary)] transition-all flex flex-col justify-between group">
+            <div className="bg-white dark:bg-slate-950 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-blue-500 transition-all flex flex-col justify-between group">
               <div>
-                <div className="w-12 h-12 rounded-xl bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                  <Landmark className="w-6 h-6 text-[var(--primary)]" />
+                <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                  <Landmark className="w-6 h-6 text-blue-600" />
                 </div>
-                <h3 className="font-bold text-lg text-[var(--foreground)] mb-2 group-hover:text-[var(--primary)] transition-colors">
+                <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-2 group-hover:text-blue-500 transition-colors">
                   Promote Senate Mandate
                 </h3>
-                <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed transition-colors">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed transition-colors">
                   Educating citizens on the Senate&apos;s distinct constitutional mission: safeguarding revenue allocations, passing devolution laws, and conducting national oversight.
                 </p>
               </div>
-              <div className="pt-4 mt-4 border-t border-[var(--card-border)] text-[11px] font-bold text-[var(--primary)] flex items-center justify-between transition-colors">
+              <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800 text-[11px] font-bold text-blue-600 flex items-center justify-between transition-colors">
                 <span>Article 96 Mandate</span>
                 <Check className="w-4 h-4" />
               </div>
             </div>
 
             {/* Pillar 2 */}
-            <div className="bg-[var(--background)] rounded-2xl p-6 border border-[var(--card-border)] shadow-sm hover:shadow-xl hover:border-[var(--accent)] transition-all flex flex-col justify-between group">
+            <div className="bg-white dark:bg-slate-950 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-red-500 transition-all flex flex-col justify-between group">
               <div>
-                <div className="w-12 h-12 rounded-xl bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                  <Users className="w-6 h-6 text-[var(--accent)]" />
+                <div className="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900/30 text-red-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                  <Users className="w-6 h-6 text-red-600" />
                 </div>
-                <h3 className="font-bold text-lg text-[var(--foreground)] mb-2 group-hover:text-[var(--accent)] transition-colors">
+                <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-2 group-hover:text-red-500 transition-colors">
                   Public Participation
                 </h3>
-                <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed transition-colors">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed transition-colors">
                   Highlighting direct channels under Article 118 for local residents, fisherfolk, farmers, women, and youth to petition standing committees in person.
                 </p>
               </div>
-              <div className="pt-4 mt-4 border-t border-[var(--card-border)] text-[11px] font-bold text-[var(--accent)] flex items-center justify-between transition-colors">
+              <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800 text-[11px] font-bold text-red-600 flex items-center justify-between transition-colors">
                 <span>Article 118 Lawmaking</span>
                 <Check className="w-4 h-4" />
               </div>
             </div>
 
             {/* Pillar 3 */}
-            <div className="bg-[var(--background)] rounded-2xl p-6 border border-[var(--card-border)] shadow-sm hover:shadow-xl hover:border-[var(--gold)] transition-all flex flex-col justify-between group">
+            <div className="bg-white dark:bg-slate-950 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-[#D4AF37] transition-all flex flex-col justify-between group">
               <div>
-                <div className="w-12 h-12 rounded-xl bg-[var(--gold)]/20 text-[var(--gold)] flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                  <Sparkles className="w-6 h-6 text-[var(--gold)]" />
+                <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 text-amber-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                  <Sparkles className="w-6 h-6 text-[#D4AF37]" />
                 </div>
-                <h3 className="font-bold text-lg text-[var(--foreground)] mb-2 group-hover:text-[var(--gold)] transition-colors">
+                <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-2 group-hover:text-[#D4AF37] transition-colors">
                   Intergovernmental Synergy
                 </h3>
-                <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed transition-colors">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed transition-colors">
                   Deepening functional collaboration between national legislators, County Governors, County Executives, and regional socio-economic development blocs.
                 </p>
               </div>
-              <div className="pt-4 mt-4 border-t border-[var(--card-border)] text-[11px] font-bold text-[var(--gold)] flex items-center justify-between transition-colors">
+              <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800 text-[11px] font-bold text-[#D4AF37] flex items-center justify-between transition-colors">
                 <span>County Executive Link</span>
                 <Check className="w-4 h-4" />
               </div>
             </div>
 
             {/* Pillar 4 */}
-            <div className="bg-[var(--background)] rounded-2xl p-6 border border-[var(--card-border)] shadow-sm hover:shadow-xl hover:border-[var(--primary)] transition-all flex flex-col justify-between group">
+            <div className="bg-white dark:bg-slate-950 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-emerald-500 transition-all flex flex-col justify-between group">
               <div>
-                <div className="w-12 h-12 rounded-xl bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                  <Award className="w-6 h-6 text-[var(--primary)]" />
+                <div className="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                  <Award className="w-6 h-6 text-emerald-600" />
                 </div>
-                <h3 className="font-bold text-lg text-[var(--foreground)] mb-2 group-hover:text-[var(--primary)] transition-colors">
+                <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-2 group-hover:text-emerald-500 transition-colors">
                   County Assembly Capacity
                 </h3>
-                <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed transition-colors">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed transition-colors">
                   Empowering Members of County Assemblies (MCAs), Hansard reporters, and legal drafters through peer benchmarking and parliamentary masterclasses.
                 </p>
               </div>
-              <div className="pt-4 mt-4 border-t border-[var(--card-border)] text-[11px] font-bold text-[var(--primary)] flex items-center justify-between transition-colors">
+              <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800 text-[11px] font-bold text-emerald-600 flex items-center justify-between transition-colors">
                 <span>Knowledge Transfer</span>
                 <Check className="w-4 h-4" />
               </div>
@@ -934,24 +1005,24 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
         </div>
       </section>
 
-      {/* Host County Editions Section */}
-      <section id="editions" className="py-20 bg-[var(--background)] relative transition-colors duration-300 border-t border-[var(--card-border)]">
+      {}
+      <section id="editions" className="py-20 bg-white dark:bg-slate-950 relative transition-colors duration-300 border-t border-slate-200 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-[var(--primary)] bg-[var(--primary)]/10 border border-[var(--primary)]/20 px-3.5 py-1.5 rounded-full transition-colors">
+              <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 px-3.5 py-1.5 rounded-full transition-colors">
                 Parliamentary Sitting Archive
               </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] mt-4 transition-colors">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4 transition-colors">
                 Host County Sittings
               </h2>
-              <p className="text-[var(--muted)] text-base mt-2 max-w-xl transition-colors">
+              <p className="text-slate-600 dark:text-slate-400 text-base mt-2 max-w-xl transition-colors">
                 Verified records of all Senate Mashinani sittings held in accordance with Article 126(1) and the Senate Resolution of March 8, 2023.
               </p>
             </div>
 
             {/* Edition Filter Tabs */}
-            <div className="flex flex-wrap gap-2 p-1.5 bg-[var(--card)] rounded-xl border border-[var(--card-border)] transition-colors">
+            <div className="flex flex-wrap gap-2 p-1.5 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors">
               <button
                 onClick={() => {
                   playCivicTone(440, 'sine', 0.1);
@@ -959,8 +1030,8 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                 }}
                 className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors ${
                   selectedEditionTab === 'all' 
-                  ? 'bg-[var(--primary)] text-white shadow' 
-                  : 'text-[var(--muted)] hover:text-[var(--foreground)]'
+                  ? 'bg-blue-600 text-white shadow' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 All Sittings (5)
@@ -974,8 +1045,8 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                   }}
                   className={`px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors ${
                     selectedEditionTab === ed.id 
-                    ? 'bg-[var(--primary)] text-white shadow' 
-                    : 'text-[var(--muted)] hover:text-[var(--foreground)]'
+                    ? 'bg-blue-600 text-white shadow' 
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   {ed.county.split(' ')[0]}
@@ -989,25 +1060,26 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
             {filteredEditions.map((ed) => (
               <div
                 key={ed.id}
-                className="bg-[var(--card)] border border-[var(--card-border)] rounded-2xl overflow-hidden hover:border-[var(--primary)] transition-all duration-300 flex flex-col group shadow-lg"
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:border-blue-500 transition-all duration-300 flex flex-col group shadow-lg"
               >
-                <div className="relative h-52 overflow-hidden">
+                <div className="relative h-52 overflow-hidden bg-slate-100 dark:bg-slate-800">
                   <img
                     src={ed.image}
                     alt={ed.name}
+                    onError={(e) => { e.currentTarget.src = `https://placehold.co/600x400/0f172a/ffffff?text=${encodeURIComponent(ed.name)}`; }}
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                   />
                   <div className="absolute top-3 left-3 flex gap-2">
-                    <span className="bg-[var(--primary)] text-white font-extrabold text-xs px-2.5 py-1 rounded-md shadow">
+                    <span className="bg-blue-600 text-white font-extrabold text-xs px-2.5 py-1 rounded-md shadow">
                       {ed.edition}
                     </span>
                     {ed.status === 'Upcoming' && (
-                      <span className="bg-[var(--gold)] text-slate-950 font-extrabold text-xs px-2 py-1 rounded-md shadow flex items-center gap-1">
+                      <span className="bg-[#D4AF37] text-slate-950 font-extrabold text-xs px-2 py-1 rounded-md shadow flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping" /> Upcoming
                       </span>
                     )}
                   </div>
-                  <span className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-[var(--gold)] text-[11px] font-semibold px-2.5 py-1 rounded border border-white/10">
+                  <span className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-[#D4AF37] text-[11px] font-semibold px-2.5 py-1 rounded border border-white/10">
                     {ed.date}
                   </span>
                 </div>
@@ -1015,28 +1087,28 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                 <div className="p-6 flex-1 flex flex-col justify-between transition-colors">
                   <div>
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-bold text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors">
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors">
                         {ed.name}
                       </h3>
-                      <span className="text-[11px] text-[var(--primary)] font-semibold">{ed.region}</span>
+                      <span className="text-[11px] text-blue-600 dark:text-blue-400 font-semibold">{ed.region}</span>
                     </div>
-                    <p className="text-xs text-[var(--gold)] font-bold mt-1 mb-2">
+                    <p className="text-xs text-[#D4AF37] font-bold mt-1 mb-2">
                       Host: {ed.hostSenator}
                     </p>
-                    <p className="text-[var(--muted)] text-xs leading-relaxed mb-4 transition-colors">
+                    <p className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed mb-4 transition-colors">
                       {ed.summary}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-[var(--card-border)] space-y-2 transition-colors">
-                    <div className="text-[11px] text-[var(--muted)] flex items-center justify-between transition-colors">
-                      <span className="truncate max-w-[200px]">{ed.assembly}</span>
+                  <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-2 transition-colors">
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between transition-colors">
+                      <span className="truncate max-w-[200px]" title={ed.assembly}>{ed.assembly}</span>
                       <button
                         onClick={() => {
                           playCivicTone(587.33, 'triangle', 0.15);
                           setActiveEditionModal(ed);
                         }}
-                        className="text-[var(--primary)] hover:text-[var(--primary-light)] font-bold flex items-center gap-1 shrink-0 transition-colors"
+                        className="text-blue-600 dark:text-blue-400 hover:text-blue-500 font-bold flex items-center gap-1 shrink-0 transition-colors"
                       >
                         Full Record <ChevronRight className="w-4 h-4" />
                       </button>
@@ -1049,39 +1121,39 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
         </div>
       </section>
 
-      {/* Bills Tracker Section */}
-      <section id="bills" className="py-20 bg-[var(--card)] transition-colors duration-300">
+      {}
+      <section id="bills" className="py-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-[var(--primary)] bg-[var(--primary)]/10 px-3.5 py-1.5 rounded-full border border-[var(--primary)]/20 transition-colors">
+              <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-100 dark:bg-blue-900/30 px-3.5 py-1.5 rounded-full border border-blue-200 dark:border-blue-800 transition-colors">
                 Grassroots Impact In Law
               </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] mt-4 transition-colors">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4 transition-colors">
                 Devolution Bills & Petitions Tracker
               </h2>
-              <p className="text-[var(--muted)] text-sm sm:text-base mt-2 transition-colors">
+              <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base mt-2 transition-colors">
                 Explore key statutes and legislative petitions born directly from citizen barazas and committee inquiries in host counties.
               </p>
             </div>
 
             {/* Bills Search Input */}
             <div className="relative">
-              <Search className="w-4 h-4 text-[var(--muted)] absolute left-3.5 top-3" />
+              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
               <input
                 type="text"
                 value={billSearchQuery}
                 onChange={(e) => setBillSearchQuery(e.target.value)}
                 placeholder="Search bills, counties, keywords..."
-                className="pl-10 pr-4 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] text-[var(--foreground)] text-xs focus:ring-2 focus:ring-[var(--primary)] focus:outline-none w-72 transition-colors"
+                className="pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none w-full sm:w-72 transition-colors"
               />
             </div>
           </div>
 
           {/* Bills Table */}
-          <div className="overflow-x-auto bg-[var(--background)] rounded-2xl border border-[var(--card-border)] shadow-sm transition-colors">
-            <table className="w-full text-left text-xs sm:text-sm text-[var(--muted)]">
-              <thead className="bg-[var(--card)] text-[var(--foreground)] font-bold text-xs uppercase border-b border-[var(--card-border)] transition-colors">
+          <div className="overflow-x-auto bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
+            <table className="w-full text-left text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+              <thead className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white font-bold text-xs uppercase border-b border-slate-200 dark:border-slate-800 transition-colors">
                 <tr>
                   <th className="px-6 py-4">Bill / Legislative Measure</th>
                   <th className="px-6 py-4">Origin Sitting</th>
@@ -1090,36 +1162,36 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                   <th className="px-6 py-4 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[var(--card-border)] transition-colors">
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800 transition-colors">
                 {filteredBills.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-8 text-center text-[var(--muted)]">
+                    <td colSpan={5} className="px-6 py-8 text-center text-slate-500 dark:text-slate-400">
                       No devolution bills found matching &ldquo;{billSearchQuery}&rdquo;.
                     </td>
                   </tr>
                 ) : (
                   filteredBills.map((b) => (
-                    <tr key={b.id} className="hover:bg-[var(--card)] transition-colors">
-                      <td className="px-6 py-4 font-semibold text-[var(--foreground)]">
+                    <tr key={b.id} className="hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+                      <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">
                         {b.title}
-                        <span className="block text-[11px] font-normal text-[var(--muted)] mt-0.5">
+                        <span className="block text-[11px] font-normal text-slate-500 dark:text-slate-400 mt-0.5">
                           {b.description}
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="px-2.5 py-1 rounded bg-[var(--card-border)] text-[var(--foreground)] font-bold text-xs">
+                        <span className="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-xs">
                           {b.county}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-[var(--muted)]">
+                      <td className="px-6 py-4 text-slate-600 dark:text-slate-400">
                         {b.committee}
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${
-                          b.statusType === 'success' ? 'bg-emerald-500/10 text-emerald-600' :
-                          b.statusType === 'warning' ? 'bg-amber-500/10 text-amber-600' :
-                          b.statusType === 'info' ? 'bg-blue-500/10 text-blue-600' :
-                          'bg-purple-500/10 text-purple-600'
+                          b.statusType === 'success' ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' :
+                          b.statusType === 'warning' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400' :
+                          b.statusType === 'info' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' :
+                          'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400'
                         }`}>
                           {b.status}
                         </span>
@@ -1130,7 +1202,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                             playCivicTone(523.25, 'sine', 0.15);
                             setActiveBillModal(b);
                           }}
-                          className="text-[var(--primary)] hover:text-[var(--primary-light)] font-bold text-xs hover:underline transition-colors"
+                          className="text-blue-600 dark:text-blue-400 hover:text-blue-500 font-bold text-xs hover:underline transition-colors"
                         >
                           View Brief
                         </button>
@@ -1144,33 +1216,33 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
         </div>
       </section>
 
-      {/* Order Paper & Live Chamber Business Section */}
-      <section id="order-paper" className="py-20 bg-[var(--background)] border-y border-[var(--card-border)] transition-colors duration-300">
+      {}
+      <section id="order-paper" className="py-20 bg-white dark:bg-slate-950 border-y border-slate-200 dark:border-slate-800 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Section Header & Official Data Link */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-2">
-                <span className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] bg-[var(--accent)]/10 px-3.5 py-1.5 rounded-full border border-[var(--accent)]/20 inline-flex items-center gap-2 transition-colors">
-                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-ping" />
+                <span className="text-xs font-bold uppercase tracking-widest text-red-600 bg-red-100 dark:bg-red-900/30 px-3.5 py-1.5 rounded-full border border-red-200 dark:border-red-800 inline-flex items-center gap-2 transition-colors">
+                  <span className="w-2 h-2 rounded-full bg-red-600 animate-ping" />
                   Official Kilifi Sitting Schedule
                 </span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] mt-2 transition-colors">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2 transition-colors">
                 Kilifi County Assembly Plenary & Committee Timetable
               </h2>
-              <p className="text-[var(--muted)] text-base mt-2 max-w-3xl transition-colors">
+              <p className="text-slate-600 dark:text-slate-400 text-base mt-2 max-w-3xl transition-colors">
                 Full 5-day official itinerary (September 21–25, 2026) in Malindi, Magarini, and Watamu pursuant to Article 126(1) and the Senate Resolution of May 6, 2026.
               </p>
             </div>
           </div>
 
           {/* Interactive Day Tabs & Category Filter */}
-          <div className="bg-[var(--card)] p-4 rounded-2xl border border-[var(--card-border)] shadow-sm mb-8 space-y-3 transition-colors">
+          <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm mb-8 space-y-3 transition-colors">
             <div className="flex items-center justify-between flex-wrap gap-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)] flex items-center gap-1.5 transition-colors">
-                <Calendar className="w-4 h-4 text-[var(--primary)]" /> Select Sitting Day:
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5 transition-colors">
+                <Calendar className="w-4 h-4 text-blue-600" /> Select Sitting Day:
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {[
@@ -1189,8 +1261,8 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                     }}
                     className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                       activeDayFilter === tab.key
-                        ? 'bg-[var(--primary)] text-white shadow'
-                        : 'bg-[var(--background)] text-[var(--muted)] hover:bg-[var(--card-border)]'
+                        ? 'bg-blue-600 text-white shadow'
+                        : 'bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                     }`}
                   >
                     {tab.label}
@@ -1199,9 +1271,9 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
               </div>
             </div>
 
-            <div className="flex items-center justify-between flex-wrap gap-3 pt-2 border-t border-[var(--card-border)] text-xs transition-colors">
-              <span className="font-semibold text-[var(--muted)] flex items-center gap-1.5 transition-colors">
-                <Search className="w-3.5 h-3.5 text-[var(--gold)]" /> Filter By Session Type:
+            <div className="flex items-center justify-between flex-wrap gap-3 pt-2 border-t border-slate-200 dark:border-slate-800 text-xs transition-colors">
+              <span className="font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1.5 transition-colors">
+                <Search className="w-3.5 h-3.5 text-[#D4AF37]" /> Filter By Session Type:
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {[
@@ -1220,8 +1292,8 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                     }}
                     className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
                       activeTypeFilter === type.key
-                        ? 'bg-[var(--foreground)] text-[var(--background)]'
-                        : 'bg-[var(--background)] text-[var(--muted)] hover:bg-[var(--card-border)] border border-[var(--card-border)]'
+                        ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
+                        : 'bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800'
                     }`}
                   >
                     {type.label}
@@ -1234,25 +1306,25 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
             {/* Left Order Paper Column */}
-            <div className="lg:col-span-7 bg-[var(--card)] rounded-2xl border border-[var(--card-border)] shadow-sm overflow-hidden transition-colors duration-300">
-              <div className="p-6 border-b border-[var(--card-border)] flex items-center justify-between bg-[var(--background)]/50 transition-colors">
+            <div className="lg:col-span-7 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-colors duration-300">
+              <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-slate-950 transition-colors">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center">
                     <CalendarCheck className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-[var(--foreground)] text-base transition-colors">Verified Kilifi Order Paper</h3>
-                    <p className="text-xs text-[var(--muted)] transition-colors">Kilifi County Assembly Chambers, Malindi & Grassroots Venues</p>
+                    <h3 className="font-bold text-slate-900 dark:text-white text-base transition-colors">Verified Kilifi Order Paper</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 transition-colors">Kilifi County Assembly Chambers, Malindi & Grassroots Venues</p>
                   </div>
                 </div>
-                <span className="text-xs font-bold text-[var(--primary)] bg-[var(--primary)]/10 px-3 py-1 rounded-full transition-colors">
+                <span className="text-xs font-bold text-blue-600 bg-blue-100 dark:bg-blue-900/30 px-3 py-1 rounded-full transition-colors">
                   {filteredProgramSessions.length} Scheduled Sessions
                 </span>
               </div>
 
-              <div className="divide-y divide-[var(--card-border)] max-h-[760px] overflow-y-auto transition-colors">
+              <div className="divide-y divide-slate-200 dark:divide-slate-800 max-h-[760px] overflow-y-auto transition-colors">
                 {filteredProgramSessions.length === 0 ? (
-                  <div className="p-8 text-center text-[var(--muted)] text-xs transition-colors">
+                  <div className="p-8 text-center text-slate-500 dark:text-slate-400 text-xs transition-colors">
                     No sessions match the selected day and session type filter.
                   </div>
                 ) : (
@@ -1261,15 +1333,15 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                       key={item.id}
                       className={`p-5 transition-colors flex items-start gap-4 ${
                         item.status === 'In Progress' 
-                        ? 'bg-[var(--gold)]/10 border-l-4 border-[var(--gold)]' 
-                        : 'hover:bg-[var(--background)]'
+                        ? 'bg-amber-50 dark:bg-amber-900/10 border-l-4 border-[#D4AF37]' 
+                        : 'hover:bg-white dark:hover:bg-slate-950'
                       }`}
                     >
                       <div className="shrink-0 space-y-1 text-center">
-                        <span className="text-[10px] font-mono font-bold text-[var(--muted)] bg-[var(--background)] px-2 py-1 rounded block whitespace-nowrap transition-colors">
+                        <span className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-950 px-2 py-1 rounded block whitespace-nowrap transition-colors border border-slate-100 dark:border-slate-800">
                           {item.time}
                         </span>
-                        <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[var(--primary)]/10 text-[var(--primary)] border border-[var(--primary)]/20 block transition-colors">
+                        <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 border border-blue-200 dark:border-blue-800 block transition-colors">
                           {item.dayLabel}
                         </span>
                       </div>
@@ -1279,28 +1351,28 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                           <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${item.categoryColor}`}>
                             {item.category}
                           </span>
-                          <span className="text-[10px] font-semibold text-[var(--muted)] bg-[var(--background)] px-2 py-0.5 rounded flex items-center gap-1 transition-colors">
-                            <MapPin className="w-3 h-3 text-[var(--accent)]" /> {item.venue}
+                          <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-950 px-2 py-0.5 rounded flex items-center gap-1 transition-colors border border-slate-100 dark:border-slate-800">
+                            <MapPin className="w-3 h-3 text-red-500" /> {item.venue}
                           </span>
                         </div>
 
-                        <h4 className="text-sm font-bold text-[var(--foreground)] transition-colors">{item.title}</h4>
-                        <p className="text-xs text-[var(--muted)] leading-relaxed transition-colors">{item.description}</p>
+                        <h4 className="text-sm font-bold text-slate-900 dark:text-white transition-colors">{item.title}</h4>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed transition-colors">{item.description}</p>
 
                         {item.mover && (
-                          <div className="text-[11px] text-[var(--muted)] bg-[var(--background)] p-2 rounded border border-[var(--card-border)] transition-colors">
-                            <strong className="text-[var(--foreground)]">Mover / Chair:</strong> {item.mover}
+                          <div className="text-[11px] text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-950 p-2 rounded border border-slate-200 dark:border-slate-800 transition-colors">
+                            <strong className="text-slate-900 dark:text-white">Mover / Chair:</strong> {item.mover}
                           </div>
                         )}
 
                         {item.keyParticipants && (
-                          <div className="text-[11px] text-[var(--muted)] transition-colors">
-                            <strong className="text-[var(--foreground)]">Key Participants:</strong> {item.keyParticipants}
+                          <div className="text-[11px] text-slate-600 dark:text-slate-400 transition-colors">
+                            <strong className="text-slate-900 dark:text-white">Key Participants:</strong> {item.keyParticipants}
                           </div>
                         )}
                       </div>
 
-                      <span className="text-xs font-bold shrink-0 text-[var(--muted)] bg-[var(--background)] px-2 py-1 rounded transition-colors">
+                      <span className="text-xs font-bold shrink-0 text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 px-2 py-1 rounded transition-colors">
                         {item.status}
                       </span>
                     </div>
@@ -1308,13 +1380,13 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                 )}
               </div>
 
-              <div className="p-4 bg-[var(--background)] border-t border-[var(--card-border)] flex flex-col sm:flex-row items-center justify-between text-xs text-[var(--muted)] gap-2 transition-colors">
+              <div className="p-4 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-2 transition-colors">
                 <span>Convening September 21–25, 2026. Official source: senate-mashinani.vercel.app</span>
                 <a
                   href="https://www.parliament.go.ke/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[var(--primary)] hover:text-[var(--primary-light)] font-bold inline-flex items-center gap-1 transition-colors"
+                  className="text-blue-600 dark:text-blue-400 hover:text-blue-500 font-bold inline-flex items-center gap-1 transition-colors"
                 >
                   Live Web Page <ExternalLink className="w-3 h-3" />
                 </a>
@@ -1323,17 +1395,18 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
 
             {/* Right Live Broadcast Simulation Player */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="bg-[var(--card)] rounded-2xl border border-[var(--card-border)] shadow-xl overflow-hidden text-[var(--foreground)] transition-colors">
+              <div className="bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden text-slate-900 dark:text-white transition-colors">
                 <div className="relative aspect-video bg-black flex items-center justify-center overflow-hidden group">
                   <img
                     src="/sessions_images/kilifi.jpeg"
                     alt="Kilifi County Chamber"
+                    onError={(e) => { e.currentTarget.src = 'https://placehold.co/800x450/0f172a/ffffff?text=Live+Broadcast'; }}
                     className="w-full h-full object-cover opacity-75 group-hover:scale-105 transition duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/60" />
 
                   <div className="absolute bottom-3 left-4 right-4 bg-black/85 backdrop-blur-md p-2.5 rounded-lg border border-slate-800">
-                    <p className="text-xs text-[var(--gold)] font-mono italic">
+                    <p className="text-xs text-[#D4AF37] font-mono italic">
                       {hansardQuotes[quoteIndex]}
                     </p>
                   </div>
@@ -1342,21 +1415,21 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                 <div className="p-5 space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h4 className="font-bold text-[var(--foreground)] text-base transition-colors">Senate Plenary Mashinani</h4>
-                      <p className="text-xs text-[var(--muted)] transition-colors">Broadcasting live from Kilifi County Assembly Chambers</p>
+                      <h4 className="font-bold text-slate-900 dark:text-white text-base transition-colors">Senate Plenary Mashinani</h4>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 transition-colors">Broadcasting live from Kilifi County Assembly Chambers</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Civic Fact Callout */}
-              <div className="bg-[var(--primary)]/5 border border-[var(--primary)]/20 rounded-xl p-4 flex items-start gap-3 transition-colors">
-                <div className="p-2 rounded-lg bg-[var(--primary)]/10 text-[var(--primary)] shrink-0 transition-colors">
+              <div className="bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-800 rounded-xl p-4 flex items-start gap-3 transition-colors">
+                <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 shrink-0 transition-colors">
                   <Lightbulb className="w-5 h-5" />
                 </div>
                 <div className="text-xs">
-                  <h5 className="font-bold text-[var(--primary)] text-sm transition-colors">Kilifi Sitting Landmark</h5>
-                  <p className="text-[var(--muted)] mt-1 leading-relaxed transition-colors">
+                  <h5 className="font-bold text-blue-600 dark:text-blue-400 text-sm transition-colors">Kilifi Sitting Landmark</h5>
+                  <p className="text-slate-600 dark:text-slate-400 mt-1 leading-relaxed transition-colors">
                     On June 9, 2026, the County Assembly of Kilifi resolved to suspend its own plenary sittings from September 21–25, 2026, handing over its chamber to host the 5th Senate Mashinani pursuant to Article 126(1) of the Constitution!
                   </p>
                 </div>
@@ -1367,29 +1440,29 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
         </div>
       </section>
 
-     {/* FAQ SECTION */}
-      <section id="faqs" className="bg-[var(--background)] border-t border-[var(--card-border)] py-20 transition-colors duration-300">
+     {}
+      <section id="faqs" className="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-20 transition-colors duration-300">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <span className="text-xs font-black uppercase tracking-widest text-[#006A44] bg-[#006A44]/10 px-3.5 py-1.5 rounded-full border border-[#006A44]/20 transition-colors">
               Parliamentary Information Hub
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-[var(--foreground)] mt-3 transition-colors">Frequently Asked Questions (FAQs)</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mt-3 transition-colors">Frequently Asked Questions (FAQs)</h2>
             <div className="w-16 h-1 bg-[#C8102E] mx-auto mt-3 rounded-full"></div>
 
-            <div className="bg-[var(--card)] p-6 rounded-2xl border border-[var(--card-border)] shadow-sm mt-6 text-left border-l-4 border-l-[#006A44] transition-colors">
-              <p className="text-[var(--muted)] text-sm sm:text-base leading-relaxed transition-colors">
-                <strong className="text-[var(--foreground)] font-bold">Senate Mashinani</strong> is an initiative by the Parliament of Kenya that relocates the entire Senate—including its plenary and committee sittings—from the traditional Parliament Buildings in Nairobi to one of the 47 counties for a week-long grassroots engagement.
+            <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm mt-6 text-left border-l-4 border-l-[#006A44] transition-colors">
+              <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed transition-colors">
+                <strong className="text-slate-900 dark:text-white font-bold">Senate Mashinani</strong> is an initiative by the Parliament of Kenya that relocates the entire Senate—including its plenary and committee sittings—from the traditional Parliament Buildings in Nairobi to one of the 47 counties for a week-long grassroots engagement.
               </p>
             </div>
           </div>
 
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={faq.id} className="bg-[var(--card)] rounded-2xl border border-[var(--card-border)] overflow-hidden shadow-sm transition-colors">
+              <div key={faq.id} className="bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm transition-colors">
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full px-6 py-4 text-left font-bold text-[var(--foreground)] text-sm sm:text-base flex items-center justify-between hover:bg-[var(--card-border)]/50 transition-colors"
+                  className="w-full px-6 py-4 text-left font-bold text-slate-900 dark:text-white text-sm sm:text-base flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors"
                 >
                   <span>{faq.q}</span>
                   <span className="text-[#006A44] text-lg font-black shrink-0 ml-3">
@@ -1397,7 +1470,7 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
                   </span>
                 </button>
                 {openFaq === index && (
-                  <div className="px-6 pb-5 text-xs sm:text-sm text-[var(--muted)] leading-relaxed border-t border-[var(--card-border)] pt-4 bg-[var(--background)]/50 transition-colors">
+                  <div className="px-6 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-200 dark:border-slate-800 pt-4 bg-white dark:bg-slate-950 transition-colors">
                     {faq.a}
                   </div>
                 )}
@@ -1407,13 +1480,13 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
         </div>
       </section>
 
-      {/* Modal: County Edition Details */}
+      {}
       {activeEditionModal && (
         <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-3xl max-w-2xl w-full p-6 sm:p-8 text-[var(--foreground)] shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 transition-colors">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 text-slate-900 dark:text-white shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 transition-colors">
             <button
               onClick={() => setActiveEditionModal(null)}
-              className="absolute top-5 right-5 text-[var(--muted)] hover:text-[var(--foreground)] p-1 rounded-lg hover:bg-[var(--card-border)] transition"
+              className="absolute top-5 right-5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               aria-label="Close modal"
             >
               <X className="w-6 h-6" />
@@ -1421,29 +1494,29 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
 
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-[var(--gold)] animate-ping" />
-                <span className="text-xs uppercase font-bold text-[var(--gold)]">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#D4AF37] animate-ping" />
+                <span className="text-xs uppercase font-bold text-[#D4AF37]">
                   {activeEditionModal.status === 'Upcoming' ? 'Official Proclamation' : 'Official Parliamentary Hansard'}
                 </span>
               </div>
-              <h3 className="text-2xl font-extrabold text-[var(--foreground)] transition-colors">
+              <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white transition-colors">
                 {activeEditionModal.name} ({activeEditionModal.edition})
               </h3>
-              <div className="pb-2 border-b border-[var(--card-border)] text-xs text-[var(--muted)] space-y-1 transition-colors">
+              <div className="pb-2 border-b border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 space-y-1 transition-colors">
                 <p><strong>Sitting Dates:</strong> {activeEditionModal.date}</p>
                 <p><strong>Chamber Venue:</strong> {activeEditionModal.assembly}</p>
                 <p><strong>Host Senator:</strong> {activeEditionModal.hostSenator}</p>
-                <p className="text-[var(--primary)] font-mono text-[11px] transition-colors">{activeEditionModal.hansardRecord}</p>
+                <p className="text-blue-600 dark:text-blue-400 font-mono text-[11px] transition-colors">{activeEditionModal.hansardRecord}</p>
               </div>
 
               <div className="space-y-3 pt-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--primary)] transition-colors">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 transition-colors">
                   Substantive Inquiries & Grassroots Outcomes:
                 </h4>
-                <ul className="space-y-2.5 text-xs sm:text-sm text-[var(--muted)] transition-colors">
+                <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 transition-colors">
                   {activeEditionModal.highlights.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2.5">
-                      <span className="text-[var(--primary)] font-bold mt-0.5 transition-colors">•</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-bold mt-0.5 transition-colors">•</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -1451,22 +1524,22 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
               </div>
 
               <div className="pt-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--muted)] mb-1.5 transition-colors">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5 transition-colors">
                   Participating Senate Standing Committees:
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {activeEditionModal.keyCommittees.map((c, i) => (
-                    <span key={i} className="text-xs bg-[var(--background)] px-2.5 py-1 rounded border border-[var(--card-border)] text-[var(--muted)] transition-colors">
+                    <span key={i} className="text-xs bg-slate-50 dark:bg-slate-800 px-2.5 py-1 rounded border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 transition-colors">
                       {c}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-6 mt-4 border-t border-[var(--card-border)] flex justify-end transition-colors">
+              <div className="pt-6 mt-4 border-t border-slate-200 dark:border-slate-800 flex justify-end transition-colors">
                 <button
                   onClick={() => setActiveEditionModal(null)}
-                  className="px-5 py-2.5 rounded-xl bg-[var(--card-border)] hover:bg-[var(--muted)] text-[var(--foreground)] hover:text-[var(--card)] font-bold text-xs transition-colors"
+                  className="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs transition-colors"
                 >
                   Close Record
                 </button>
@@ -1476,13 +1549,13 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
         </div>
       )}
 
-      {/* Modal: Bill Brief Details */}
+      {}
       {activeBillModal && (
         <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-3xl max-w-xl w-full p-6 sm:p-8 text-[var(--foreground)] shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 transition-colors">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-xl w-full p-6 sm:p-8 text-slate-900 dark:text-white shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 transition-colors">
             <button
               onClick={() => setActiveBillModal(null)}
-              className="absolute top-5 right-5 text-[var(--muted)] hover:text-[var(--foreground)] p-1 rounded-lg hover:bg-[var(--card-border)] transition"
+              className="absolute top-5 right-5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               aria-label="Close modal"
             >
               <X className="w-6 h-6" />
@@ -1490,27 +1563,27 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
 
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-[var(--primary)] transition-colors" />
-                <span className="text-xs uppercase font-bold text-[var(--primary)] transition-colors">
+                <span className="w-2.5 h-2.5 rounded-full bg-blue-600 transition-colors" />
+                <span className="text-xs uppercase font-bold text-blue-600 dark:text-blue-400 transition-colors">
                   {activeBillModal.county}
                 </span>
               </div>
-              <h3 className="text-xl font-extrabold text-[var(--foreground)] transition-colors">
+              <h3 className="text-xl font-extrabold text-slate-900 dark:text-white transition-colors">
                 {activeBillModal.title}
               </h3>
-              <p className="text-xs text-[var(--muted)] leading-relaxed border-t border-[var(--card-border)] pt-3 transition-colors">
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-200 dark:border-slate-800 pt-3 transition-colors">
                 {activeBillModal.fullBrief}
               </p>
 
-              <div className="bg-[var(--background)] rounded-xl p-3.5 border border-[var(--card-border)] space-y-1 text-xs transition-colors">
-                <div className="text-[var(--muted)]"><strong className="text-[var(--foreground)]">Sponsoring Committee:</strong> {activeBillModal.committee}</div>
-                <div className="text-[var(--muted)]"><strong className="text-[var(--foreground)]">Current Stage:</strong> {activeBillModal.status}</div>
+              <div className="bg-slate-50 dark:bg-slate-800 rounded-xl p-3.5 border border-slate-200 dark:border-slate-700 space-y-1 text-xs transition-colors">
+                <div className="text-slate-600 dark:text-slate-400"><strong className="text-slate-900 dark:text-white">Sponsoring Committee:</strong> {activeBillModal.committee}</div>
+                <div className="text-slate-600 dark:text-slate-400"><strong className="text-slate-900 dark:text-white">Current Stage:</strong> {activeBillModal.status}</div>
               </div>
 
               <div className="pt-4 flex justify-end">
                 <button
                   onClick={() => setActiveBillModal(null)}
-                  className="px-5 py-2 rounded-xl bg-[var(--card-border)] hover:bg-[var(--muted)] text-[var(--foreground)] hover:text-[var(--card)] font-bold text-xs transition-colors"
+                  className="px-5 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs transition-colors"
                 >
                   Close Brief
                 </button>
@@ -1520,23 +1593,23 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
         </div>
       )}
 
-      {/* Modal: Live Stream Preview */}
+      {}
       {liveStreamModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 transition-colors">
-            <div className="p-4 bg-[var(--background)] border-b border-[var(--card-border)] flex justify-between items-center transition-colors">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 transition-colors">
+            <div className="p-4 bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center transition-colors">
               <div className="flex items-center gap-3">
                 <span className="w-3 h-3 rounded-full bg-red-600 animate-ping" />
-                <span className="font-bold text-[var(--foreground)] text-sm transition-colors">
+                <span className="font-bold text-slate-900 dark:text-white text-sm transition-colors">
                   The Parliament of Kenya · Senate Live Chamber Broadcast
                 </span>
-                <span className="text-xs bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/20 px-2 py-0.5 rounded font-mono transition-colors">
+                <span className="text-xs bg-red-100 dark:bg-red-900/30 text-red-600 border border-red-200 dark:border-red-800 px-2 py-0.5 rounded font-mono transition-colors">
                   LIVE FEED
                 </span>
               </div>
               <button
                 onClick={() => setLiveStreamModalOpen(false)}
-                className="text-[var(--muted)] hover:text-[var(--foreground)] p-1 rounded-lg hover:bg-[var(--card-border)] transition"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -1552,22 +1625,22 @@ OFFICIAL RECORD SOURCED VIA SENATE MASHINANI VERIFIED PORTAL.`;
               />
             </div>
 
-            <div className="p-4 bg-[var(--background)] border-t border-[var(--card-border)] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs transition-colors">
-              <div className="flex items-center gap-2 text-[var(--muted)] transition-colors">
-                <Info className="w-4 h-4 text-[var(--primary)]" />
+            <div className="p-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs transition-colors">
+              <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 transition-colors">
+                <Info className="w-4 h-4 text-blue-600" />
                 <span>Broadcasting under Article 118 Public Participation mandate</span>
               </div>
               <div className="flex items-center gap-3">
                 <button
                   onClick={downloadHansardFile}
-                  className="px-3 py-1.5 rounded-lg bg-[var(--card-border)] text-[var(--foreground)] hover:bg-[var(--muted)] hover:text-[var(--card)] flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-300 dark:hover:bg-slate-700 flex items-center gap-1.5 transition-colors"
                 >
-                  <Download className="w-3.5 h-3.5 text-[var(--gold)]" />
+                  <Download className="w-3.5 h-3.5 text-[#D4AF37]" />
                   Extract Hansard
                 </button>
                 <button
                   onClick={() => setLiveStreamModalOpen(false)}
-                  className="px-4 py-1.5 rounded-lg bg-[var(--primary)] text-white font-bold hover:bg-[var(--primary-light)] transition-colors"
+                  className="px-4 py-1.5 rounded-lg bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors"
                 >
                   Close Player
                 </button>
