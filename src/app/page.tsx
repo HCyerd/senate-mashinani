@@ -87,7 +87,7 @@ const HOST_EDITIONS: Edition[] = [
     region: 'Coast Region',
     assembly: 'Kilifi County Assembly Chambers, Malindi',
     hostSenator: 'Sen. Stewart Madzayo, EGH, MP (Senate Minority Leader)',
-    status: 'Ongoing',
+    status: 'Upcoming',
     image: '/sessions_images/kilifi.jpeg',
     summary: 'Approved by Senate Motion on May 6, 2026. Convening to address Coast blue economy financing, salt mining royalties to indigenous host communities, and historical land injustice title adjudications.',
     highlights: [
@@ -130,7 +130,7 @@ const HOST_EDITIONS: Edition[] = [
     assembly: 'Turkana County Assembly, Lodwar',
     hostSenator: 'Sen. James Lomenen Ekomwa',
     status: 'Concluded',
-    image: '/sessions_images/turkana.jpeg',
+      image: '/sessions_images/turkana.jpeg',
     summary: 'Convened concurrently with the Tobong’u Lore Cultural Festival. Hosted by Speaker Rt. Hon. Christopher Nakuleu and Speaker Amason Jeffah Kingi; interrogated oil revenue sharing and dryland water access.',
     highlights: [
       'Strict statutory enforcement of the 20% county government and 5% host community shares under Project Oil Kenya.',
@@ -140,6 +140,48 @@ const HOST_EDITIONS: Edition[] = [
     ],
     keyCommittees: ['Energy, Roads & Transportation', 'Finance & Budget', 'Devolution & Intergovernmental Relations'],
     hansardRecord: 'Senate Mashinani Plenary Hansard Vol. IV (Lodwar Assembly Chamber)'
+  },
+  {
+    id: 'kitui',
+    name: 'Kitui County',
+    county: 'Kitui',
+    edition: '2nd Edition',
+    date: 'September 16–20, 2019',
+    region: 'Eastern Kenya',
+    assembly: 'Kitui County Assembly Hall',
+    hostSenator: 'Sen. Enoch Kiio Wambua',
+    status: 'Concluded',
+    image: '/sessions_images/kitui_session.jpg',
+    summary: 'Heard critical citizen petitions on Mui Basin coal exploration land rights, evaluated local manufacturing at KICOTEC, and initiated the nationwide Mung Beans (Ndengu) Bill.',
+    highlights: [
+      'Senate Agriculture Committee stakeholder hearings directly originating The Mung Beans (Ndengu) Bill.',
+      'Environmental and land compensation hearings safeguarding local families across the Mui Coal Basin.',
+      'Apparel value-addition benchmarking at the Kitui County Textile Centre (KICOTEC) garment manufacturing plant.',
+      'Capacity development and procedural Standing Orders peer-review for Kitui County Assembly MCAs.'
+    ],
+    keyCommittees: ['Agriculture, Livestock & Fisheries', 'Environment, Land & Natural Resources', 'Trade & Industrialization'],
+    hansardRecord: 'Senate Hansard Vol. II, Part 3 (Kitui Assembly Special Sitting)'
+  },
+  {
+    id: 'uasin-gishu',
+    name: 'Uasin Gishu County',
+    county: 'Uasin-Gishu (Eldoret)',
+    edition: '1st Inaugural Launch',
+    date: 'September 24–28, 2018',
+    region: 'North Rift Breadbasket',
+    assembly: 'Eldoret County Assembly Chambers',
+    hostSenator: 'Prof. Margaret Jepkoech Kamar',
+    status: 'Concluded',
+    image: '/sessions_images/uasingishu.jpeg',
+    summary: 'The historic trailblazer. The first time in Kenya’s history that Parliament sat outside Nairobi under Article 126(1), directly tackling the national maize payment crisis and athlete welfare.',
+    highlights: [
+      'First historic implementation of Article 126(1) of the Constitution of Kenya outside Nairobi.',
+      'Parliamentary summons securing prompt payments for grain supplies delivered to the National Cereals & Produce Board (NCPB).',
+      'Policy recommendations establishing price caps on government-subsidized planting and top-dressing fertilizers.',
+      'Special public hearings on world-class athlete social safety nets, anti-doping education, and post-career medical cover.'
+    ],
+    keyCommittees: ['Agriculture, Livestock & Fisheries', 'Labour & Social Welfare', 'Finance & Budget'],
+    hansardRecord: 'Historic Inaugural Mashinani Hansard Record (Eldoret County Assembly)'
   }
 ];
 
@@ -635,8 +677,8 @@ export default function App() {
             onError={(e) => { e.currentTarget.src = 'https://placehold.co/1200x800/020617/ffffff?text=Senate+Chamber'; }}
             className="w-full h-full object-cover object-center opacity-95 filter saturate-150 scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/77 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/60 to-[var(--primary)]/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/40 to-[var(--primary)]/20" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-20 pb-20 sm:pb-28">
