@@ -572,7 +572,7 @@ export default function App() {
   const [billSearchQuery, setBillSearchQuery] = useState<string>('');
 
   // Default active tab to Tue 22 Sep (day4) based on current real-world time context mapped to the new schedule
-  const [activeDayFilter, setActiveDayFilter] = useState<string>('day4');
+  const [activeDayFilter, setActiveDayFilter] = useState<string>('day5');
   const [activeTypeFilter, setActiveTypeFilter] = useState<string>('all');
 
   const [activeEditionModal, setActiveEditionModal] = useState<Edition | null>(null);
@@ -743,9 +743,9 @@ export default function App() {
                       Live Sitting Assembly
                     </span>
                   </div>
-                  <span className="text-xs font-bold  text-slate-900 bg-amber-400 px-8 py-1 rounded-full">
-                    5th Edition
-                  </span>
+                  <span className="px-2.5 py-1 bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30 text-[10px] font-extrabold uppercase rounded shadow animate-pulse">
+                        5th Edition
+                      </span>
                 </div>
 
                 <div className="w-full h-full mt-4 space-y-4">
@@ -769,8 +769,8 @@ export default function App() {
                     ) : (
                       <iframe 
                         className="w-full h-full absolute inset-0"
-                        src="https://www.youtube.com/embed/JUB87VKMCbQ?si=j6b0NWZMmYbCvUgD&autoplay=1" 
-                        title="YouTube video player" 
+                        src="https://www.youtube.com/embed/kkPOzUNeSGQ?si=qrIWi8xQ_bGklTno" 
+                        title="Parliament of Kenya" 
                         frameBorder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                         referrerPolicy="strict-origin-when-cross-origin" 
