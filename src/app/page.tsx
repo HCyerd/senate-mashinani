@@ -437,7 +437,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Joint visit to assess workplace safety standards, labour practices, and value addition at the Tezo Cashew Processing Plant.',
     mover: 'Agriculture / Labour & Social Welfare',
     type: 'Inspection',
-    status: 'Ongoing'
+    status: 'Completed'
   },
   {
     id: 'op16',
@@ -451,7 +451,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Inspection of Malindi Marine National Park and Reserve and the Mambrui Sand Dunes with the County Assembly Committee.',
     mover: 'Trade, Industrialization & Tourism',
     type: 'Inspection',
-    status: 'Ongoing'
+    status: 'Completed'
   },
   {
     id: 'op17',
@@ -465,7 +465,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Meeting with the Governor of Kilifi County to assess the Auditor General\'s Report on ECDE provision.',
     mover: 'Standing Committee on Education',
     type: 'Committee',
-    status: 'Ongoing'
+    status: 'Completed'
   },
   {
     id: 'op18',

@@ -21,7 +21,7 @@ const MASHINANI_SESSIONS = [
     county: "Kilifi County",
     region: "Coastal Region",
     period: "September 21 - 25, 2026",
-    status: "Upcoming",
+    status: "Ongoing",
     color: "from-amber-600 to-amber-900",
     accentColor: "bg-amber-500",
     overview: "The 5th Mashinani Sitting focuses on Blue Economy development, coastal land tenure rights, coconut sub-sector revival, and maritime security.",
