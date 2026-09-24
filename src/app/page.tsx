@@ -407,7 +407,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Responses to Questions by Cabinet Secretaries for ICT, Youth Affairs, Education, and Mining & Blue Economy.',
     mover: 'Speaker of the Senate',
     type: 'Plenary',
-    status: 'Upcoming'
+    status: 'Completed'
   },
   {
     id: 'op14',
@@ -421,7 +421,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Consideration of Bills, Motions, Petitions and Statements.',
     mover: 'Speaker of the Senate',
     type: 'Plenary',
-    status: 'Upcoming'
+    status: 'Completed'
   },
 
   // DAY SIX
@@ -437,7 +437,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Joint visit to assess workplace safety standards, labour practices, and value addition at the Tezo Cashew Processing Plant.',
     mover: 'Agriculture / Labour & Social Welfare',
     type: 'Inspection',
-    status: 'Upcoming'
+    status: 'Ongoing'
   },
   {
     id: 'op16',
@@ -451,7 +451,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Inspection of Malindi Marine National Park and Reserve and the Mambrui Sand Dunes with the County Assembly Committee.',
     mover: 'Trade, Industrialization & Tourism',
     type: 'Inspection',
-    status: 'Upcoming'
+    status: 'Ongoing'
   },
   {
     id: 'op17',
@@ -465,7 +465,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Meeting with the Governor of Kilifi County to assess the Auditor General\'s Report on ECDE provision.',
     mover: 'Standing Committee on Education',
     type: 'Committee',
-    status: 'Upcoming'
+    status: 'Ongoing'
   },
   {
     id: 'op18',
@@ -479,7 +479,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Consideration of Bills, Motions, Petitions and Statements.',
     mover: 'Speaker of the Senate',
     type: 'Plenary',
-    status: 'Upcoming'
+    status: 'Ongoing'
   },
 
   // DAY SEVEN
@@ -572,7 +572,7 @@ export default function App() {
   const [billSearchQuery, setBillSearchQuery] = useState<string>('');
 
   // Default active tab to Tue 22 Sep (day4) based on current real-world time context mapped to the new schedule
-  const [activeDayFilter, setActiveDayFilter] = useState<string>('day5');
+  const [activeDayFilter, setActiveDayFilter] = useState<string>('day6');
   const [activeTypeFilter, setActiveTypeFilter] = useState<string>('all');
 
   const [activeEditionModal, setActiveEditionModal] = useState<Edition | null>(null);
