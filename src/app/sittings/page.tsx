@@ -21,7 +21,7 @@ const MASHINANI_SESSIONS = [
     county: "Kilifi County",
     region: "Coastal Region",
     period: "September 21 - 25, 2026",
-    status: "Ongoing",
+    status: "Concluded",
     color: "from-amber-600 to-amber-900",
     accentColor: "bg-amber-500",
     overview: "The 5th Mashinani Sitting focuses on Blue Economy development, coastal land tenure rights, coconut sub-sector revival, and maritime security.",
@@ -145,7 +145,7 @@ export default function MashinaniImpactPage() {
           </h1>
           
           <p className="text-lg sm:text-xl bg-red-500/10 backdrop-blur-2xl p-4 rounded-xl font-serif font-extrabold text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
-            A comprehensive retrospective of the legislative, economic, and social impact driven by relocating the Senate to the counties — from the upcoming 5th session in Kilifi to the inaugural sitting in Uasin Gishu.
+            A comprehensive retrospective of the legislative, economic, and social impact driven by relocating the Senate to the counties — from the Concluded 5th session in Kilifi to the inaugural sitting in Uasin Gishu.
           </p>
         </div>
       </section>
@@ -184,7 +184,7 @@ export default function MashinaniImpactPage() {
                     {session.ordinal} Session
                   </span>
                   <span className={`text-xs font-semibold flex items-center gap-1.5 px-3 py-1.5 rounded-md border ${
-                    session.status === 'Upcoming' 
+                    session.status === 'Concluded' 
                       ? 'bg-amber-900/30 text-amber-400 border-amber-800/50' 
                       : 'bg-[#006A44]/20 text-emerald-400 border-[#006A44]/40'
                   }`}>

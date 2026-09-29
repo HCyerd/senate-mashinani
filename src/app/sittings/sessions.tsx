@@ -8,7 +8,7 @@ export const sessions = [
     color: 'from-blue-700 to-blue-900',
     accentColor: 'bg-blue-600',
     status: 'Planned',
-    overview: 'The Kilifi programme is a zero-draft schedule for the fifth sitting of the Senate outside Nairobi. It is not an exit report: the activities below are planned programme items and should not be read as completed outcomes.',
+    overview: 'The Kilifi programme is a zero-draft schedule for the fifth sitting of the Senate outside Nairobi. It is not an exit report: the activities below are planned programme items and should not be read as Concluded outcomes.',
     keyLegislation: [
       'Senate business and committee agendas scheduled for the Kilifi programme',
       'Public participation and delegated-legislation discussions with county institutions',
@@ -36,7 +36,7 @@ export const sessions = [
     period: '6th–10th October, 2025',
     color: 'from-amber-700 to-amber-900',
     accentColor: 'bg-amber-600',
-    status: 'Completed',
+    status: 'Concluded',
     overview: 'The fourth Senate Mashinani sitting in Busia combined four plenary sittings with committee meetings, inspections, a constitutional-amendment town hall, public access to proceedings, and engagement with county and border institutions.',
     keyLegislation: [
       'Constitution of Kenya (Amendment) Bill, 2025 (Senate Bills No. 13 of 2025)',
@@ -107,7 +107,7 @@ export const sessions = [
     period: '25th–29th September, 2023',
     color: 'from-amber-600 to-amber-900',
     accentColor: 'bg-amber-600',
-    status: 'Completed',
+    status: 'Concluded',
     overview: 'The Senate resolved on 30th May 2023 to hold plenary and committee sittings in Turkana County. The official report records four plenary sittings and nine committees conducting meetings, site visits, and inspections across Turkana and the surrounding region.',
     keyLegislation: [
       'Papers, statements, motions, and other Senate business considered in four plenary sittings',
@@ -175,7 +175,7 @@ export const sessions = [
     period: '16th–20th September, 2019',
     color: 'from-blue-700 to-blue-900',
     accentColor: 'bg-blue-600',
-    status: 'Completed',
+    status: 'Concluded',
     overview: 'The Senate held its plenary and committee sittings in Kitui County after the Senate Business Committee resolved on 28th May 2019 and the House adopted the resolution on 13th June 2019. The planning report documents the logistics, business programme, committee work, public invitations, broadcasting, and county-assembly coordination required to deliver the sitting.',
     keyLegislation: [
       'Bills, papers, statements, and motions considered during three plenary sittings',
@@ -228,7 +228,7 @@ export const sessions = [
     period: '24th–28th September, 2018',
     color: 'from-teal-700 to-teal-900',
     accentColor: 'bg-teal-600',
-    status: 'Completed',
+    status: 'Concluded',
     overview: 'The first Senate plenary and committee sittings held away from Nairobi took place in Uasin Gishu County. The sitting created a direct channel for public participation and enabled Senators to inspect national and county government projects in the host region.',
     keyLegislation: [
       'Senate business considered during the first sitting outside Nairobi',

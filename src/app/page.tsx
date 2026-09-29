@@ -234,7 +234,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     title: 'KEWOSA Visit to Malindi Women\'s Prison',
     description: 'Kenya Women Senators\' Association (KEWOSA) visit and outreach to the Malindi Women\'s Prison facility.',
     type: 'Committee',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op2',
@@ -247,7 +247,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     title: 'Football Match: Senate vs Kilifi County Assembly',
     description: 'Friendly football match engaging Senators and Kilifi County Assembly Members to build rapport ahead of the sittings.',
     type: 'Protocol',
-    status: 'Completed'
+    status: 'Concluded'
   },
 
   // DAY THREE
@@ -263,7 +263,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Joint inspection visit to inspect projects funded by the Equalization Fund in Malindi and Ganze Sub-Counties.',
     mover: 'Finance & Budget / Roads & Transportation',
     type: 'Inspection',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op4',
@@ -277,7 +277,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Joint inspection visit to Malindi Sub-County Hospital and Marafa Sub-County Hospital to assess the provision of healthcare services.',
     mover: 'Health / CPAC',
     type: 'Inspection',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op5',
@@ -291,7 +291,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Meeting with the Ministry of Environment, Ministry of Mining and Blue Economy, and Mining Companies on environmental obligations and impact assessments.',
     mover: 'Land, Environment & Natural Resources',
     type: 'Committee',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op6',
@@ -305,7 +305,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Inspection visits to Krystalline Salt Limited (Marereni) and Mjana Heri sand quarries to assess environmental audit compliance.',
     mover: 'Land, Environment & Natural Resources',
     type: 'Inspection',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op7',
@@ -319,7 +319,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Meeting with the Suppliers\' Association of Kilifi County and other affected vendors to deliberate on outstanding pending bills.',
     mover: 'County Public Accounts Committee',
     type: 'Committee',
-    status: 'Completed'
+    status: 'Concluded'
   },
 
   // DAY FOUR
@@ -335,7 +335,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Joint inspection of cold storage, fish banda, and solar projects; stakeholder engagement with beach management units.',
     mover: 'Agriculture / Energy / Lands',
     type: 'Inspection',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op9',
@@ -349,7 +349,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Meeting with the Kilifi County Executive to deliberate on the status of pending bills.',
     mover: 'Standing Committee on Finance and Budget',
     type: 'Committee',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op10',
@@ -363,7 +363,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Inspection of Sabaki, Malindi Central, and Sir Ali Bin Salim ECDE Centres to verify Auditor General recommendations.',
     mover: 'Standing Committee on Education',
     type: 'Inspection',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op11',
@@ -377,7 +377,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Deliberation on the prevailing security situation, emerging threats, and disaster management with the Governor and County Commissioner.',
     mover: 'National Security, Defence & Foreign Relations',
     type: 'Committee',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op12',
@@ -391,7 +391,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Consideration of Bills, Motions, Petitions and Statements.',
     mover: 'Speaker of the Senate',
     type: 'Plenary',
-    status: 'Completed' // Evaluated as completed given current time context
+    status: 'Concluded' // Evaluated as Concluded given current time context
   },
 
   // DAY FIVE
@@ -407,7 +407,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Responses to Questions by Cabinet Secretaries for ICT, Youth Affairs, Education, and Mining & Blue Economy.',
     mover: 'Speaker of the Senate',
     type: 'Plenary',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op14',
@@ -421,7 +421,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Consideration of Bills, Motions, Petitions and Statements.',
     mover: 'Speaker of the Senate',
     type: 'Plenary',
-    status: 'Completed'
+    status: 'Concluded'
   },
 
   // DAY SIX
@@ -437,7 +437,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Joint visit to assess workplace safety standards, labour practices, and value addition at the Tezo Cashew Processing Plant.',
     mover: 'Agriculture / Labour & Social Welfare',
     type: 'Inspection',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op16',
@@ -451,7 +451,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Inspection of Malindi Marine National Park and Reserve and the Mambrui Sand Dunes with the County Assembly Committee.',
     mover: 'Trade, Industrialization & Tourism',
     type: 'Inspection',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op17',
@@ -465,7 +465,7 @@ const ORDER_PAPER_ITEMS: OrderPaperItem[] = [
     description: 'Meeting with the Governor of Kilifi County to assess the Auditor General\'s Report on ECDE provision.',
     mover: 'Standing Committee on Education',
     type: 'Committee',
-    status: 'Completed'
+    status: 'Concluded'
   },
   {
     id: 'op18',
@@ -1199,7 +1199,7 @@ export default function App() {
                     <div
                       key={item.id}
                       className={`p-5 transition-colors flex items-start gap-4 ${
-                        item.status === 'Completed'
+                        item.status === 'Concluded'
                         ? 'bg-[var(--background)]/50 opacity-70'
                         : item.status === 'Ongoing' 
                         ? 'bg-[var(--gold)]/5 border-l-4 border-[var(--gold)]' 
@@ -1227,7 +1227,7 @@ export default function App() {
                       </div>
 
                       <span className={`text-xs font-bold shrink-0 px-2 py-1 rounded transition-colors border ${
-                        item.status === 'Completed' ? 'text-white border-[var(--card-border)] bg-green-700' :
+                        item.status === 'Concluded' ? 'text-white border-[var(--card-border)] bg-green-700' :
                         item.status === 'Ongoing' ? 'text-white border-[var(--accent)] bg-[var(--accent)] animate-pulse' :
                         'text-white border-[var(--primary)]/30 bg-[var(--primary)]'
                       }`}>
